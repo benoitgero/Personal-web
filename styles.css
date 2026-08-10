@@ -63,16 +63,6 @@
   --texto-fam: "Playfair Display", Georgia, serif;
 
   /* ── Métrica ── */
-  /* ── Escala áurea del rack ──
-     La unidad base es el alto del segmento (17.55px, viene de Figma).
-     De ahí salen los demás espaciados dividiendo o multiplicando por
-     φ = 1.618, así ningún hueco es arbitrario. */
-  --phi:       1.618;
-  --u:         17.55px;   /* base  = alto del segmento */
-  --u-menor:   10.85px;   /* u / φ */
-  --u-mayor:   28.40px;   /* u × φ */
-  --u-mayor2:  45.95px;   /* u × φ²  */
-
   --ancho: 1380px;
   --alto-barra: 80px;   /* alto real del header sticky */
   --radio: 8px;
@@ -320,7 +310,7 @@ main {
   box-shadow:
     inset  14.30px  14.30px 59.34px rgba(255, 255, 255, .70),
     inset -14.30px -14.30px 67.20px rgba(255, 255, 255, .70);
-  display: flex; flex-direction: column; align-items: center;
+  display: grid; place-items: center;
   padding: 28px 20px;
 }
 
@@ -328,22 +318,14 @@ main {
   list-style: none; margin: 0; padding: 0;
   display: flex; flex-wrap: wrap;
   justify-content: center;
-  gap: var(--u-mayor);          /* 28.40 — entre módulos */
+  gap: 14px;
 }
 
 /* Módulo: 52.33 × 209.7 · radio 8.39 · fill C5C5C5 */
-.rack > li { display: flex; }
-
-/* Ahora es un botón: hereda tipografía y quita estilos por defecto */
 .fader {
-  border: 0;
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-  transition: box-shadow .22s ease, transform .22s ease;
   width: 52.33px;
   min-height: 209.7px;
-  padding: var(--u) 0 var(--u);   /* 17.55 arriba y abajo */
+  padding: 12px 0 18px;
   background: var(--modulo);
   border-radius: 8.39px;
   box-shadow: var(--relieve-boton);
@@ -351,7 +333,7 @@ main {
 }
 
 .fader__escala {
-  display: flex; flex-direction: column-reverse; gap: var(--u-menor);
+  display: flex; flex-direction: column-reverse; gap: 11px;
 }
 
 /* Segmento: 29.26 × 17.55 · radio 0.84 · fill C0C0C0 */
@@ -370,9 +352,9 @@ main {
 }
 
 .fader__logo {
-  width: var(--u-mayor); height: var(--u-mayor);   /* 28.40 */
+  width: 28px; height: 28px;
   display: grid; place-items: center;
-  margin-top: var(--u);                            /* 17.55 */
+  margin-top: 14px;
   font-family: var(--display);
   font-size: .6rem;
   font-weight: 700;
@@ -382,96 +364,6 @@ main {
   overflow: hidden;
 }
 .fader__logo img { width: 100%; height: 100%; object-fit: contain; }
-
-
-/* ═══════════════════════════════════════════
-   CARTA DESPLEGABLE DEL RACK
-   ═══════════════════════════════════════════ */
-
-/* El módulo seleccionado se hunde, como las pestañas de Stories */
-.fader--activo {
-  box-shadow: var(--hundido-boton);
-  transform: translateY(1px);
-}
-
-.fader:hover:not(.fader--activo) { transform: translateY(-2px); }
-
-/* Truco de grid: de 0fr a 1fr da una apertura suave sin fijar altura */
-.detalle {
-  width: 100%;
-  display: grid;
-  grid-template-rows: 0fr;
-  opacity: 0;
-  margin-top: 0;
-  transition: grid-template-rows .35s ease, opacity .3s ease, margin-top .35s ease;
-}
-
-.detalle.abierto {
-  grid-template-rows: 1fr;
-  opacity: 1;
-  margin-top: var(--u-mayor);
-}
-
-.detalle__caja {
-  overflow: hidden;
-  min-height: 0;
-  display: flex;
-  align-items: center;
-  gap: var(--u-mayor);
-}
-
-.detalle.abierto .detalle__caja {
-  padding: var(--u-mayor);
-  border-radius: 12px;
-  background: linear-gradient(160deg, #f0f0f0 0%, #e3e3e3 100%);
-  box-shadow: var(--hundido-boton);
-}
-
-.detalle__icono {
-  width: var(--u-mayor2); height: var(--u-mayor2);
-  flex: none;
-  display: grid; place-items: center;
-  font-family: var(--display);
-  font-size: .75rem;
-  font-weight: 700;
-  color: var(--texto-fuerte);
-}
-.detalle__icono img { width: 100%; height: 100%; object-fit: contain; }
-
-.detalle__cuerpo { flex: 1; min-width: 0; }
-
-.detalle__titulo {
-  font-family: var(--display);
-  font-weight: 800;
-  font-size: 1rem;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  color: var(--texto-fuerte);
-  margin: 0 0 .45em;
-}
-
-.detalle__texto {
-  font-size: .9rem;
-  line-height: 1.55;
-  color: var(--texto);
-  margin: 0;
-}
-
-/* El nivel, en grande y a la derecha */
-.detalle__nivel {
-  flex: none;
-  display: flex; align-items: baseline; gap: 4px;
-  font-family: var(--display);
-  color: var(--texto-fuerte);
-}
-.detalle__num   { font-size: 2.4rem; font-weight: 800; line-height: 1; }
-.detalle__total { font-size: 1rem; color: var(--texto-suave); }
-
-@media (max-width: 720px) {
-  .detalle__caja { flex-direction: column; text-align: center; gap: var(--u); }
-  .detalle.abierto .detalle__caja { padding: var(--u); }
-  .detalle__nivel { justify-content: center; }
-}
 
 /* ═══════════════════════════════════════════
    COLUMNAS LATERALES (tabs)
@@ -826,9 +718,7 @@ main {
   .about__marco { min-height: 0; height: 280px; }
   .about__cuerpo { padding: 22px 20px 28px; }
 
-  /* En mobile la escala se mantiene, un escalón más abajo */
-  .rack { gap: var(--u); }
-  .fader__escala { gap: 6.7px; }   /* u / φ² */
+  .rack { gap: 10px; }
 
   .formulario { grid-template-columns: minmax(0, 1fr); }
   .proyecto__galeria { flex-direction: column; }
