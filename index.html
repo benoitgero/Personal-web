@@ -79,9 +79,10 @@
       <h2 class="visually-hidden" id="rack-titulo">Nivel por tecnología</h2>
       <ul class="rack" id="rack"></ul>
 
-      <!-- Pop-up que se abre sobre el rack al tocar una habilidad -->
-      <div class="detalle" id="rack-detalle" role="dialog" aria-modal="true"
-           aria-label="Detalle de la habilidad" hidden></div>
+      <!-- Carta que se despliega al tocar una habilidad -->
+      <div class="detalle" id="rack-detalle" aria-live="polite">
+        <div class="detalle__caja" id="rack-detalle-caja"></div>
+      </div>
     </article>
 
   </section>

@@ -322,7 +322,6 @@ main {
     inset -14.30px -14.30px 67.20px rgba(255, 255, 255, .70);
   display: flex; flex-direction: column; align-items: center;
   padding: 28px 20px;
-  position: relative;   /* ancla del pop-up */
 }
 
 .rack {
@@ -386,154 +385,92 @@ main {
 
 
 /* ═══════════════════════════════════════════
-   POP-UP DEL RACK
+   CARTA DESPLEGABLE DEL RACK
    ═══════════════════════════════════════════ */
 
+/* El módulo seleccionado se hunde, como las pestañas de Stories */
 .fader--activo {
   box-shadow: var(--hundido-boton);
   transform: translateY(1px);
 }
+
 .fader:hover:not(.fader--activo) { transform: translateY(-2px); }
 
-/* Capa que cubre solo la tarjeta del rack, no la pantalla entera */
+/* Truco de grid: de 0fr a 1fr da una apertura suave sin fijar altura */
 .detalle {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
+  width: 100%;
   display: grid;
-  place-items: center;
-  padding: 18px;
-  background: rgba(228, 228, 228, .78);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
+  grid-template-rows: 0fr;
   opacity: 0;
-  transition: opacity .25s ease;
+  margin-top: 0;
+  transition: grid-template-rows .35s ease, opacity .3s ease, margin-top .35s ease;
 }
-.detalle.abierto { opacity: 1; }
 
-.pop {
-  position: relative;
-  width: min(560px, 100%);
-  padding: var(--u-mayor) var(--u-mayor2);
-  border-radius: 14px;
-  background: linear-gradient(160deg, #f2f2f2 0%, #e2e2e2 100%);
-  box-shadow: var(--relieve-boton);
-  text-align: center;
-  transform: scale(.96);
-  transition: transform .25s ease;
-  touch-action: pan-y;   /* deja pasar el scroll vertical, captura el lateral */
+.detalle.abierto {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  margin-top: var(--u-mayor);
 }
-.detalle.abierto .pop { transform: scale(1); }
 
-/* ── Botón de cerrar ── */
-.pop__cerrar {
-  position: absolute;
-  top: 10px; right: 10px;
-  width: 30px; height: 30px;
-  display: grid; place-items: center;
-  border: 0; padding: 0;
-  border-radius: 50%;
-  background: none;
-  color: var(--texto-suave);
-  cursor: pointer;
-  transition: color .18s ease, background .18s ease;
+.detalle__caja {
+  overflow: hidden;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--u-mayor);
 }
-.pop__cerrar:hover { color: var(--texto-fuerte); background: rgba(0,0,0,.06); }
-.pop__cerrar svg { width: 16px; height: 16px; }
 
-/* ── Flechas laterales ── */
-.pop__flecha {
-  position: absolute;
-  top: 50%; transform: translateY(-50%);
-  width: 34px; height: 34px;
-  display: grid; place-items: center;
-  border: 0; padding: 0;
-  border-radius: 50%;
-  background: none;
-  color: var(--texto-apagado);
-  cursor: pointer;
-  transition: color .18s ease, background .18s ease;
+.detalle.abierto .detalle__caja {
+  padding: var(--u-mayor);
+  border-radius: 12px;
+  background: linear-gradient(160deg, #f0f0f0 0%, #e3e3e3 100%);
+  box-shadow: var(--hundido-boton);
 }
-.pop__flecha:hover { color: var(--texto-fuerte); background: rgba(0,0,0,.06); }
-.pop__flecha svg { width: 20px; height: 20px; }
-.pop__flecha--prev { left: 6px; }
-.pop__flecha--next { right: 6px; }
 
-/* ── Contenido ── */
-.pop__contenido { display: block; }
-
-@keyframes entraDer { from { opacity: 0; transform: translateX(26px); }
-                      to   { opacity: 1; transform: none; } }
-@keyframes entraIzq { from { opacity: 0; transform: translateX(-26px); }
-                      to   { opacity: 1; transform: none; } }
-
-.pop__contenido.entra-der { animation: entraDer .28s ease; }
-.pop__contenido.entra-izq { animation: entraIzq .28s ease; }
-
-.pop__icono {
+.detalle__icono {
   width: var(--u-mayor2); height: var(--u-mayor2);
-  margin: 0 auto var(--u-menor);
+  flex: none;
   display: grid; place-items: center;
   font-family: var(--display);
-  font-size: .8rem; font-weight: 700;
+  font-size: .75rem;
+  font-weight: 700;
   color: var(--texto-fuerte);
 }
-.pop__icono img { width: 100%; height: 100%; object-fit: contain; }
+.detalle__icono img { width: 100%; height: 100%; object-fit: contain; }
 
-.pop__titulo {
+.detalle__cuerpo { flex: 1; min-width: 0; }
+
+.detalle__titulo {
   font-family: var(--display);
   font-weight: 800;
-  font-size: 1.05rem;
-  letter-spacing: .07em;
+  font-size: 1rem;
+  letter-spacing: .06em;
   text-transform: uppercase;
   color: var(--texto-fuerte);
-  margin: 0 0 .35em;
+  margin: 0 0 .45em;
 }
 
-.pop__nivel {
-  display: flex; align-items: baseline; justify-content: center; gap: 5px;
-  font-family: var(--display);
-  color: var(--texto-fuerte);
-  margin-bottom: var(--u-menor);
-}
-.pop__num   { font-size: 2.3rem; font-weight: 800; line-height: 1; }
-.pop__total { font-size: .95rem; color: var(--texto-suave); }
-
-.pop__texto {
+.detalle__texto {
   font-size: .9rem;
   line-height: 1.55;
   color: var(--texto);
-  margin: 0 auto;
-  max-width: 42ch;
+  margin: 0;
 }
 
-/* ── Puntos de posición ── */
-.pop__puntos {
-  display: flex; justify-content: center; gap: 7px;
-  margin-top: var(--u);
+/* El nivel, en grande y a la derecha */
+.detalle__nivel {
+  flex: none;
+  display: flex; align-items: baseline; gap: 4px;
+  font-family: var(--display);
+  color: var(--texto-fuerte);
 }
-.pop__punto {
-  width: 7px; height: 7px;
-  border: 0; padding: 0;
-  border-radius: 50%;
-  background: #c0c0c0;
-  box-shadow: inset 1px 1px 2px rgba(0,0,0,.3);
-  cursor: pointer;
-  transition: background .2s ease, transform .2s ease;
-}
-.pop__punto--activo { background: var(--acento); transform: scale(1.35); }
+.detalle__num   { font-size: 2.4rem; font-weight: 800; line-height: 1; }
+.detalle__total { font-size: 1rem; color: var(--texto-suave); }
 
 @media (max-width: 720px) {
-  .detalle { padding: 12px; }
-  .pop { padding: var(--u-mayor) var(--u); }
-  .pop__flecha--prev { left: -2px; }
-  .pop__flecha--next { right: -2px; }
-  .pop__texto { font-size: .86rem; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pop__contenido.entra-der,
-  .pop__contenido.entra-izq { animation: none; }
+  .detalle__caja { flex-direction: column; text-align: center; gap: var(--u); }
+  .detalle.abierto .detalle__caja { padding: var(--u); }
+  .detalle__nivel { justify-content: center; }
 }
 
 /* ═══════════════════════════════════════════
