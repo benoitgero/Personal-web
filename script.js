@@ -2,29 +2,29 @@
    CONTENIDO — editá solo esta sección para actualizar el sitio
    ═══════════════════════════════════════════════════════════ */
 
-/* Rack de skills. nivel va de 0 a 5 (segmentos verdes encendidos).
-   Los niveles salieron de tu diseño; los nombres son mi lectura de
-   los iconos, ajustalos. En "logo" podés poner "assets/logos/x.svg"
-   y se muestra la imagen en vez de las iniciales. */
+/* Rack de skills.
+   nivel: 0 a 5, son los segmentos verdes encendidos.
+   logo:  ruta al SVG. Si ponés null, muestra el texto de "abrev".
+   El orden del array es el orden de izquierda a derecha en pantalla. */
 const SKILLS = [
-  { nombre: "Windows Server", abrev: "WIN",  nivel: 3, logo: null },
-  { nombre: "VMware",         abrev: "VM",   nivel: 3, logo: null },
-  { nombre: "JavaScript",     abrev: "JS",   nivel: 2, logo: null },
-  { nombre: "Linux",          abrev: "LNX",  nivel: 3, logo: null },
-  { nombre: "Azure",          abrev: "AZ",   nivel: 3, logo: null },
-  { nombre: "Microsoft 365",  abrev: "M365", nivel: 3, logo: null },
-  { nombre: "Docker",         abrev: "DOC",  nivel: 2, logo: null },
-  { nombre: "Python",         abrev: "PY",   nivel: 4, logo: null },
-  { nombre: "Proxmox",        abrev: "PVE",  nivel: 4, logo: null },
-  { nombre: "Cisco",          abrev: "CIS",  nivel: 4, logo: null },
+  { nombre: "HTML5",            abrev: "HTML", nivel: 3, logo: "assets/logos/html.svg" },
+  { nombre: "CSS3",             abrev: "CSS",  nivel: 3, logo: "assets/logos/css.svg" },
+  { nombre: "JavaScript",       abrev: "JS",   nivel: 2, logo: "assets/logos/js.svg" },
+  { nombre: "AWS",              abrev: "AWS",  nivel: 3, logo: "assets/logos/aws.svg" },
+  { nombre: "Azure",            abrev: "AZ",   nivel: 3, logo: "assets/logos/azure.svg" },
+  { nombre: "Figma",            abrev: "FIG",  nivel: 3, logo: "assets/logos/figma.svg" },
+  { nombre: "Linux",            abrev: "LNX",  nivel: 2, logo: "assets/logos/linux.svg" },
+  { nombre: "Microsoft Office", abrev: "MS",   nivel: 4, logo: "assets/logos/office.svg" },
+  { nombre: "AutoCAD",          abrev: "CAD",  nivel: 4, logo: "assets/logos/autocad.svg" },
+  { nombre: "SketchUp",         abrev: "SKP",  nivel: 4, logo: "assets/logos/sketchup.svg" },
 ];
 
 const HISTORIAS = [
   {
     id: "forge",
     tab: "Forge",
-    titulo: "Forge",
-    texto: "Contá acá de qué se trató esta experiencia: qué hiciste, con qué herramientas y qué aprendiste. Dos o tres párrafos alcanzan.",
+    titulo: "Fundación Forge",
+    texto: "Entré a Forge sin experiencia formal en tecnología y salí con una certificación internacional. Cursé AWS re/Start, el programa que la fundación desarrolla junto a Amazon Web Services: cuatro meses de clases diarias online, con laboratorios prácticos y ejercicios basados en escenarios reales. Linux, Python, redes, seguridad, bases de datos y los fundamentos de la nube de AWS. En paralelo hice Tu Futuro, la parte socioemocional del programa: comunicación, manejo del tiempo, armado de CV, entrevistas simuladas. Al principio me parecía lo secundario frente a lo técnico; con el tiempo entendí que era justamente lo que marca la diferencia cuando estás sentado frente a un entrevistador. El cierre fue el examen de AWS Certified Cloud Practitioner, que aprobé. Más allá del diploma, Forge me dejó algo más difícil de medir: la certeza de que podía dedicarme a esto.",
     imagen: "assets/historias/forge.jpg",
   },
   { id: "ces",    tab: "CES",    titulo: "CES",    texto: "Texto de la historia CES.",    imagen: "assets/historias/ces.jpg" },
@@ -89,8 +89,10 @@ function pintarRack() {
       `<span class="fader__seg${i < s.nivel ? " fader__seg--on" : ""}"></span>`
     ).join("");
 
+    // Si el archivo no existe, onerror cambia la imagen por el texto
     const logo = s.logo
-      ? `<img src="${s.logo}" alt="">`
+      ? `<img src="${s.logo}" alt=""
+             onerror="this.replaceWith('${s.abrev}')">`
       : s.abrev;
 
     return `
