@@ -101,14 +101,14 @@ const SEGMENTOS = 5; // segmentos por fader
 /* ── Rack de skills ── */
 function pintarRack() {
   const rack = document.getElementById("rack");
-  const detalle = document.getElementById("rack-detalle");
-  const caja = document.getElementById("rack-detalle-caja");
-  if (!rack) return;
+  const pop = document.getElementById("rack-detalle");
+  if (!rack || !pop) return;
 
   const icono = (s) => s.logo
     ? `<img src="${s.logo}" alt="" onerror="this.replaceWith('${s.abrev}')">`
     : s.abrev;
 
+  /* Los faders */
   rack.innerHTML = SKILLS.map((s, i) => {
     const segs = Array.from({ length: SEGMENTOS }, (_, n) =>
       `<span class="fader__seg${n < s.nivel ? " fader__seg--on" : ""}"></span>`
@@ -117,7 +117,7 @@ function pintarRack() {
     return `
       <li>
         <button class="fader" type="button" data-indice="${i}"
-                aria-expanded="false" aria-controls="rack-detalle">
+                aria-haspopup="dialog" aria-expanded="false">
           <span class="visually-hidden">${s.nombre}: nivel ${s.nivel} de ${SEGMENTOS}</span>
           <span class="fader__escala" aria-hidden="true">${segs}</span>
           <span class="fader__logo" aria-hidden="true">${icono(s)}</span>
@@ -125,55 +125,133 @@ function pintarRack() {
       </li>`;
   }).join("");
 
-  const faders = [...rack.querySelectorAll(".fader")];
-  let abierto = null;   // índice de la habilidad desplegada
+  /* El armazón del pop-up se crea una sola vez */
+  pop.innerHTML = `
+    <div class="pop">
+      <button class="pop__cerrar" type="button" aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor"
+                stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+      </button>
 
-  function mostrar(i) {
+      <button class="pop__flecha pop__flecha--prev" type="button" aria-label="Anterior">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor"
+                stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <div class="pop__contenido" id="pop-contenido"></div>
+
+      <button class="pop__flecha pop__flecha--next" type="button" aria-label="Siguiente">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M9 5l7 7-7 7" fill="none" stroke="currentColor"
+                stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <div class="pop__puntos" id="pop-puntos"></div>
+    </div>`;
+
+  const faders    = [...rack.querySelectorAll(".fader")];
+  const caja      = pop.querySelector(".pop");
+  const contenido = pop.querySelector("#pop-contenido");
+  const puntos    = pop.querySelector("#pop-puntos");
+  let indice = null;
+
+  puntos.innerHTML = SKILLS.map((s, i) =>
+    `<button class="pop__punto" type="button" data-indice="${i}"
+             aria-label="Ir a ${s.nombre}"></button>`).join("");
+
+  function pintarContenido(i, direccion) {
     const s = SKILLS[i];
 
-    caja.innerHTML = `
-      <div class="detalle__icono" aria-hidden="true">${icono(s)}</div>
-      <div class="detalle__cuerpo">
-        <h3 class="detalle__titulo">${s.nombre}</h3>
-        <p class="detalle__texto">${s.detalle}</p>
+    contenido.innerHTML = `
+      <div class="pop__icono" aria-hidden="true">${icono(s)}</div>
+      <h3 class="pop__titulo">${s.nombre}</h3>
+      <div class="pop__nivel">
+        <span class="pop__num">${s.nivel}</span><span class="pop__total">/ ${SEGMENTOS}</span>
       </div>
-      <div class="detalle__nivel">
-        <span class="detalle__num">${s.nivel}</span>
-        <span class="detalle__total">/ ${SEGMENTOS}</span>
-      </div>`;
+      <p class="pop__texto">${s.detalle}</p>`;
 
-    detalle.classList.add("abierto");
+    // Reinicia la animación de entrada, deslizando desde el lado correcto
+    contenido.classList.remove("entra-izq", "entra-der");
+    void contenido.offsetWidth;            // fuerza el reflow
+    if (direccion) contenido.classList.add(direccion > 0 ? "entra-der" : "entra-izq");
+
     faders.forEach((f, j) => {
       f.classList.toggle("fader--activo", j === i);
       f.setAttribute("aria-expanded", String(j === i));
     });
-    abierto = i;
+    [...puntos.children].forEach((p, j) =>
+      p.classList.toggle("pop__punto--activo", j === i));
+
+    indice = i;
+  }
+
+  function abrir(i) {
+    pop.hidden = false;
+    requestAnimationFrame(() => pop.classList.add("abierto"));
+    pintarContenido(i, 0);
+    pop.querySelector(".pop__cerrar").focus();
   }
 
   function cerrar() {
-    detalle.classList.remove("abierto");
+    pop.classList.remove("abierto");
     faders.forEach((f) => {
       f.classList.remove("fader--activo");
       f.setAttribute("aria-expanded", "false");
     });
-    abierto = null;
+    const volver = indice;
+    setTimeout(() => { pop.hidden = true; }, 260);   // espera el fundido
+    if (volver !== null) faders[volver].focus();
+    indice = null;
   }
 
-  faders.forEach((f) => {
-    f.addEventListener("click", () => {
-      const i = +f.dataset.indice;
-      // Tocar la que ya está abierta la cierra
-      if (abierto === i) cerrar(); else mostrar(i);
-    });
+  function mover(paso) {
+    if (indice === null) return;
+    const siguiente = (indice + paso + SKILLS.length) % SKILLS.length;
+    pintarContenido(siguiente, paso);
+  }
+
+  faders.forEach((f) =>
+    f.addEventListener("click", () => abrir(+f.dataset.indice)));
+
+  pop.querySelector(".pop__cerrar").addEventListener("click", cerrar);
+  pop.querySelector(".pop__flecha--prev").addEventListener("click", () => mover(-1));
+  pop.querySelector(".pop__flecha--next").addEventListener("click", () => mover(1));
+
+  puntos.addEventListener("click", (e) => {
+    const p = e.target.closest(".pop__punto");
+    if (!p) return;
+    const destino = +p.dataset.indice;
+    pintarContenido(destino, destino > indice ? 1 : -1);
   });
 
-  // Escape cierra la carta
+  // Tocar el fondo cierra
+  pop.addEventListener("click", (e) => { if (e.target === pop) cerrar(); });
+
+  // Teclado: flechas para navegar, Escape para salir
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && abierto !== null) {
-      faders[abierto].focus();
-      cerrar();
-    }
+    if (pop.hidden) return;
+    if (e.key === "Escape")     { e.preventDefault(); cerrar(); }
+    if (e.key === "ArrowLeft")  { e.preventDefault(); mover(-1); }
+    if (e.key === "ArrowRight") { e.preventDefault(); mover(1); }
   });
+
+  // Deslizar con el dedo
+  let inicioX = null;
+  caja.addEventListener("touchstart", (e) => {
+    inicioX = e.changedTouches[0].clientX;
+  }, { passive: true });
+
+  caja.addEventListener("touchend", (e) => {
+    if (inicioX === null) return;
+    const recorrido = e.changedTouches[0].clientX - inicioX;
+    if (Math.abs(recorrido) > 45) mover(recorrido < 0 ? 1 : -1);
+    inicioX = null;
+  }, { passive: true });
 }
 
 /* ── Tabs de historias ── */
