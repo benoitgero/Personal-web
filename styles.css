@@ -802,3 +802,50 @@ body {
   background-size: 400px 400px;
   background-attachment: scroll;
 }
+
+/* Panel de historias: imagen a sangre, pegada a los tres bordes */
+.panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 365px;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "titulo imagen"
+    "texto  imagen";
+  align-content: stretch;
+  gap: 0;
+  padding: 0;
+  min-height: 440px;
+}
+
+/* El padding se pasa al texto, no al contenedor */
+.panel .titulo {
+  grid-area: titulo;
+  padding: 26px 36px 0 48px;
+}
+
+.panel .parrafo {
+  grid-area: texto;
+  padding: 0 36px 30px 48px;
+}
+
+.panel__imagen {
+  grid-area: imagen;
+  width: 100%;
+  height: 100%;
+  align-self: stretch;
+  object-fit: cover;
+  object-position: center;
+  margin: 0;
+}
+
+@media (max-width: 1100px) {
+  .panel {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
+    grid-template-areas: "titulo" "texto" "imagen";
+    min-height: 0;
+  }
+  .panel .titulo  { padding: 24px 24px 0; }
+  .panel .parrafo { padding: 0 24px 24px; }
+  .panel__imagen  { height: 320px; }
+}
