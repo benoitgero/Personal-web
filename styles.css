@@ -801,6 +801,41 @@ body {
   background-attachment: scroll;
 }
 
+/* ═══ IMAGEN DE HISTORIAS — versión definitiva ═══ */
+
+.panel {
+  position: relative !important;
+  padding: 0 !important;
+  min-height: 460px !important;
+  overflow: hidden !important;
+}
+
+.panel .titulo  { padding: 28px 405px 0 48px !important; }
+.panel .parrafo { padding: 0 405px 32px 48px !important; }
+
 .panel__imagen {
-  height: 100%;
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: auto !important;
+  width: 365px !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  max-height: none !important;
+  max-width: none !important;
+  margin: 0 !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+@media (max-width: 1100px) {
+  .panel { min-height: 0 !important; }
+  .panel .titulo  { padding: 24px 24px 0 !important; }
+  .panel .parrafo { padding: 0 24px 24px !important; }
+  .panel__imagen {
+    position: static !important;
+    width: 100% !important;
+    height: 320px !important;
+  }
 }
