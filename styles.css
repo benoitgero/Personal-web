@@ -64,6 +64,7 @@
 
   /* ── Métrica ── */
   --ancho: 1380px;
+  --alto-barra: 80px;   /* alto real del header sticky */
   --radio: 8px;
   --gap: 16px;
   --gap-seccion: 48px;
@@ -451,22 +452,30 @@ main {
 /* ═══════════════════════════════════════════
    PANEL DE HISTORIAS
    ═══════════════════════════════════════════ */
+/* La imagen se ancla a los bordes con position absolute: así llena
+   la tarjeta entera sin depender de cómo se resuelvan las filas. */
 .panel {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 365px;
-  gap: 0 32px;
-  grid-template-areas:
-    "titulo imagen"
-    "texto  imagen";
-  align-content: start;
-  padding: 22px 0 22px 48px;
+  display: block;
+  position: relative;
+  padding: 0;
+  min-height: 460px;
+  overflow: hidden;
 }
-.panel .titulo  { grid-area: titulo; }
-.panel .parrafo { grid-area: texto; }
+
+/* El padding vive en el texto, que deja libre la franja derecha */
+.panel .titulo  { padding: 28px 405px 0 48px; margin-bottom: .5em; }
+.panel .parrafo { padding: 0 405px 32px 48px; }
 
 .panel__imagen {
-  grid-area: imagen;
-  width: 100%; height: 100%;
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 365px;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  object-fit: cover;
+  object-position: center;
 }
 
 /* ═══════════════════════════════════════════
@@ -642,12 +651,14 @@ main {
   .tab { width: auto; min-width: 130px; }
   .miniatura { width: 140px; height: 80px; }
 
-  .panel {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: "titulo" "texto" "imagen";
-    padding: 24px;
+  .panel { min-height: 0; }
+  .panel .titulo  { padding: 24px 24px 0; }
+  .panel .parrafo { padding: 0 24px 24px; }
+  .panel__imagen {
+    position: static;
+    width: 100%;
+    height: 320px;
   }
-  .panel__imagen { max-height: 380px; margin-top: 20px; }
 
   .proyecto { grid-template-columns: minmax(0, 1fr); }
   .proyecto__galeria { flex-direction: row; }
@@ -789,10 +800,19 @@ main {
   .nav { border-radius: 0; }
 }
 
-/* Separación exacta entre el header y la sección al saltar */
+/* Separación entre el header y la sección al saltar desde el menú.
+   Valor plano a propósito: un calc() con una variable indefinida hace
+   que el navegador descarte la declaración entera y quede en 0. */
 .seccion,
 #sobre-mi, #historias, #proyectos, #contacto {
-  scroll-margin-top: calc(var(--alto-barra) + 50.33px);
+  scroll-margin-top: 130px;
+}
+
+@media (max-width: 720px) {
+  .seccion,
+  #sobre-mi, #historias, #proyectos, #contacto {
+    scroll-margin-top: 118px;
+  }
 }
 
 body {
