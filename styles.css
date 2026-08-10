@@ -63,6 +63,16 @@
   --texto-fam: "Playfair Display", Georgia, serif;
 
   /* ── Métrica ── */
+  /* ── Escala áurea del rack ──
+     La unidad base es el alto del segmento (17.55px, viene de Figma).
+     De ahí salen los demás espaciados dividiendo o multiplicando por
+     φ = 1.618, así ningún hueco es arbitrario. */
+  --phi:       1.618;
+  --u:         17.55px;   /* base  = alto del segmento */
+  --u-menor:   10.85px;   /* u / φ */
+  --u-mayor:   28.40px;   /* u × φ */
+  --u-mayor2:  45.95px;   /* u × φ²  */
+
   --ancho: 1380px;
   --alto-barra: 80px;   /* alto real del header sticky */
   --radio: 8px;
@@ -318,14 +328,14 @@ main {
   list-style: none; margin: 0; padding: 0;
   display: flex; flex-wrap: wrap;
   justify-content: center;
-  gap: 14px;
+  gap: var(--u-mayor);          /* 28.40 — entre módulos */
 }
 
 /* Módulo: 52.33 × 209.7 · radio 8.39 · fill C5C5C5 */
 .fader {
   width: 52.33px;
   min-height: 209.7px;
-  padding: 12px 0 18px;
+  padding: var(--u) 0 var(--u);   /* 17.55 arriba y abajo */
   background: var(--modulo);
   border-radius: 8.39px;
   box-shadow: var(--relieve-boton);
@@ -333,7 +343,7 @@ main {
 }
 
 .fader__escala {
-  display: flex; flex-direction: column-reverse; gap: 11px;
+  display: flex; flex-direction: column-reverse; gap: var(--u-menor);
 }
 
 /* Segmento: 29.26 × 17.55 · radio 0.84 · fill C0C0C0 */
@@ -352,9 +362,9 @@ main {
 }
 
 .fader__logo {
-  width: 28px; height: 28px;
+  width: var(--u-mayor); height: var(--u-mayor);   /* 28.40 */
   display: grid; place-items: center;
-  margin-top: 14px;
+  margin-top: var(--u);                            /* 17.55 */
   font-family: var(--display);
   font-size: .6rem;
   font-weight: 700;
@@ -718,7 +728,9 @@ main {
   .about__marco { min-height: 0; height: 280px; }
   .about__cuerpo { padding: 22px 20px 28px; }
 
-  .rack { gap: 10px; }
+  /* En mobile la escala se mantiene, un escalón más abajo */
+  .rack { gap: var(--u); }
+  .fader__escala { gap: 6.7px; }   /* u / φ² */
 
   .formulario { grid-template-columns: minmax(0, 1fr); }
   .proyecto__galeria { flex-direction: column; }
