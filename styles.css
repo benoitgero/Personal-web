@@ -64,7 +64,6 @@
 
   /* ── Métrica ── */
   --ancho: 1380px;
-  --alto-barra: 80px;   /* alto real del header sticky */
   --radio: 8px;
   --gap: 16px;
   --gap-seccion: 48px;
@@ -79,13 +78,7 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  /* Patrón de iconos IT repetido sobre el gris base.
-     Es SVG, así que se ve nítido en cualquier pantalla. */
-  background-color: var(--fondo);
-  background-image: url("assets/fondo.svg");
-  background-repeat: repeat;
-  background-size: 640px 640px;
-  background-attachment: fixed;
+  background: var(--fondo);
   color: var(--texto);
   font-family: var(--texto-fam);
   font-size: 16px;
@@ -275,11 +268,6 @@ main {
 }
 
 .seccion { display: grid; gap: var(--gap); }
-
-/* El header sticky tapa la sección al saltar con el ancla.
-   scroll-margin-top frena el scroll antes: alto de la barra + el
-   mismo espacio que separa las tarjetas entre sí. */
-.seccion { scroll-margin-top: calc(var(--alto-barra) + var(--gap)); }
 
 .seccion--doble      { grid-template-columns: minmax(0, 41fr) minmax(0, 59fr); }
 .seccion--historias  { grid-template-columns: minmax(0, 1fr) 208px; }
@@ -669,7 +657,7 @@ main {
 }
 
 @media (max-width: 720px) {
-  :root { --gap-seccion: 32px; --alto-barra: 68px; }
+  :root { --gap-seccion: 32px; }
 
   .menu-btn { display: block; }
 
@@ -709,4 +697,100 @@ main {
     transition-duration: .01ms !important;
   }
   .revelar { opacity: 1; transform: none; }
+}
+
+/* ═══ NAVEGACIÓN ═══ */
+
+.nav {
+  display: flex;
+  align-items: center;
+  padding: 6px;
+  border-radius: 999px;
+  background: var(--superficie);
+  box-shadow: var(--hundido-boton);
+}
+
+.nav__lista {
+  display: flex;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav__enlace {
+  display: block;
+  padding: 11px 20px;
+  border-radius: 999px;
+  font-family: var(--display);
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  color: var(--texto-grabado);
+  text-shadow: var(--grabado);
+  transition: color .2s ease, background .2s ease, box-shadow .2s ease;
+}
+
+.nav__enlace:hover { color: #c4c4c4; }
+
+.nav__enlace[aria-current="page"] {
+  background: var(--acento);
+  color: #0e3f42;
+  text-shadow: 0 1px 0 rgba(255,255,255,.45);
+  box-shadow:
+     3px  3px 7px rgba(0,0,0,.32),
+    -2px -2px 6px rgba(255,255,255,.55);
+}
+
+/* ═══ FOOTER ═══ */
+
+.pie__acciones {
+  max-width: var(--ancho);
+  margin: 0 auto;
+  padding: 32px 24px 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.pie__cv {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 999px;
+  background: var(--acento);
+  color: #0e3f42;
+  text-decoration: none;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: .78rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  box-shadow: var(--relieve-boton);
+  transition: box-shadow .18s ease, transform .18s ease;
+}
+.pie__cv:hover { box-shadow: var(--hundido-boton); transform: translateY(1px); }
+.pie__cv svg { width: 18px; height: 18px; }
+
+.pie__redes {
+  display: flex;
+  justify-content: center;
+  gap: clamp(40px, 12vw, 140px);
+}
+
+@media (max-width: 720px) {
+  .nav__lista { flex-direction: column; gap: 8px; }
+  .nav__enlace { text-align: center; padding: 14px 18px; }
+  .nav { border-radius: 0; }
+}
+
+/* Separación exacta entre el header y la sección al saltar */
+.seccion,
+#sobre-mi, #historias, #proyectos, #contacto {
+  scroll-margin-top: calc(var(--alto-barra) + 50.33px);
 }
