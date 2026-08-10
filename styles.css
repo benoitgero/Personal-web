@@ -164,11 +164,14 @@ button { font: inherit; color: inherit; }
   text-decoration: none; margin-right: auto;
   /* El logo crece con el ancho disponible pero nunca pasa de 260px */
   width: clamp(150px, 24vw, 260px);
+  min-width: 150px;
+  flex: none;
 }
 
 .marca__logo {
   width: 100%;
   height: auto;
+  min-width: 150px;
   display: block;
   overflow: visible;   /* que la sombra no se recorte */
 }
