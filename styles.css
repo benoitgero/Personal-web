@@ -189,29 +189,47 @@ button { font: inherit; color: inherit; }
   overflow: visible;
 }
 
-.nav { display: flex; align-items: center; gap: 18px; }
-
-.nav__icono {
-  width: 56px; height: 56px; flex: none;
-  display: grid; place-items: center;
-  color: var(--texto-fuerte);
-  text-decoration: none;
-  border-radius: 12px;
-  background: var(--acento);
-  border: 1px solid rgba(0, 0, 0, .6);
-  box-shadow: var(--relieve-boton);
-  transition: box-shadow .18s ease, transform .18s ease;
+/* ── NAVEGACIÓN: canaleta hundida con las secciones grabadas ── */
+.nav {
+  display: flex;
+  padding: 6px;
+  border-radius: 999px;
+  background: var(--superficie);
+  box-shadow: var(--hundido-boton);
 }
-.nav__icono:hover { box-shadow: var(--hundido-boton); transform: translateY(1px); }
-.nav__icono svg { width: 26px; height: 26px; }
 
-.nav__icono--cv {
+.nav__lista {
+  display: flex; gap: 4px;
+  list-style: none; margin: 0; padding: 0;
+}
+
+.nav__enlace {
+  display: block;
+  padding: 11px 20px;
+  border-radius: 999px;
   font-family: var(--display);
-  font-weight: 800;
-  font-size: 1.05rem;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  color: var(--texto-grabado);
+  text-shadow: var(--grabado);
+  transition: color .2s ease, background .2s ease, box-shadow .2s ease;
 }
 
-.nav__texto { display: none; }   /* solo visible en el menú móvil */
+.nav__enlace:hover { color: #c4c4c4; }
+
+/* La sección activa emerge de la canaleta */
+.nav__enlace[aria-current="page"] {
+  background: var(--acento);
+  color: #0e3f42;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .45);
+  box-shadow:
+     3px  3px 7px rgba(0, 0, 0, .32),
+    -2px -2px 6px rgba(255, 255, 255, .55);
+}
 
 .menu-btn {
   display: none;
@@ -558,16 +576,39 @@ main {
   box-shadow: var(--relieve-xl);
 }
 
-.pie__redes {
+.pie__acciones {
   max-width: var(--ancho);
   margin: 0 auto;
-  padding: 36px 24px 56px;
+  padding: 32px 24px 56px;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 30px;
+}
+
+.pie__cv {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 28px;
+  border-radius: 999px;
+  background: var(--acento);
+  color: #0e3f42;
+  text-decoration: none;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: .78rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  box-shadow: var(--relieve-boton);
+  transition: box-shadow .18s ease, transform .18s ease;
+}
+.pie__cv:hover { box-shadow: var(--hundido-boton); transform: translateY(1px); }
+.pie__cv svg { width: 18px; height: 18px; }
+
+.pie__redes {
   display: flex; justify-content: center;
-  gap: clamp(48px, 18vw, 280px);
+  gap: clamp(40px, 12vw, 140px);
 }
 
 .red {
-  width: 36px; height: 36px;
+  width: 34px; height: 34px;
   color: var(--texto-suave);
   transition: color .18s ease, transform .18s ease;
 }
@@ -623,28 +664,15 @@ main {
   .nav {
     display: none;
     position: absolute; top: 100%; left: 0; right: 0;
-    flex-direction: column; align-items: stretch;
-    gap: 10px; padding: 18px 24px;
+    padding: 14px;
+    border-radius: 0;
     background: var(--superficie);
     box-shadow: var(--relieve-boton);
   }
-  .nav.abierto { display: flex; }
+  .nav.abierto { display: block; }
 
-  /* En el desplegable los iconos solos no alcanzan: mostramos el nombre */
-  .nav__icono {
-    width: auto; height: auto;
-    grid-auto-flow: column;
-    justify-content: start;
-    gap: 12px;
-    padding: 14px 18px;
-  }
-  .nav__texto {
-    display: block;
-    font-family: var(--display);
-    font-size: .85rem;
-    text-transform: uppercase;
-  }
-  .nav__icono--cv span[aria-hidden] { display: none; }
+  .nav__lista { flex-direction: column; gap: 8px; }
+  .nav__enlace { text-align: center; padding: 14px 18px; }
 
   .barra__interior { position: relative; padding: 10px 16px; min-height: 68px; }
 
