@@ -292,7 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
   montarProyectos();
   montarMenu();
   montarNavActiva();
-  montarRevelado();
+  //montarRevelado();
   montarFormulario();
 });
 
