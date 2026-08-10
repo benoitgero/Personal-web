@@ -789,11 +789,17 @@ main {
   .nav { border-radius: 0; }
 }
 
-/* La sección activa se hunde, igual que las pestañas de Stories */
-.nav__enlace[aria-current="page"] {
-  background: var(--superficie);
-  color: var(--texto-fuerte);
-  text-shadow: 1px 1px 1px rgba(255,255,255,.45);
-  box-shadow: var(--hundido-boton);
-  border-radius: 6px;
+/* ═══ DESFASE DE SCROLL ═══
+   El header sticky tapa la sección al saltar con el ancla.
+   scroll-margin-top frena el scroll antes: alto de la barra
+   + el mismo espacio que separa las tarjetas horizontalmente. */
+
+:root { --alto-barra: 80px; }
+
+.seccion {
+  scroll-margin-top: calc(var(--alto-barra) + var(--gap));
+}
+
+@media (max-width: 720px) {
+  :root { --alto-barra: 68px; }
 }
