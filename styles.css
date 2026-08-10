@@ -1,75 +1,68 @@
-/* ===== VERSION 3 — buscá "VERSION 3" para confirmar que este archivo cargó ===== */
-/* ═══════════════════════════════════════════
-   TOKENS — cambiá todo desde acá
-   ═══════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   VERSION 4 — buscá "VERSION 4" para confirmar que este archivo cargó
+   Sombras traducidas 1:1 desde Figma.
+   ═══════════════════════════════════════════════════════════════ */
+
 :root {
-  /* Superficies */
+  /* ── Superficies ── */
   --fondo:          #c4c4c4;
-  --superficie:     #a3a3a3;  /* barras, columnas laterales */
+  --superficie:     #a3a3a3;  /* barras y columnas laterales */
   --superficie-alt: #e5e5e5;  /* tarjetas claras */
-  --superficie-mod: #d6d3d1;  /* módulos del rack */
+  --modulo:         #C5C5C5;  /* cuerpo de los faders */
+  --hueco:          #C0C0C0;  /* segmento apagado */
+  --led:            #00FF1A;  /* segmento encendido */
 
-  /* Acentos */
-  --acento:         #5eead4;  /* teal */
+  /* ── Acentos ── */
+  --acento:         #3fd0d6;
   --acento-oscuro:  #115e59;
-  --led:            #22c55e;  /* segmentos encendidos */
 
-  /* Texto */
+  /* ── Texto ── */
   --texto:          #3f3f46;
   --texto-fuerte:   #404040;
   --texto-suave:    #78716c;
-  --texto-apagado:  #a1a1aa;
+  --texto-grabado:  #b4b4b4;
   --texto-claro:    #ffffff;
 
-  /* Relieve (neumorfismo) */
-  --sombra-oscura:  rgba(0, 0, 0, .40);
-  --sombra-media:   rgba(0, 0, 0, .30);
-  --sombra-clara:   rgba(255, 255, 255, .70);
-  --sombra-tenue:   rgba(255, 255, 255, .40);
+  /* ═══ EL PATRÓN DE 4 CAPAS ═══
+     1. +X +Y blur grande, negro 40%  → sombra ambiente
+     2. +X +Y blur chico,  negro 30%  → contacto
+     3. −X −Y blur chico,  blanco 70% → filo iluminado
+     4. −X −Y blur grande, blanco 40% → rebote de luz
+     En relieve van como drop shadow; hundido, las mismas con inset. */
 
+  /* Piezas grandes: tarjetas y barras */
   --relieve-xl:
-     30px  30px 130px var(--sombra-oscura),
-      9px   9px  36px var(--sombra-media),
-     -9px  -9px  41px var(--sombra-clara),
-    -30px -30px  86px var(--sombra-tenue);
+     30.74px  30.74px 131.74px rgba(0, 0, 0, .40),
+      8.78px   8.78px  36.45px rgba(0, 0, 0, .30),
+     -8.78px  -8.78px  41.28px rgba(255, 255, 255, .70),
+    -30.74px -30.74px  86.51px rgba(255, 255, 255, .40);
 
-  --relieve-md:
-      5px   5px  23px var(--sombra-oscura),
-      2px   2px   6px var(--sombra-media),
-     -1px  -1px   7px var(--sombra-clara),
-     -4px  -4px  26px var(--sombra-tenue);
-
-  --hundido-md: inset
-      5px   5px  21px var(--sombra-oscura), inset
-      1px   1px   6px var(--sombra-media), inset
-     -1px  -1px   7px var(--sombra-clara), inset
-     -5px  -5px  14px var(--sombra-tenue);
-
-  /* Relieve corto y definido, para piezas chicas como los botones */
+  /* Piezas chicas: módulos, botones, pestañas */
   --relieve-boton:
-      4px   4px   8px rgba(0, 0, 0, .30),
-     -3px  -3px   7px rgba(255, 255, 255, .45);
+      5.46px   5.46px  23.41px rgba(0, 0, 0, .40),
+      1.56px   1.56px   6.48px rgba(0, 0, 0, .30),
+     -0.92px  -0.92px   7.33px rgba(255, 255, 255, .70),
+     -4.14px  -4.14px  26.32px rgba(255, 255, 255, .40);
 
   --hundido-boton: inset
-      4px   4px   8px rgba(0, 0, 0, .32), inset
-     -3px  -3px   7px rgba(255, 255, 255, .45);
+      5px      5px     21.42px rgba(0, 0, 0, .40), inset
+      1.43px   1.43px   5.93px rgba(0, 0, 0, .30), inset
+     -1.43px  -1.43px   6.71px rgba(255, 255, 255, .70), inset
+     -5px     -5px     14.07px rgba(255, 255, 255, .40);
 
-  /* Texto grabado — traducción de las 4 inner shadows de Figma.
-     CSS no tiene sombra interior en texto, así que se invierte el color
-     manteniendo posición y blur: interior claro = exterior oscuro. */
-  --grabado-figma:
+  /* Texto grabado: CSS no tiene sombra interior en texto, así que se
+     invierte el color manteniendo posición y blur de las inner shadows. */
+  --grabado:
      -0.59px -0.59px 3.77px rgba(0, 0, 0, .40),
      -0.13px -0.13px 1.05px rgba(0, 0, 0, .70),
       1.05px  1.05px 0.93px rgba(255, 255, 255, .30),
       3.15px  3.15px 3.35px rgba(255, 255, 255, .40);
 
-  --texto-grabado: #b4b4b4;   /* el fill exacto de tu Figma */
-
-  /* Tipografía */
-  --display: "Inknut Antiqua", Georgia, serif;
+  /* ── Tipografía ── */
+  --display:   "Inknut Antiqua", Georgia, serif;
   --texto-fam: "Playfair Display", Georgia, serif;
 
-  /* Métrica */
+  /* ── Métrica ── */
   --ancho: 1380px;
   --radio: 8px;
   --gap: 16px;
@@ -95,8 +88,7 @@ body {
 
 img { max-width: 100%; display: block; }
 
-/* Ninguna imagen se estira: si el archivo no coincide con el hueco,
-   se recorta desde el centro. Aplica a todas las fotos del sitio. */
+/* Ninguna imagen se estira: si no coincide con el hueco, se recorta */
 .about__foto,
 .panel__imagen,
 .banda__imagen,
@@ -153,7 +145,7 @@ button { font: inherit; color: inherit; }
   letter-spacing: .14em;
   margin: 0;
   color: var(--texto-grabado);
-  text-shadow: var(--grabado-figma);
+  text-shadow: var(--grabado);
 }
 
 .parrafo {
@@ -184,7 +176,6 @@ button { font: inherit; color: inherit; }
 .marca {
   display: flex; align-items: center;
   text-decoration: none; margin-right: auto;
-  /* El logo crece con el ancho disponible pero nunca pasa de 260px */
   width: clamp(150px, 24vw, 260px);
   min-width: 150px;
   flex: none;
@@ -195,7 +186,7 @@ button { font: inherit; color: inherit; }
   height: auto;
   min-width: 150px;
   display: block;
-  overflow: visible;   /* que la sombra no se recorte */
+  overflow: visible;
 }
 
 .nav { display: flex; align-items: center; gap: 18px; }
@@ -208,10 +199,10 @@ button { font: inherit; color: inherit; }
   border-radius: 12px;
   background: var(--acento);
   border: 1px solid rgba(0, 0, 0, .6);
-  box-shadow: var(--relieve-md);
+  box-shadow: var(--relieve-boton);
   transition: box-shadow .18s ease, transform .18s ease;
 }
-.nav__icono:hover { box-shadow: var(--hundido-md); transform: translateY(1px); }
+.nav__icono:hover { box-shadow: var(--hundido-boton); transform: translateY(1px); }
 .nav__icono svg { width: 26px; height: 26px; }
 
 .nav__icono--cv {
@@ -220,8 +211,7 @@ button { font: inherit; color: inherit; }
   font-size: 1.05rem;
 }
 
-/* El nombre solo se ve en el menú móvil */
-.nav__texto { display: none; }
+.nav__texto { display: none; }   /* solo visible en el menú móvil */
 
 .menu-btn {
   display: none;
@@ -229,7 +219,7 @@ button { font: inherit; color: inherit; }
   background: var(--acento);
   border: 1px solid rgba(0, 0, 0, .6);
   border-radius: 12px;
-  box-shadow: var(--relieve-md);
+  box-shadow: var(--relieve-boton);
   cursor: pointer;
   position: relative;
 }
@@ -271,36 +261,34 @@ main {
 .tarjeta--about {
   display: grid;
   grid-template-columns: 208px minmax(0, 1fr);
-  align-items: stretch;   /* la columna de la foto llega de borde a borde */
+  align-items: stretch;
 }
 
 .about__marco {
   background: var(--superficie);
   overflow: hidden;
-  min-height: 288px;      /* alto mínimo si el texto es corto */
+  min-height: 288px;
 }
 
-/* La foto llena todo el bloque. Al recortar desde el centro puede
-   cortarte la cabeza: ajustá object-position si pasa. */
+/* La foto llena el bloque entero. Si te corta la cabeza, ajustá
+   object-position: probá "center 25%" para subir el encuadre. */
 .about__foto {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;   /* probá "center 30%" para subir el encuadre */
+  object-position: center;
 }
 
 .about__cuerpo { padding: 24px 28px; }
 
 /* ═══════════════════════════════════════════
-   RACK DE SKILLS  (el elemento firma)
+   RACK DE SKILLS
    ═══════════════════════════════════════════ */
 .tarjeta--rack {
-  background: linear-gradient(to bottom, var(--superficie), var(--superficie-alt));
+  background: linear-gradient(180deg, #dedede 0%, #efefef 100%);
   box-shadow:
-    inset  50px  50px 214px var(--sombra-clara),
-    inset  14px  14px  59px var(--sombra-clara),
-    inset -14px -14px  67px var(--sombra-clara),
-    inset -50px -50px 140px var(--sombra-tenue);
+    inset  14.30px  14.30px 59.34px rgba(255, 255, 255, .70),
+    inset -14.30px -14.30px 67.20px rgba(255, 255, 255, .70);
   display: grid; place-items: center;
   padding: 28px 20px;
 }
@@ -309,42 +297,48 @@ main {
   list-style: none; margin: 0; padding: 0;
   display: flex; flex-wrap: wrap;
   justify-content: center;
-  gap: 16px;
+  gap: 14px;
 }
 
+/* Módulo: 52.33 × 209.7 · radio 8.39 · fill C5C5C5 */
 .fader {
-  width: 56px;
-  padding: 12px 0;
-  background: var(--superficie-mod);
-  border-radius: 10px;
-  box-shadow: var(--relieve-md);
-  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  width: 52.33px;
+  min-height: 209.7px;
+  padding: 12px 0 18px;
+  background: var(--modulo);
+  border-radius: 8.39px;
+  box-shadow: var(--relieve-boton);
+  display: flex; flex-direction: column; align-items: center;
 }
 
 .fader__escala {
-  display: flex; flex-direction: column-reverse; gap: 12px;
+  display: flex; flex-direction: column-reverse; gap: 11px;
 }
 
+/* Segmento: 29.26 × 17.55 · radio 0.84 · fill C0C0C0 */
 .fader__seg {
-  width: 28px; height: 16px;
-  border-radius: 2px;
-  background: var(--superficie-mod);
-  box-shadow: var(--hundido-md);
+  width: 29.26px;
+  height: 17.55px;
+  border-radius: 0.84px;
+  background: var(--hueco);
+  box-shadow: var(--hundido-boton);
 }
+
+/* Encendido: mismas 4 sombras, solo cambia el fill */
 .fader__seg--on {
   background: var(--led);
-  box-shadow: var(--hundido-md), 0 0 6px rgba(34, 197, 94, .55);
+  box-shadow: var(--hundido-boton);
 }
 
 .fader__logo {
-  width: 30px; height: 30px;
+  width: 28px; height: 28px;
   display: grid; place-items: center;
-  margin-top: 4px;
+  margin-top: 14px;
   font-family: var(--display);
-  font-size: .62rem;
+  font-size: .6rem;
   font-weight: 700;
   color: var(--texto-fuerte);
-  background: #f5f5f4;
+  background: transparent;
   border-radius: 4px;
   overflow: hidden;
 }
@@ -356,7 +350,6 @@ main {
 .columna {
   background: var(--superficie);
   display: flex; flex-direction: column;
-  /* Filo apenas visible que despega el panel del fondo */
   outline: 1px solid rgba(0, 0, 0, .10);
   outline-offset: -1px;
 }
@@ -366,11 +359,10 @@ main {
   padding: 16px 14px 14px;
   text-align: center;
   position: relative; z-index: 1;
-  /* Ranura horizontal que separa el título de los botones:
-     línea oscura arriba, línea de luz abajo */
+  /* Ranura: línea oscura arriba, línea de luz abajo */
   box-shadow:
     inset 0 -2px 2px -1px rgba(0, 0, 0, .28),
-          0  1px 0      rgba(255, 255, 255, .40);
+          0  1px 0       rgba(255, 255, 255, .40);
 }
 
 .columna__cuerpo {
@@ -394,14 +386,13 @@ main {
   letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--texto-grabado);
-  text-shadow: var(--grabado-figma);
+  text-shadow: var(--grabado);
   cursor: pointer;
   transition: box-shadow .2s ease, color .2s ease, text-shadow .2s ease;
 }
-
 .tab:hover { color: #a8a8a8; }
 
-/* El activo se hunde y su texto sube: pasa a ser oscuro y sólido */
+/* El activo se hunde y su texto sube a oscuro sólido */
 .tab[aria-selected="true"] {
   box-shadow: var(--hundido-boton);
   color: var(--texto-fuerte);
@@ -415,13 +406,13 @@ main {
   width: 160px; height: 90px;
   padding: 0; border: 0;
   border-radius: 3px;
-  box-shadow: var(--relieve-md);
+  box-shadow: var(--relieve-boton);
   cursor: pointer;
   position: relative;
   overflow: hidden;
   background: var(--superficie);
 }
-.miniatura img { width: 100%; height: 100%; object-fit: cover; }
+.miniatura img { width: 100%; height: 100%; }
 
 .miniatura__etiqueta {
   position: absolute; inset: auto 0 0 0;
@@ -437,7 +428,7 @@ main {
 .miniatura:hover .miniatura__etiqueta,
 .miniatura:focus-visible .miniatura__etiqueta,
 .miniatura[aria-selected="true"] .miniatura__etiqueta { opacity: 1; }
-.miniatura[aria-selected="true"] { box-shadow: var(--hundido-md); }
+.miniatura[aria-selected="true"] { box-shadow: var(--hundido-boton); }
 
 /* ═══════════════════════════════════════════
    PANEL DE HISTORIAS
@@ -452,13 +443,12 @@ main {
   align-content: start;
   padding: 22px 0 22px 48px;
 }
-.panel .titulo { grid-area: titulo; }
+.panel .titulo  { grid-area: titulo; }
 .panel .parrafo { grid-area: texto; }
 
 .panel__imagen {
   grid-area: imagen;
   width: 100%; height: 100%;
-  object-fit: cover;
 }
 
 /* ═══════════════════════════════════════════
@@ -470,7 +460,7 @@ main {
 }
 
 .proyecto__galeria { display: flex; flex-direction: column; }
-.proyecto__galeria img { width: 100%; flex: 1; object-fit: cover; min-height: 0; }
+.proyecto__galeria img { width: 100%; flex: 1; min-height: 0; }
 
 .proyecto__detalle { padding: 30px 32px; }
 
@@ -480,7 +470,7 @@ main {
   aspect-ratio: 16 / 9;
   background: #000;
   border-radius: 4px;
-  box-shadow: var(--relieve-md);
+  box-shadow: var(--relieve-boton);
 }
 
 /* ═══════════════════════════════════════════
@@ -491,7 +481,6 @@ main {
 .banda__imagen {
   width: 100%;
   height: clamp(220px, 26vw, 384px);
-  object-fit: cover;
   border-radius: var(--radio);
   box-shadow: var(--relieve-xl);
 }
@@ -531,7 +520,7 @@ main {
   border: 0;
   border-radius: 4px;
   background: var(--superficie-alt);
-  box-shadow: var(--hundido-md);
+  box-shadow: var(--hundido-boton);
 }
 .campo__input--area { resize: vertical; min-height: 96px; }
 
@@ -547,11 +536,11 @@ main {
   font-size: .85rem;
   text-transform: uppercase;
   color: var(--texto-fuerte);
-  box-shadow: var(--relieve-md);
+  box-shadow: var(--relieve-boton);
   cursor: pointer;
   transition: box-shadow .18s ease, transform .18s ease;
 }
-.boton:hover { box-shadow: var(--hundido-md); transform: translateY(1px); }
+.boton:hover { box-shadow: var(--hundido-boton); transform: translateY(1px); }
 
 .formulario__estado {
   grid-column: 1 / -1;
@@ -602,7 +591,6 @@ main {
   .seccion--historias,
   .seccion--proyectos { grid-template-columns: minmax(0, 1fr); }
 
-  /* En mobile la columna de tabs va arriba del panel */
   .seccion--historias .columna { order: -1; }
 
   .columna__cuerpo {
@@ -638,11 +626,11 @@ main {
     flex-direction: column; align-items: stretch;
     gap: 10px; padding: 18px 24px;
     background: var(--superficie);
-    box-shadow: var(--relieve-md);
+    box-shadow: var(--relieve-boton);
   }
   .nav.abierto { display: flex; }
 
-  /* En el menú desplegable los iconos solos no alcanzan: mostramos el nombre */
+  /* En el desplegable los iconos solos no alcanzan: mostramos el nombre */
   .nav__icono {
     width: auto; height: auto;
     grid-auto-flow: column;
@@ -666,9 +654,7 @@ main {
   .about__marco { min-height: 0; height: 280px; }
   .about__cuerpo { padding: 22px 20px 28px; }
 
-  .rack { gap: 12px; }
-  .fader { width: 48px; }
-  .fader__seg { width: 24px; height: 13px; }
+  .rack { gap: 10px; }
 
   .formulario { grid-template-columns: minmax(0, 1fr); }
   .proyecto__galeria { flex-direction: column; }
