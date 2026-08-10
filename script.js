@@ -295,3 +295,19 @@ document.addEventListener("DOMContentLoaded", () => {
   montarRevelado();
   montarFormulario();
 });
+
+/* ══ Cuánto espacio dejar entre el header y la sección ══ */
+const ESPACIO = 50;   // ← cambiá SOLO este número
+
+document.querySelectorAll('.nav__enlace').forEach((enlace) => {
+  enlace.addEventListener('click', (e) => {
+    const destino = document.querySelector(enlace.getAttribute('href'));
+    if (!destino) return;
+    e.preventDefault();
+
+    const alturaBarra = document.querySelector('.barra').offsetHeight;
+    const y = destino.getBoundingClientRect().top + window.scrollY - alturaBarra - ESPACIO;
+
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  });
+});
