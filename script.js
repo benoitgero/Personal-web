@@ -230,7 +230,7 @@ function montarMenu() {
   });
 
   nav.addEventListener("click", (e) => {
-    if (e.target.matches("a")) {
+    if (e.target.closest("a")) {   // closest tolera que toques dentro del enlace
       nav.classList.remove("abierto");
       btn.setAttribute("aria-expanded", "false");
     }
