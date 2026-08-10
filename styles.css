@@ -232,20 +232,22 @@ button { font: inherit; color: inherit; }
     -2px -2px 6px rgba(255, 255, 255, .55);
 }
 
+/* Botón hamburguesa: solo las tres líneas, sin fondo ni marco */
 .menu-btn {
   display: none;
-  width: 48px; height: 48px;
-  background: var(--acento);
-  border: 1px solid rgba(0, 0, 0, .6);
-  border-radius: 12px;
-  box-shadow: var(--relieve-boton);
+  width: 44px; height: 44px;
+  background: none;
+  border: 0;
+  padding: 0;
+  box-shadow: none;
   cursor: pointer;
   position: relative;
 }
 .menu-btn__barra,
 .menu-btn__barra::before,
 .menu-btn__barra::after {
-  position: absolute; left: 50%; width: 22px; height: 2px;
+  position: absolute; left: 50%; width: 24px; height: 2px;
+  border-radius: 2px;
   background: var(--texto-fuerte); transform: translateX(-50%);
   transition: transform .2s ease, opacity .2s ease;
 }
