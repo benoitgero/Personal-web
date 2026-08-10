@@ -44,6 +44,21 @@
      -1px  -1px   7px var(--sombra-clara), inset
      -5px  -5px  14px var(--sombra-tenue);
 
+  /* Relieve corto y definido, para piezas chicas como los botones */
+  --relieve-boton:
+      4px   4px   8px rgba(0, 0, 0, .30),
+     -3px  -3px   7px rgba(255, 255, 255, .45);
+
+  --hundido-boton: inset
+      4px   4px   8px rgba(0, 0, 0, .32), inset
+     -3px  -3px   7px rgba(255, 255, 255, .45);
+
+  /* Texto grabado: se ve como tallado en el material.
+     La sombra oscura va arriba-izquierda y la luz abajo-derecha. */
+  --grabado:
+     -1px  -1px  1px rgba(0, 0, 0, .45),
+      1px   1px  1px rgba(255, 255, 255, .55);
+
   /* Tipografía */
   --display: "Inknut Antiqua", Georgia, serif;
   --texto-fam: "Playfair Display", Georgia, serif;
@@ -128,10 +143,14 @@ button { font: inherit; color: inherit; }
 .rotulo {
   font-family: var(--display);
   font-weight: 800;
-  font-size: clamp(1.2rem, 2vw, 1.75rem);
-  color: var(--texto-apagado);
+  font-size: clamp(1.1rem, 1.8vw, 1.45rem);
+  letter-spacing: .14em;
   margin: 0;
-  text-shadow: 1px 1px 2px var(--sombra-media);
+  /* Mismo truco de grabado que los botones, un poco más marcado */
+  color: var(--superficie);
+  text-shadow:
+    -1px -1px 1px rgba(0, 0, 0, .50),
+     1px  1px 1px rgba(255, 255, 255, .60);
 }
 
 .parrafo {
@@ -351,45 +370,65 @@ main {
 .columna {
   background: var(--superficie);
   display: flex; flex-direction: column;
+  /* Filo apenas visible que despega el panel del fondo */
+  outline: 1px solid rgba(0, 0, 0, .10);
+  outline-offset: -1px;
 }
 
 .columna__cabecera {
   background: var(--superficie);
-  box-shadow: var(--relieve-md);
-  padding: 14px 16px;
+  padding: 16px 14px 14px;
+  text-align: center;
   position: relative; z-index: 1;
+  /* Ranura horizontal que separa el título de los botones:
+     línea oscura arriba, línea de luz abajo */
+  box-shadow:
+    inset 0 -2px 2px -1px rgba(0, 0, 0, .28),
+          0  1px 0      rgba(255, 255, 255, .40);
 }
 
 .columna__cuerpo {
   flex: 1;
   display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 22px;
-  padding: 24px 12px;
+  align-items: stretch; justify-content: center;
+  gap: 16px;
+  padding: 20px 16px;
 }
 
 .tab {
-  width: 160px;
-  padding: 10px 8px;
+  width: 100%;
+  padding: 14px 8px;
   border: 0;
-  border-radius: 3px;
+  border-radius: 6px;
   background: var(--superficie);
-  box-shadow: var(--relieve-md);
+  box-shadow: var(--relieve-boton);
   font-family: var(--display);
   font-weight: 800;
-  font-size: .95rem;
-  color: var(--texto-apagado);
+  font-size: .82rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  /* El texto es del mismo color que el fondo: solo se lee por la sombra,
+     que es justo lo que le da el aspecto de grabado a cincel. */
+  color: var(--superficie);
+  text-shadow: var(--grabado);
   cursor: pointer;
-  transition: box-shadow .18s ease, color .18s ease;
+  transition: box-shadow .2s ease, color .2s ease, text-shadow .2s ease;
 }
-.tab:hover { color: var(--texto); }
+
+.tab:hover {
+  color: #9d9d9d;
+  text-shadow: -1px -1px 1px rgba(0, 0, 0, .5), 1px 1px 1px rgba(255, 255, 255, .6);
+}
+
+/* El activo se hunde y su texto sube: pasa a ser oscuro y sólido */
 .tab[aria-selected="true"] {
-  box-shadow: var(--hundido-md);
-  color: var(--texto-suave);
+  box-shadow: var(--hundido-boton);
+  color: var(--texto-fuerte);
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, .45);
 }
 
 /* Miniaturas de proyectos */
-.columna__cuerpo--miniaturas { gap: 26px; }
+.columna__cuerpo--miniaturas { gap: 22px; align-items: center; }
 
 .miniatura {
   width: 160px; height: 90px;
@@ -587,9 +626,10 @@ main {
 
   .columna__cuerpo {
     flex-direction: row; flex-wrap: wrap;
+    align-items: center; justify-content: center;
     gap: 14px; padding: 18px;
   }
-  .tab, .miniatura { width: auto; min-width: 120px; }
+  .tab { width: auto; min-width: 130px; }
   .miniatura { width: 140px; height: 80px; }
 
   .panel {
