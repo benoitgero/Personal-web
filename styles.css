@@ -73,6 +73,18 @@ body {
 }
 
 img { max-width: 100%; display: block; }
+
+/* Ninguna imagen se estira: si el archivo no coincide con el hueco,
+   se recorta desde el centro. Aplica a todas las fotos del sitio. */
+.about__foto,
+.panel__imagen,
+.banda__imagen,
+.miniatura img,
+.proyecto__galeria img {
+  object-fit: cover;
+  object-position: center;
+}
+
 button { font: inherit; color: inherit; }
 
 .visually-hidden {
@@ -256,8 +268,9 @@ main {
 }
 
 .about__hueco {
-  width: 100%; aspect-ratio: 1;
+  width: 100%;
   max-width: 240px;
+  aspect-ratio: 1;          /* el hueco siempre es cuadrado */
   border-radius: 50%;
   background: var(--superficie);
   box-shadow:
@@ -268,10 +281,15 @@ main {
   display: grid; place-items: center;
 }
 
+/* La foto ocupa el 86% del hueco en ancho Y alto, así que siempre es
+   un cuadrado perfecto sin importar las dimensiones del archivo.
+   object-fit: cover recorta el sobrante en vez de estirar la imagen. */
 .about__foto {
-  width: 86%; aspect-ratio: 1;
+  width: 86%;
+  height: 86%;
   border-radius: 50%;
   object-fit: cover;
+  object-position: center;  /* cambiá a "center top" si te corta la cabeza */
 }
 
 .about__cuerpo { padding: 24px 28px; }
