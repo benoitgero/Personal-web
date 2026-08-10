@@ -801,4 +801,6 @@ body {
   background-attachment: scroll;
 }
 
-
+.panel__imagen {
+  height: 100%;
+}
