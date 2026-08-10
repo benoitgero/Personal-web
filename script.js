@@ -7,16 +7,35 @@
    logo:  ruta al SVG. Si ponés null, muestra el texto de "abrev".
    El orden del array es el orden de izquierda a derecha en pantalla. */
 const SKILLS = [
-  { nombre: "HTML5",            abrev: "HTML", nivel: 3, logo: "assets/logos/html.svg" },
-  { nombre: "CSS3",             abrev: "CSS",  nivel: 3, logo: "assets/logos/css.svg" },
-  { nombre: "JavaScript",       abrev: "JS",   nivel: 2, logo: "assets/logos/js.svg" },
-  { nombre: "AWS",              abrev: "AWS",  nivel: 3, logo: "assets/logos/aws.svg" },
-  { nombre: "Azure",            abrev: "AZ",   nivel: 3, logo: "assets/logos/azure.svg" },
-  { nombre: "Figma",            abrev: "FIG",  nivel: 3, logo: "assets/logos/figma.svg" },
-  { nombre: "Linux",            abrev: "LNX",  nivel: 2, logo: "assets/logos/linux.svg" },
-  { nombre: "Microsoft Office", abrev: "MS",   nivel: 4, logo: "assets/logos/office.svg" },
-  { nombre: "AutoCAD",          abrev: "CAD",  nivel: 4, logo: "assets/logos/autocad.svg" },
-  { nombre: "SketchUp",         abrev: "SKP",  nivel: 4, logo: "assets/logos/sketchup.svg" },
+  { nombre: "HTML5", abrev: "HTML", nivel: 3, logo: "assets/logos/html.svg",
+    detalle: "Explicá acá por qué te pusiste este nivel: qué construiste, dónde lo usaste y qué te falta para el siguiente escalón." },
+
+  { nombre: "CSS3", abrev: "CSS", nivel: 3, logo: "assets/logos/css.svg",
+    detalle: "Texto sobre tu nivel en CSS." },
+
+  { nombre: "JavaScript", abrev: "JS", nivel: 2, logo: "assets/logos/js.svg",
+    detalle: "Texto sobre tu nivel en JavaScript." },
+
+  { nombre: "AWS", abrev: "AWS", nivel: 3, logo: "assets/logos/aws.svg",
+    detalle: "Certificación AWS Certified Cloud Practitioner obtenida tras el programa re/Start de Fundación Forge. Manejo los servicios fundamentales y el modelo de responsabilidad compartida." },
+
+  { nombre: "Azure", abrev: "AZ", nivel: 3, logo: "assets/logos/azure.svg",
+    detalle: "Texto sobre tu nivel en Azure." },
+
+  { nombre: "Figma", abrev: "FIG", nivel: 3, logo: "assets/logos/figma.svg",
+    detalle: "Texto sobre tu nivel en Figma." },
+
+  { nombre: "Linux", abrev: "LNX", nivel: 2, logo: "assets/logos/linux.svg",
+    detalle: "Texto sobre tu nivel en Linux." },
+
+  { nombre: "Microsoft Office", abrev: "MS", nivel: 4, logo: "assets/logos/office.svg",
+    detalle: "Texto sobre tu nivel en Office." },
+
+  { nombre: "AutoCAD", abrev: "CAD", nivel: 4, logo: "assets/logos/autocad.svg",
+    detalle: "Texto sobre tu nivel en AutoCAD." },
+
+  { nombre: "SketchUp", abrev: "SKP", nivel: 4, logo: "assets/logos/sketchup.svg",
+    detalle: "Texto sobre tu nivel en SketchUp." },
 ];
 
 const HISTORIAS = [
@@ -82,26 +101,79 @@ const SEGMENTOS = 5; // segmentos por fader
 /* ── Rack de skills ── */
 function pintarRack() {
   const rack = document.getElementById("rack");
+  const detalle = document.getElementById("rack-detalle");
+  const caja = document.getElementById("rack-detalle-caja");
   if (!rack) return;
 
-  rack.innerHTML = SKILLS.map((s) => {
-    const segs = Array.from({ length: SEGMENTOS }, (_, i) =>
-      `<span class="fader__seg${i < s.nivel ? " fader__seg--on" : ""}"></span>`
+  const icono = (s) => s.logo
+    ? `<img src="${s.logo}" alt="" onerror="this.replaceWith('${s.abrev}')">`
+    : s.abrev;
+
+  rack.innerHTML = SKILLS.map((s, i) => {
+    const segs = Array.from({ length: SEGMENTOS }, (_, n) =>
+      `<span class="fader__seg${n < s.nivel ? " fader__seg--on" : ""}"></span>`
     ).join("");
 
-    // Si el archivo no existe, onerror cambia la imagen por el texto
-    const logo = s.logo
-      ? `<img src="${s.logo}" alt=""
-             onerror="this.replaceWith('${s.abrev}')">`
-      : s.abrev;
-
     return `
-      <li class="fader" title="${s.nombre}: ${s.nivel} de ${SEGMENTOS}">
-        <span class="visually-hidden">${s.nombre}: nivel ${s.nivel} de ${SEGMENTOS}</span>
-        <span class="fader__escala" aria-hidden="true">${segs}</span>
-        <span class="fader__logo" aria-hidden="true">${logo}</span>
+      <li>
+        <button class="fader" type="button" data-indice="${i}"
+                aria-expanded="false" aria-controls="rack-detalle">
+          <span class="visually-hidden">${s.nombre}: nivel ${s.nivel} de ${SEGMENTOS}</span>
+          <span class="fader__escala" aria-hidden="true">${segs}</span>
+          <span class="fader__logo" aria-hidden="true">${icono(s)}</span>
+        </button>
       </li>`;
   }).join("");
+
+  const faders = [...rack.querySelectorAll(".fader")];
+  let abierto = null;   // índice de la habilidad desplegada
+
+  function mostrar(i) {
+    const s = SKILLS[i];
+
+    caja.innerHTML = `
+      <div class="detalle__icono" aria-hidden="true">${icono(s)}</div>
+      <div class="detalle__cuerpo">
+        <h3 class="detalle__titulo">${s.nombre}</h3>
+        <p class="detalle__texto">${s.detalle}</p>
+      </div>
+      <div class="detalle__nivel">
+        <span class="detalle__num">${s.nivel}</span>
+        <span class="detalle__total">/ ${SEGMENTOS}</span>
+      </div>`;
+
+    detalle.classList.add("abierto");
+    faders.forEach((f, j) => {
+      f.classList.toggle("fader--activo", j === i);
+      f.setAttribute("aria-expanded", String(j === i));
+    });
+    abierto = i;
+  }
+
+  function cerrar() {
+    detalle.classList.remove("abierto");
+    faders.forEach((f) => {
+      f.classList.remove("fader--activo");
+      f.setAttribute("aria-expanded", "false");
+    });
+    abierto = null;
+  }
+
+  faders.forEach((f) => {
+    f.addEventListener("click", () => {
+      const i = +f.dataset.indice;
+      // Tocar la que ya está abierta la cierra
+      if (abierto === i) cerrar(); else mostrar(i);
+    });
+  });
+
+  // Escape cierra la carta
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && abierto !== null) {
+      faders[abierto].focus();
+      cerrar();
+    }
+  });
 }
 
 /* ── Tabs de historias ── */
