@@ -792,7 +792,7 @@ main {
 /* Separación exacta entre el header y la sección al saltar */
 .seccion,
 #sobre-mi, #historias, #proyectos, #contacto {
-  scroll-margin-top: calc(var(--alto-barra) + 50.33px);
+  scroll-margin-top: 180px;
 }
 
 body {
