@@ -788,3 +788,12 @@ main {
   .nav__enlace { text-align: center; padding: 14px 18px; }
   .nav { border-radius: 0; }
 }
+
+/* La sección activa se hunde, igual que las pestañas de Stories */
+.nav__enlace[aria-current="page"] {
+  background: var(--superficie);
+  color: var(--texto-fuerte);
+  text-shadow: 1px 1px 1px rgba(255,255,255,.45);
+  box-shadow: var(--hundido-boton);
+  border-radius: 6px;
+}
