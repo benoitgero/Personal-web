@@ -160,28 +160,17 @@ button { font: inherit; color: inherit; }
 }
 
 .marca {
-  display: flex; align-items: center; gap: 10px;
+  display: flex; align-items: center;
   text-decoration: none; margin-right: auto;
+  /* El logo crece con el ancho disponible pero nunca pasa de 260px */
+  width: clamp(150px, 24vw, 260px);
 }
 
-.marca__tile {
-  width: 56px; height: 56px; flex: none;
-  display: grid; place-items: center;
-  background: var(--acento);
-  color: var(--texto-fuerte);
-  border: 1px solid rgba(0, 0, 0, .6);
-  box-shadow: var(--relieve-md);
-}
-.marca__tile svg { width: 60%; height: 60%; }
-
-.marca__nombre {
-  font-family: var(--texto-fam);
-  font-weight: 500;
-  font-size: clamp(1.6rem, 3.4vw, 2.8rem);
-  color: var(--texto-claro);
-  text-transform: lowercase;
-  line-height: 1;
-  text-shadow: 2px 2px 4px var(--sombra-media);
+.marca__logo {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;   /* que la sombra no se recorte */
 }
 
 .nav { display: flex; align-items: center; gap: 18px; }
