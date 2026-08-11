@@ -885,8 +885,7 @@ body {
   font-size: .82rem;
   letter-spacing: .14em;
   margin: 0;
-  color: var(--texto-grabado);
-  text-shadow: var(--grabado);
+  color: var(--texto-fuerte);
 }
 
 .carta-skill__texto {
