@@ -826,6 +826,10 @@ body {
     position: static !important;
     width: 100% !important;
     height: 320px !important;
+    /* Sin esto el min-height:100% de arriba sigue mandando y la imagen
+       se estira a la altura del texto, quedando recortadísima. */
+    min-height: 0 !important;
+    object-position: center 35% !important;
   }
 }
 /* ═══════════════════════════════════════════
