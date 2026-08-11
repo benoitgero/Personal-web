@@ -7,16 +7,26 @@
    logo:  ruta al SVG. Si ponés null, muestra el texto de "abrev".
    El orden del array es el orden de izquierda a derecha en pantalla. */
 const SKILLS = [
-  { nombre: "HTML5",            abrev: "HTML", nivel: 3, logo: "assets/logos/html.svg" },
-  { nombre: "CSS3",             abrev: "CSS",  nivel: 3, logo: "assets/logos/css.svg" },
-  { nombre: "JavaScript",       abrev: "JS",   nivel: 2, logo: "assets/logos/js.svg" },
-  { nombre: "AWS",              abrev: "AWS",  nivel: 3, logo: "assets/logos/aws.svg" },
-  { nombre: "Azure",            abrev: "AZ",   nivel: 3, logo: "assets/logos/azure.svg" },
-  { nombre: "Figma",            abrev: "FIG",  nivel: 3, logo: "assets/logos/figma.svg" },
-  { nombre: "Linux",            abrev: "LNX",  nivel: 2, logo: "assets/logos/linux.svg" },
-  { nombre: "Microsoft Office", abrev: "MS",   nivel: 4, logo: "assets/logos/office.svg" },
-  { nombre: "AutoCAD",          abrev: "CAD",  nivel: 4, logo: "assets/logos/autocad.svg" },
-  { nombre: "SketchUp",         abrev: "SKP",  nivel: 4, logo: "assets/logos/sketchup.svg" },
+  { nombre: "HTML5",            abrev: "HTML", nivel: 3, logo: "assets/logos/html.svg",
+    descripcion: "Estructura semántica y accesible. Este mismo sitio está armado a mano con HTML5, sin frameworks." },
+  { nombre: "CSS3",             abrev: "CSS",  nivel: 3, logo: "assets/logos/css.svg",
+    descripcion: "Grid, flexbox y sistemas de diseño. El estilo neumórfico de esta página está traducido 1:1 desde Figma." },
+  { nombre: "JavaScript",       abrev: "JS",   nivel: 2, logo: "assets/logos/js.svg",
+    descripcion: "JavaScript vanilla para interactividad: tabs, menús, formularios y esta misma carta que estás viendo." },
+  { nombre: "AWS",              abrev: "AWS",  nivel: 3, logo: "assets/logos/aws.svg",
+    descripcion: "Certificado AWS Cloud Practitioner a través del programa re/Start: EC2, S3, redes, seguridad y fundamentos de la nube." },
+  { nombre: "Azure",            abrev: "AZ",   nivel: 3, logo: "assets/logos/azure.svg",
+    descripcion: "Administración de recursos en Azure: máquinas virtuales, Entra ID y servicios de infraestructura." },
+  { nombre: "Figma",            abrev: "FIG",  nivel: 3, logo: "assets/logos/figma.svg",
+    descripcion: "Diseño de interfaces y prototipos. Antes de escribir una línea de código, lo visualizo en Figma." },
+  { nombre: "Linux",            abrev: "LNX",  nivel: 2, logo: "assets/logos/linux.svg",
+    descripcion: "Línea de comandos, administración básica de servidores y scripting en entornos Linux." },
+  { nombre: "Microsoft Office", abrev: "MS",   nivel: 4, logo: "assets/logos/office.svg",
+    descripcion: "Dominio avanzado de la suite: Excel, Word, PowerPoint y herramientas de productividad del día a día." },
+  { nombre: "AutoCAD",          abrev: "CAD",  nivel: 4, logo: "assets/logos/autocad.svg",
+    descripcion: "Dibujo técnico y planos en 2D. Base de mi mentalidad de diseño aplicada a la infraestructura." },
+  { nombre: "SketchUp",         abrev: "SKP",  nivel: 4, logo: "assets/logos/sketchup.svg",
+    descripcion: "Modelado 3D para visualizar espacios y proyectos antes de construirlos." },
 ];
 
 const HISTORIAS = [
@@ -96,12 +106,87 @@ function pintarRack() {
       : s.abrev;
 
     return `
-      <li class="fader" title="${s.nombre}: ${s.nivel} de ${SEGMENTOS}">
-        <span class="visually-hidden">${s.nombre}: nivel ${s.nivel} de ${SEGMENTOS}</span>
+      <li class="fader" title="${s.nombre}: ${s.nivel} de ${SEGMENTOS}"
+          role="button" tabindex="0" data-indice="${SKILLS.indexOf(s)}">
+        <span class="visually-hidden">${s.nombre}: nivel ${s.nivel} de ${SEGMENTOS}. Abrir detalle.</span>
         <span class="fader__escala" aria-hidden="true">${segs}</span>
         <span class="fader__logo" aria-hidden="true">${logo}</span>
       </li>`;
   }).join("");
+}
+
+/* ── Carta de skill: se abre al clickear un fader ── */
+function montarCartaSkills() {
+  const rack = document.getElementById("rack");
+  const carta = document.getElementById("carta-skill");
+  if (!rack || !carta) return;
+
+  const logo = document.getElementById("carta-logo");
+  const titulo = document.getElementById("carta-titulo");
+  const nivel = document.getElementById("carta-nivel");
+  const puntaje = document.getElementById("carta-puntaje");
+  const texto = document.getElementById("carta-texto");
+  const btnCerrar = document.getElementById("carta-cerrar");
+  const btnPrev = document.getElementById("carta-prev");
+  const btnNext = document.getElementById("carta-next");
+
+  let actual = 0;
+
+  function pintar(i) {
+    // Módulo para que las flechas den la vuelta en los extremos
+    actual = (i + SKILLS.length) % SKILLS.length;
+    const s = SKILLS[actual];
+
+    titulo.textContent = s.nombre;
+    puntaje.textContent = `${s.nivel} / ${SEGMENTOS}`;
+    texto.textContent = s.descripcion || "";
+
+    nivel.innerHTML = Array.from({ length: SEGMENTOS }, (_, j) =>
+      `<span${j < s.nivel ? ' class="on"' : ""}></span>`
+    ).join("");
+
+    logo.innerHTML = s.logo
+      ? `<img src="${s.logo}" alt="" onerror="this.replaceWith('${s.abrev}')">`
+      : s.abrev;
+  }
+
+  function abrir(i) {
+    pintar(i);
+    carta.hidden = false;
+    btnCerrar.focus();
+  }
+
+  function cerrar() {
+    carta.hidden = true;
+    // Devuelve el foco al fader que estaba abierto
+    rack.querySelector(`.fader[data-indice="${actual}"]`)?.focus();
+  }
+
+  rack.addEventListener("click", (e) => {
+    const fader = e.target.closest(".fader");
+    if (fader) abrir(+fader.dataset.indice);
+  });
+
+  rack.addEventListener("keydown", (e) => {
+    const fader = e.target.closest(".fader");
+    if (!fader) return;
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      abrir(+fader.dataset.indice);
+    }
+  });
+
+  btnPrev.addEventListener("click", () => pintar(actual - 1));
+  btnNext.addEventListener("click", () => pintar(actual + 1));
+  btnCerrar.addEventListener("click", cerrar);
+
+  // Escape cierra; flechas del teclado navegan mientras la carta está abierta
+  document.addEventListener("keydown", (e) => {
+    if (carta.hidden) return;
+    if (e.key === "Escape") cerrar();
+    if (e.key === "ArrowLeft") pintar(actual - 1);
+    if (e.key === "ArrowRight") pintar(actual + 1);
+  });
 }
 
 /* ── Tabs de historias ── */
@@ -290,6 +375,7 @@ function montarFormulario() {
 
 document.addEventListener("DOMContentLoaded", () => {
   pintarRack();
+  montarCartaSkills();
   montarHistorias();
   montarProyectos();
   montarMenu();

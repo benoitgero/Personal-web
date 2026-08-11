@@ -78,6 +78,41 @@
     <article class="tarjeta tarjeta--rack" aria-labelledby="rack-titulo">
       <h2 class="visually-hidden" id="rack-titulo">Nivel por tecnología</h2>
       <ul class="rack" id="rack"></ul>
+
+      <!-- Carta de skill: se superpone al rack al clickear un fader -->
+      <div class="carta-skill" id="carta-skill" role="dialog"
+           aria-labelledby="carta-titulo" hidden>
+
+        <button class="carta-skill__cerrar" id="carta-cerrar" aria-label="Cerrar carta">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="none" stroke="currentColor" stroke-width="2.4"
+                  stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/>
+          </svg>
+        </button>
+
+        <button class="carta-skill__flecha" id="carta-prev" aria-label="Skill anterior">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="none" stroke="currentColor" stroke-width="2.4"
+                  stroke-linecap="round" stroke-linejoin="round" d="M14 6l-6 6 6 6"/>
+          </svg>
+        </button>
+
+        <div class="carta-skill__contenido">
+          <span class="carta-skill__logo" id="carta-logo" aria-hidden="true"></span>
+          <h3 class="carta-skill__titulo" id="carta-titulo"></h3>
+          <div class="carta-skill__nivel" id="carta-nivel" aria-hidden="true"></div>
+          <p class="carta-skill__puntaje" id="carta-puntaje"></p>
+          <p class="carta-skill__texto" id="carta-texto"></p>
+        </div>
+
+        <button class="carta-skill__flecha" id="carta-next" aria-label="Skill siguiente">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="none" stroke="currentColor" stroke-width="2.4"
+                  stroke-linecap="round" stroke-linejoin="round" d="M10 6l6 6-6 6"/>
+          </svg>
+        </button>
+
+      </div>
     </article>
 
   </section>
