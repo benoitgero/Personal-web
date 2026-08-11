@@ -244,14 +244,32 @@ function montarProyectos() {
     texto.textContent = p.texto;
 
     video.pause();
-    video.poster = p.poster;
-    video.querySelector("source").src = p.video;
-    video.load(); // sin esto el navegador sigue mostrando el video anterior
 
+    if (p.video) {
+      video.hidden = false;
+      video.poster = p.poster || "";
+      video.querySelector("source").src = p.video;
+      video.load(); // sin esto el navegador sigue mostrando el video anterior
+    } else {
+      // Sin video: se oculta el reproductor en lugar de mostrar el cartel de error
+      video.hidden = true;
+      video.querySelector("source").removeAttribute("src");
+      video.removeAttribute("poster");
+      video.load();
+    }
+
+    // Cada ítem puede ser una ruta suelta o un objeto { src, ajuste: "contener" }
     galeria.innerHTML = p.galeria
-      .map((src) => `<img src="${src}" alt="">`)
+      .map((item) => {
+        const src = typeof item === "string" ? item : item.src;
+        const clase = typeof item === "object" && item.ajuste === "contener" ? " class=\"contener\"" : "";
+        return `<img${clase} src="${src}" alt="">`;
+      })
       .join("");
   }
+
+  // Si el archivo está declarado pero no existe en el servidor, también se oculta
+  video.addEventListener("error", () => { video.hidden = true; }, true);
 
   tabs.forEach((t) => t.addEventListener("click", () => seleccionar(+t.dataset.indice)));
   navegarConTeclado(tabs, seleccionar);
