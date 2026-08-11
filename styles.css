@@ -976,3 +976,127 @@ body {
   color: var(--texto-suave);
 }
 .campo__contador--tope { color: var(--acento-oscuro, #1a8f95); }
+
+/* ═══════════════════════════════════════════
+   VISOR DE IMÁGENES (lightbox)
+   El markup lo crea el JS, no está en el HTML.
+   ═══════════════════════════════════════════ */
+
+/* Las fotos de la galería se sienten clickeables */
+.galeria__foto { cursor: zoom-in; }
+.galeria__foto:focus-visible {
+  outline: 3px solid var(--acento);
+  outline-offset: -3px;
+}
+
+/* Bloquea el scroll del fondo mientras el visor está abierto */
+body.sin-scroll { overflow: hidden; }
+
+.visor {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  /* Fila con altura definida: sin esto el max-height de la imagen no tiene
+     contra qué calcularse y las fotos altas se desbordan de la pantalla. */
+  grid-template-rows: minmax(0, 1fr);
+  align-items: stretch;
+  gap: 16px;
+  padding: 56px 24px;
+  background: rgba(28, 28, 28, .92);
+  backdrop-filter: blur(4px);
+}
+.visor[hidden] { display: none; }
+
+.visor__flecha { align-self: center; }
+
+.visor__marco {
+  margin: 0;
+  height: 100%;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  min-width: 0;
+}
+
+/* contain: la imagen se ve entera, nunca recortada ni deformada.
+   El alto se limita contra la ventana (no con %) porque el porcentaje
+   necesita un padre de altura definida y acá no lo hay de forma fiable.
+   112px = los 56px de padding de arriba y abajo del visor. */
+.visor__imagen {
+  max-width: 100%;
+  max-height: calc(100vh - 112px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, .55);
+  background: #ffffff;
+}
+
+/* Botones con el mismo relieve del resto del sitio */
+.visor__flecha,
+.visor__cerrar {
+  border: 0;
+  border-radius: 50%;
+  background: var(--modulo);
+  box-shadow: var(--relieve-boton);
+  color: var(--texto-fuerte);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: box-shadow .18s ease, transform .18s ease;
+}
+.visor__flecha { width: 52px; height: 52px; }
+.visor__flecha svg { width: 24px; height: 24px; }
+.visor__cerrar {
+  position: absolute;
+  top: 18px; right: 20px;
+  width: 44px; height: 44px;
+}
+.visor__cerrar svg { width: 18px; height: 18px; }
+
+.visor__flecha:hover,
+.visor__cerrar:hover { transform: translateY(1px); }
+.visor__flecha:active,
+.visor__cerrar:active { box-shadow: var(--hundido-boton); }
+.visor__flecha[hidden],
+.visor__contador[hidden] { display: none; }
+
+.visor__contador {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  margin: 0;
+  /* Píldora oscura: el contador tiene que leerse igual sobre un plano blanco */
+  padding: 7px 16px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, .62);
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: .72rem;
+  letter-spacing: .14em;
+  color: #f0f0f0;
+}
+
+@media (max-width: 720px) {
+  /* Las flechas pasan abajo: en pantalla chica no pueden comerse el ancho
+     de la imagen. Igual el gesto natural acá es deslizar con el dedo. */
+  .visor {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 56px 12px 96px;
+    gap: 0;
+  }
+  .visor__flecha {
+    position: absolute;
+    bottom: 22px;
+    width: 46px; height: 46px;
+  }
+  .visor__flecha--prev { left: 22px; }
+  .visor__flecha--next { right: 22px; }
+  .visor__contador { bottom: 34px; }
+  /* dvh contempla la barra del navegador móvil; 152px = 56 + 96 de padding */
+  .visor__imagen { max-height: calc(100dvh - 152px); }
+}
