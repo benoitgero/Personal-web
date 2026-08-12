@@ -644,7 +644,9 @@ main {
    FOOTER
    ═══════════════════════════════════════════ */
 .pie {
-  margin-top: var(--gap-seccion);
+  /* Sin margin-top: el padding inferior del main ya aporta el
+     --gap-seccion, igual que entre las demás secciones. Con ambos,
+     la distancia al footer quedaba duplicada. */
   background: var(--superficie);
   box-shadow:
     0 -10px 30px rgba(var(--sombra), .25),
