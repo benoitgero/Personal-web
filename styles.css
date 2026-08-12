@@ -933,11 +933,14 @@ body {
 }
 
 /* Flechas: botones circulares en relieve que se hunden al presionar */
+/* Los botones toman el mismo tono claro de la carta en lugar del gris del rack.
+   El fondo de la carta es un degradado de #dedede a #efefef, así que cada botón
+   usa el tono exacto que le corresponde según dónde está apoyado. */
 .carta-skill__flecha {
   width: 46px; height: 46px;
   border: 0;
   border-radius: 50%;
-  background: var(--modulo);
+  background: #e7e7e7;  /* tono del degradado a media altura */
   box-shadow: var(--relieve-boton);
   color: var(--texto-fuerte);
   display: grid; place-items: center;
@@ -955,7 +958,7 @@ body {
   width: 38px; height: 38px;
   border: 0;
   border-radius: 50%;
-  background: var(--modulo);
+  background: #dbdbdb;  /* tono del degradado cerca del borde superior */
   box-shadow: var(--relieve-boton);
   color: var(--texto-fuerte);
   display: grid; place-items: center;
