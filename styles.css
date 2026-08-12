@@ -1292,7 +1292,17 @@ body.sin-scroll { overflow: hidden; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .portal__logo, .portal__leds span { animation: none; }
+  .portal__logo { animation: none; }
+  /* Sin animaciones, la barra aparece llena de entrada:
+     nunca debe quedar vacía durante toda la carga. */
+  .portal__leds span {
+    animation: none;
+    background: linear-gradient(160deg, #52ecf3, #22c3cb);
+    box-shadow:
+      inset 2px 2px 5px rgba(6, 90, 95, .35),
+      inset -1px -1px 3px rgba(255, 255, 255, .55),
+      0 0 10px var(--acento-glow);
+  }
 }
 
 /* ── Honeypot del formulario: fuera de pantalla, no display:none,
