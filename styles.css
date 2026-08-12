@@ -1239,7 +1239,8 @@ body.sin-scroll { overflow: hidden; }
   50%      { transform: scale(1.05); }
 }
 
-/* Cinco segmentos LED que se encienden en ola, como los faders */
+/* Cinco segmentos LED que se encienden uno a uno, como barra de
+   progreso, y quedan prendidos. 3s total: un LED cada 0.6s. */
 .portal__leds {
   display: flex;
   gap: 11px;
@@ -1249,16 +1250,16 @@ body.sin-scroll { overflow: hidden; }
   border-radius: 3px;
   background: var(--hueco);
   box-shadow: var(--hundido-boton);
-  animation: portal-led 1.4s ease-in-out infinite;
+  animation: portal-led .45s var(--curva) forwards;
 }
-.portal__leds span:nth-child(2) { animation-delay: .14s; }
-.portal__leds span:nth-child(3) { animation-delay: .28s; }
-.portal__leds span:nth-child(4) { animation-delay: .42s; }
-.portal__leds span:nth-child(5) { animation-delay: .56s; }
+.portal__leds span:nth-child(1) { animation-delay: .15s; }
+.portal__leds span:nth-child(2) { animation-delay: .75s; }
+.portal__leds span:nth-child(3) { animation-delay: 1.35s; }
+.portal__leds span:nth-child(4) { animation-delay: 1.95s; }
+.portal__leds span:nth-child(5) { animation-delay: 2.55s; }
 
 @keyframes portal-led {
-  0%, 100% { background: var(--hueco); box-shadow: var(--hundido-boton); }
-  40% {
+  to {
     background: linear-gradient(160deg, #52ecf3, #22c3cb);
     box-shadow:
       inset 2px 2px 5px rgba(6, 90, 95, .35),

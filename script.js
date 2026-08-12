@@ -563,7 +563,7 @@ function montarPortal() {
 
   const texto = document.getElementById("portal-texto");
   const inicio = performance.now();
-  const MINIMO_VISIBLE = 900; // que la pantalla se aprecie, sin demorar
+  const MINIMO_VISIBLE = 3000; // duración de la pantalla de carga
 
   let frames = 0;
   function contarFrames() {
@@ -574,7 +574,7 @@ function montarPortal() {
   requestAnimationFrame(contarFrames);
 
   // Red de seguridad: si algo falla, nadie queda afuera del sitio
-  const rescate = setTimeout(() => despedir(), 4000);
+  const rescate = setTimeout(() => despedir(), 8000);
 
   function evaluar() {
     const automatizado = navigator.webdriver === true;
@@ -582,7 +582,7 @@ function montarPortal() {
       texto.textContent = "Navegador automatizado detectado";
     }
     // A los automatizados se los demora; a los humanos se los deja pasar.
-    const espera = automatizado ? 2500 : Math.max(0, MINIMO_VISIBLE - (performance.now() - inicio));
+    const espera = automatizado ? 5000 : Math.max(0, MINIMO_VISIBLE - (performance.now() - inicio));
     setTimeout(despedir, espera);
   }
 
