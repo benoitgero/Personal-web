@@ -990,7 +990,22 @@ body {
    ═══════════════════════════════════════════ */
 
 /* Las fotos de la galería se sienten clickeables */
-.galeria__foto { cursor: zoom-in; }
+/* Las fotos se agrandan suavemente al pasar por encima.
+   Cursor común (pointer), sin la lupa de zoom. */
+.galeria__foto {
+  cursor: pointer;
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+.galeria__foto:hover {
+  transform: scale(1.045);
+  z-index: 2;
+  position: relative;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .30);
+}
+@media (prefers-reduced-motion: reduce) {
+  .galeria__foto { transition: none; }
+  .galeria__foto:hover { transform: none; box-shadow: none; }
+}
 .galeria__foto:focus-visible {
   outline: 3px solid var(--acento);
   outline-offset: -3px;
@@ -1042,32 +1057,41 @@ body.sin-scroll { overflow: hidden; }
   background: #ffffff;
 }
 
-/* Botones con el mismo relieve del resto del sitio */
+/* Controles minimalistas: trazos finos claros sobre el fondo oscuro,
+   sin círculos ni relieve. El área de click sigue siendo generosa
+   aunque el dibujo sea chico. */
 .visor__flecha,
 .visor__cerrar {
   border: 0;
-  border-radius: 50%;
-  background: var(--modulo);
-  box-shadow: var(--relieve-boton);
-  color: var(--texto-fuerte);
+  background: transparent;
+  color: rgba(255, 255, 255, .75);
   display: grid;
   place-items: center;
   cursor: pointer;
-  transition: box-shadow .18s ease, transform .18s ease;
+  transition: color .2s ease, transform .2s ease, opacity .2s ease;
 }
-.visor__flecha { width: 52px; height: 52px; }
-.visor__flecha svg { width: 24px; height: 24px; }
+.visor__flecha { width: 56px; height: 88px; }
+.visor__flecha svg { width: 34px; height: 34px; }
 .visor__cerrar {
   position: absolute;
-  top: 18px; right: 20px;
-  width: 44px; height: 44px;
+  top: 14px; right: 16px;
+  width: 52px; height: 52px;
 }
-.visor__cerrar svg { width: 18px; height: 18px; }
+.visor__cerrar svg { width: 26px; height: 26px; }
 
 .visor__flecha:hover,
-.visor__cerrar:hover { transform: translateY(1px); }
+.visor__cerrar:hover { color: #ffffff; }
+.visor__flecha--prev:hover { transform: translateX(-3px); }
+.visor__flecha--next:hover { transform: translateX(3px); }
+.visor__cerrar:hover { transform: rotate(90deg); }
 .visor__flecha:active,
-.visor__cerrar:active { box-shadow: var(--hundido-boton); }
+.visor__cerrar:active { opacity: .6; }
+.visor__flecha:focus-visible,
+.visor__cerrar:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, .9);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
 .visor__flecha[hidden],
 .visor__contador[hidden] { display: none; }
 

@@ -294,15 +294,15 @@ function montarVisor() {
   visor.innerHTML = `
     <button class="visor__cerrar" aria-label="Cerrar">
       <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path fill="none" stroke="currentColor" stroke-width="2.4"
-              stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/>
+        <path fill="none" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" d="M5 5l14 14M19 5 5 19"/>
       </svg>
     </button>
 
     <button class="visor__flecha visor__flecha--prev" aria-label="Imagen anterior">
       <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path fill="none" stroke="currentColor" stroke-width="2.4"
-              stroke-linecap="round" stroke-linejoin="round" d="M14 6l-6 6 6 6"/>
+        <path fill="none" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round" d="M15 4l-8 8 8 8"/>
       </svg>
     </button>
 
@@ -312,8 +312,8 @@ function montarVisor() {
 
     <button class="visor__flecha visor__flecha--next" aria-label="Imagen siguiente">
       <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path fill="none" stroke="currentColor" stroke-width="2.4"
-              stroke-linecap="round" stroke-linejoin="round" d="M10 6l6 6-6 6"/>
+        <path fill="none" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round" d="M9 4l8 8-8 8"/>
       </svg>
     </button>
 
