@@ -1188,3 +1188,117 @@ body.sin-scroll { overflow: hidden; }
   }
   html { scroll-behavior: auto; }
 }
+
+/* ═══════════════════════════════════════════
+   PORTAL DE ENTRADA (verificación anti-bot)
+   Pantalla del mismo material que el sitio. Los LEDs de progreso
+   citan al rack de skills: es la primera pieza de la identidad.
+   ═══════════════════════════════════════════ */
+.portal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  background: var(--fondo);
+  opacity: 1;
+  transition: opacity .45s var(--curva);
+}
+
+/* Sesión ya verificada (clase puesta por el script inline del head):
+   el portal no existe, ni un frame. */
+.verificado .portal { display: none; }
+
+/* Salida: se desvanece y el JS lo retira del DOM */
+.portal--saliendo { opacity: 0; pointer-events: none; }
+
+.portal__nucleo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+}
+
+/* La inicial de la marca sobre un módulo blando que respira */
+.portal__logo {
+  width: 92px; height: 92px;
+  display: grid; place-items: center;
+  border-radius: 28px;
+  background: var(--superficie);
+  box-shadow: var(--relieve-xl);
+  font-family: var(--texto-fam);
+  font-size: 3rem;
+  font-weight: 600;
+  color: var(--acento);
+  text-shadow: 0 0 18px var(--acento-glow);
+  animation: portal-respira 2.2s var(--curva) infinite;
+}
+
+@keyframes portal-respira {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.05); }
+}
+
+/* Cinco segmentos LED que se encienden en ola, como los faders */
+.portal__leds {
+  display: flex;
+  gap: 11px;
+}
+.portal__leds span {
+  width: 29px; height: 17px;
+  border-radius: 3px;
+  background: var(--hueco);
+  box-shadow: var(--hundido-boton);
+  animation: portal-led 1.4s ease-in-out infinite;
+}
+.portal__leds span:nth-child(2) { animation-delay: .14s; }
+.portal__leds span:nth-child(3) { animation-delay: .28s; }
+.portal__leds span:nth-child(4) { animation-delay: .42s; }
+.portal__leds span:nth-child(5) { animation-delay: .56s; }
+
+@keyframes portal-led {
+  0%, 100% { background: var(--hueco); box-shadow: var(--hundido-boton); }
+  40% {
+    background: linear-gradient(160deg, #52ecf3, #22c3cb);
+    box-shadow:
+      inset 2px 2px 5px rgba(6, 90, 95, .35),
+      inset -1px -1px 3px rgba(255, 255, 255, .55),
+      0 0 10px var(--acento-glow),
+      0 0 22px rgba(46, 198, 205, .25);
+  }
+}
+
+.portal__texto {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: .72rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+}
+
+.portal__noscript {
+  position: absolute;
+  left: 50%; bottom: 12vh;
+  transform: translateX(-50%);
+  width: min(90%, 480px);
+  margin: 0;
+  text-align: center;
+  font-family: var(--texto-fam);
+  font-size: .95rem;
+  color: var(--texto);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portal__logo, .portal__leds span { animation: none; }
+}
+
+/* ── Honeypot del formulario: fuera de pantalla, no display:none,
+     porque los bots más listos saltean lo que está oculto. ── */
+.campo--trampa {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px; height: 1px;
+  overflow: hidden;
+}

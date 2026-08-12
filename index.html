@@ -11,8 +11,32 @@
 <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="styles.css">
+<script>
+/* Si esta sesión ya pasó la verificación, se marca el html ANTES del
+   primer render y el portal no llega a mostrarse ni un frame. */
+try { if (sessionStorage.getItem("portal-ok")) document.documentElement.classList.add("verificado"); } catch (e) {}
+</script>
 </head>
 <body>
+
+<!-- ══════════ VERIFICACIÓN DE ENTRADA ══════════
+     Pantalla de carga que filtra bots simples: exige un navegador
+     que ejecute JS de verdad. Se muestra una vez por sesión. -->
+<div class="portal" id="portal" aria-hidden="true">
+  <div class="portal__nucleo">
+    <div class="portal__logo">G</div>
+    <div class="portal__leds" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <p class="portal__texto" id="portal-texto">Verificando el navegador…</p>
+  </div>
+  <noscript>
+    <p class="portal__noscript">
+      Este sitio necesita JavaScript para verificar que no sos un robot.
+      Activalo y recargá la página.
+    </p>
+  </noscript>
+</div>
 
 <a class="saltar" href="#contenido">Saltar al contenido</a>
 
@@ -183,6 +207,12 @@
 
       <!-- Para que funcione: creá una cuenta gratis en formspree.io y pegá tu ID en el action -->
      <form class="formulario" action="https://formspree.io/f/moeaegwl" method="POST">
+      <!-- Honeypot: invisible para humanos; los bots lo completan y quedan
+           descartados. El name "_gotcha" activa el filtro de Formspree. -->
+      <label class="campo campo--trampa" aria-hidden="true">
+        <span class="campo__etiqueta">No completar</span>
+        <input class="campo__input" type="text" name="_gotcha" tabindex="-1" autocomplete="off">
+      </label>
       <label class="campo">
         <span class="campo__etiqueta">Nombre</span>
         <input class="campo__input" type="text" name="nombre" required
