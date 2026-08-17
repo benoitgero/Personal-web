@@ -1,0 +1,73 @@
+/* ═══════════════════════════════════════════
+   FOOTER (partials/footer.html)
+   ═══════════════════════════════════════════ */
+.pie {
+  /* Sin margin-top: el padding inferior del main ya aporta el
+     --gap-seccion, igual que entre las demás secciones. Con ambos,
+     la distancia al footer quedaba duplicada. */
+  background: var(--superficie);
+  box-shadow:
+    0 -10px 30px rgba(var(--sombra), .25),
+    inset 0 1px 0 rgba(255, 255, 255, .75);
+}
+
+/* La barra decorativa que iba arriba del pie se elimina:
+   el fondo blanco ya separa el footer del resto. */
+.pie__barra { display: none; }
+
+.pie__acciones {
+  max-width: var(--ancho);
+  margin: 0 auto;
+  padding: 26px 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* Redes a la izquierda */
+.pie__redes {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.red {
+  width: 30px; height: 30px;
+  color: var(--texto-suave);
+  transition: color .18s ease, transform .18s ease;
+}
+.red:hover { color: var(--acento-oscuro); transform: translateY(-2px); }
+.red svg { width: 100%; height: 100%; }
+
+/* CV a la derecha */
+.pie__cv {
+  order: 2;
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 26px;
+  border-radius: 999px;
+  background: linear-gradient(145deg, #3ad4db, #24b7be);
+  color: #073a3d;
+  text-decoration: none;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: .74rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: var(--relieve-boton);
+  transition: box-shadow .18s ease, transform .18s ease;
+}
+.pie__cv:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--relieve-boton), 0 6px 22px var(--acento-glow);
+}
+.pie__cv:active { transform: none; box-shadow: var(--hundido-boton); }
+.pie__cv svg { width: 17px; height: 17px; }
+
+@media (max-width: 560px) {
+  .pie__acciones { flex-direction: column; gap: 20px; padding: 26px 20px 34px; }
+  .pie__cv { order: 0; }
+  .pie__redes { gap: 34px; }
+}

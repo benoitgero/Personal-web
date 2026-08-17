@@ -1,0 +1,52 @@
+<!-- ══════════ SOBRE MÍ + SKILLS ══════════
+     El rack de faders se pinta desde js/componentes/rack.js con los
+     datos de contenido/skills.js -->
+<section class="seccion seccion--doble" id="sobre-mi">
+
+  <article class="tarjeta tarjeta--about">
+    <div class="about__marco">
+      <img class="about__foto" src="assets/foto.jpg" alt="Retrato de Gerónimo">
+    </div>
+    <div class="about__cuerpo">
+      <h2 class="titulo">About me</h2>
+      <p class="parrafo">
+        Combino mi pasión por la tecnología con una mentalidad de diseño.
+        Tengo experiencia en Windows Server, virtualización y la nube, pero aspiro
+        a ser un arquitecto de sistemas. Me encanta visualizar, diseñar y construir
+        soluciones, aprendiendo cada día para mejorar mis habilidades.
+      </p>
+    </div>
+  </article>
+
+  <article class="tarjeta tarjeta--rack" aria-labelledby="rack-titulo">
+    <h2 class="visually-hidden" id="rack-titulo">Nivel por tecnología</h2>
+    <ul class="rack" id="rack"></ul>
+
+    <!-- Carta de skill: se superpone al rack al clickear un fader -->
+    <div class="carta-skill" id="carta-skill" role="dialog"
+         aria-labelledby="carta-titulo" hidden>
+
+      <button class="carta-skill__cerrar" id="carta-cerrar" aria-label="Cerrar carta">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icono-cerrar"/></svg>
+      </button>
+
+      <button class="carta-skill__flecha" id="carta-prev" aria-label="Skill anterior">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icono-flecha-izq"/></svg>
+      </button>
+
+      <div class="carta-skill__contenido">
+        <span class="carta-skill__logo" id="carta-logo" aria-hidden="true"></span>
+        <h3 class="carta-skill__titulo" id="carta-titulo"></h3>
+        <div class="carta-skill__nivel" id="carta-nivel" aria-hidden="true"></div>
+        <p class="carta-skill__puntaje" id="carta-puntaje"></p>
+        <p class="carta-skill__texto" id="carta-texto"></p>
+      </div>
+
+      <button class="carta-skill__flecha" id="carta-next" aria-label="Skill siguiente">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icono-flecha-der"/></svg>
+      </button>
+
+    </div>
+  </article>
+
+</section>

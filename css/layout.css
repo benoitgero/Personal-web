@@ -1,0 +1,48 @@
+/* ═══════════════════════════════════════════
+   LAYOUT DE SECCIONES
+   La grilla general: cómo se reparten las columnas
+   de cada sección y cómo colapsan en pantallas chicas.
+   ═══════════════════════════════════════════ */
+main {
+  max-width: var(--ancho);
+  margin: 0 auto;
+  padding: var(--gap-seccion) 24px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-seccion);
+}
+
+.seccion { display: grid; gap: var(--gap); }
+
+.seccion--doble      { grid-template-columns: minmax(0, 41fr) minmax(0, 59fr); }
+.seccion--historias  { grid-template-columns: minmax(0, 1fr) 208px; }
+.seccion--proyectos  { grid-template-columns: 208px minmax(0, 1fr); }
+
+@media (max-width: 1100px) {
+  .seccion--doble,
+  .seccion--historias,
+  .seccion--proyectos { grid-template-columns: minmax(0, 1fr); }
+
+  .seccion--historias .columna { order: -1; }
+}
+
+@media (max-width: 720px) {
+  :root { --gap-seccion: 32px; }
+
+  main { padding: 32px 16px; }
+}
+
+/* Separación entre el header y la sección al saltar desde el menú.
+   Valor plano a propósito: un calc() con una variable indefinida hace
+   que el navegador descarte la declaración entera y quede en 0. */
+.seccion,
+#sobre-mi, #historias, #proyectos, #contacto {
+  scroll-margin-top: 130px;
+}
+
+@media (max-width: 720px) {
+  .seccion,
+  #sobre-mi, #historias, #proyectos, #contacto {
+    scroll-margin-top: 118px;
+  }
+}

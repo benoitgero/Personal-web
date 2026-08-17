@@ -1,0 +1,98 @@
+/* ═══════════════════════════════════════════
+   CONTACTO (partials/secciones/contacto.html)
+   ═══════════════════════════════════════════ */
+.contacto {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px;
+  padding: 40px 48px;
+}
+
+.formulario {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-content: start;
+}
+
+.campo { display: flex; flex-direction: column; gap: 6px; }
+.campo--ancho { grid-column: 1 / -1; }
+
+.campo__etiqueta {
+  font-family: var(--display);
+  font-size: .7rem;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+}
+
+.campo__input {
+  font-family: var(--texto-fam);
+  font-size: .95rem;
+  color: var(--texto);
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 12px;
+  transition: box-shadow var(--trans);
+  background: var(--superficie-alt);
+  box-shadow: var(--hundido-boton);
+}
+.campo__input:focus-visible {
+  outline: none;
+  box-shadow: var(--hundido-boton), 0 0 0 2px var(--acento);
+}
+.campo__input--area { resize: vertical; min-height: 96px; }
+
+.boton {
+  grid-column: 1 / -1;
+  justify-self: start;
+  padding: 15px 36px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(145deg, #3ad4db, #24b7be);
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: .85rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #073a3d;
+  box-shadow: var(--relieve-boton), 0 0 0 rgba(46, 198, 205, 0);
+  cursor: pointer;
+  transition: box-shadow var(--trans), transform var(--trans);
+}
+.boton:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--relieve-boton), 0 6px 22px var(--acento-glow);
+}
+.boton:active { transform: none; box-shadow: var(--hundido-boton); }
+
+.formulario__estado {
+  grid-column: 1 / -1;
+  margin: 0; font-size: .9rem; color: var(--texto-suave);
+}
+
+/* Contador de caracteres del mensaje */
+.campo__contador {
+  align-self: end;
+  font-family: var(--display);
+  font-size: .65rem;
+  letter-spacing: .06em;
+  color: var(--texto-suave);
+}
+.campo__contador--tope { color: var(--acento-oscuro, #1a8f95); }
+
+/* ── Honeypot del formulario: fuera de pantalla, no display:none,
+     porque los bots más listos saltean lo que está oculto. ── */
+.campo--trampa {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px; height: 1px;
+  overflow: hidden;
+}
+
+@media (max-width: 1100px) {
+  .contacto { grid-template-columns: minmax(0, 1fr); padding: 32px 24px; }
+}
+
+@media (max-width: 720px) {
+  .formulario { grid-template-columns: minmax(0, 1fr); }
+}

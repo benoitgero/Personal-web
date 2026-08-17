@@ -1,0 +1,27 @@
+<!-- ══════════ PROYECTOS ══════════
+     Las miniaturas, la galería y el video se montan desde
+     js/componentes/proyectos.js con los datos de contenido/proyectos.js. -->
+<section class="seccion seccion--proyectos" id="proyectos">
+
+  <aside class="tarjeta columna columna--proyectos" aria-labelledby="proyectos-titulo">
+    <div class="columna__cabecera">
+      <h2 class="rotulo" id="proyectos-titulo">Projects</h2>
+    </div>
+    <div class="columna__cuerpo columna__cuerpo--miniaturas" role="tablist" aria-label="Proyectos" id="tabs-proyectos"></div>
+  </aside>
+
+  <article class="tarjeta proyecto">
+    <div class="proyecto__galeria" id="proyecto-galeria"></div>
+    <div class="proyecto__detalle">
+      <h2 class="titulo" id="proyecto-titulo">Rocha</h2>
+      <p class="parrafo" id="proyecto-texto"></p>
+      <video class="proyecto__video" id="proyecto-video"
+             controls preload="none"
+             poster="assets/proyectos/rocha-poster.jpg">
+        <source src="assets/proyectos/rocha.mp4" type="video/mp4">
+        Tu navegador no puede reproducir este video.
+      </video>
+    </div>
+  </article>
+
+</section>

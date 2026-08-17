@@ -1,0 +1,84 @@
+/* ═══════════════════════════════════════════
+   PANEL DE HISTORIAS (partials/secciones/historias.html)
+   ═══════════════════════════════════════════ */
+/* La imagen se ancla a los bordes con position absolute: así llena
+   la tarjeta entera sin depender de cómo se resuelvan las filas. */
+.panel {
+  display: block;
+  position: relative;
+  padding: 0;
+  min-height: 460px;
+  overflow: hidden;
+}
+
+/* El padding vive en el texto, que deja libre la franja derecha */
+.panel .titulo  { padding: 28px 405px 0 48px; margin-bottom: .5em; }
+.panel .parrafo { padding: 0 405px 32px 48px; }
+
+.panel__imagen {
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 365px;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (max-width: 1100px) {
+  .panel { min-height: 0; }
+  .panel .titulo  { padding: 24px 24px 0; }
+  .panel .parrafo { padding: 0 24px 24px; }
+  .panel__imagen {
+    position: static;
+    width: 100%;
+    height: 320px;
+  }
+}
+
+/* ═══ IMAGEN DE HISTORIAS — versión definitiva ═══
+   Estos !important pisan cualquier regla anterior; se mantienen
+   tal cual estaban en el CSS original. */
+
+.panel {
+  position: relative !important;
+  padding: 0 !important;
+  min-height: 460px !important;
+  overflow: hidden !important;
+}
+
+.panel .titulo  { padding: 28px 405px 0 48px !important; }
+.panel .parrafo { padding: 0 405px 32px 48px !important; }
+
+.panel__imagen {
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: auto !important;
+  width: 365px !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  max-height: none !important;
+  max-width: none !important;
+  margin: 0 !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+@media (max-width: 1100px) {
+  .panel { min-height: 0 !important; }
+  .panel .titulo  { padding: 24px 24px 0 !important; }
+  .panel .parrafo { padding: 0 24px 24px !important; }
+  .panel__imagen {
+    position: static !important;
+    width: 100% !important;
+    height: 320px !important;
+    /* Sin esto el min-height:100% de arriba sigue mandando y la imagen
+       se estira a la altura del texto, quedando recortadísima. */
+    min-height: 0 !important;
+    object-position: center 35% !important;
+  }
+}

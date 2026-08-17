@@ -1,0 +1,36 @@
+/* ═══════════════════════════════════════════════════════════════
+   VERSION 5 — buscá "VERSION 5" para confirmar que este archivo cargó
+   Soft-UI unificado: una sola superficie, jerarquía por luz.
+
+   Punto de entrada del CSS. Cada pieza vive en su propio archivo;
+   EL ORDEN DE LOS IMPORTS IMPORTA: reproduce la cascada del CSS
+   original en un solo archivo. Si agregás un componente nuevo,
+   sumá su import donde corresponda.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Base: variables, reset y piezas reutilizables */
+@import url("base/variables.css");
+@import url("base/base.css");
+@import url("base/piezas.css");
+
+/* Estructura de la página */
+@import url("componentes/header.css");
+@import url("layout.css");
+
+/* Secciones, en el orden en que aparecen */
+@import url("secciones/sobre-mi.css");
+@import url("secciones/rack.css");
+@import url("componentes/columnas.css");
+@import url("secciones/historias.css");
+@import url("secciones/proyectos.css");
+@import url("secciones/banda.css");
+@import url("secciones/contacto.css");
+
+/* Footer y extras */
+@import url("componentes/pie.css");
+@import url("componentes/revelado.css");
+
+/* Superposiciones (van después: pisan estilos de las secciones) */
+@import url("componentes/carta-skill.css");
+@import url("componentes/visor.css");
+@import url("componentes/portal.css");

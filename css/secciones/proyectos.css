@@ -1,0 +1,65 @@
+/* ═══════════════════════════════════════════
+   PANEL DE PROYECTOS (partials/secciones/proyectos.html)
+   ═══════════════════════════════════════════ */
+.proyecto {
+  display: grid;
+  grid-template-columns: 361px minmax(0, 1fr);
+  /* Piso de altura: si el proyecto tiene poco texto, la galería no se achica */
+  min-height: 460px;
+}
+
+/* Las imágenes se reparten la altura disponible en partes iguales,
+   sin importar cuántas haya ni qué proporción tengan.
+   Detalle clave: flex-basis en 0px (no 0%). Con 0% el navegador no puede
+   resolver el porcentaje contra una altura automática, cae en "auto" y
+   cada imagen impone su alto real, estirando la tarjeta. */
+.proyecto__galeria {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.proyecto__galeria img {
+  flex: 1 1 0px;
+  width: 100%;
+  height: 0;
+  min-height: 0;
+}
+
+/* Para planos y láminas: se ven enteros en vez de recortados.
+   Se activa poniendo ajuste: "contener" en el array de galería. */
+.proyecto__galeria img.contener {
+  object-fit: contain;
+  background: #ffffff;
+}
+
+.proyecto__detalle { padding: 30px 32px; }
+
+.proyecto__video {
+  width: 100%;
+  margin-top: 24px;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: var(--radio-chico);
+  box-shadow: var(--relieve-boton);
+}
+
+/* Cuando el proyecto todavía no tiene video, se oculta desde el JS */
+.proyecto__video[hidden] { display: none; }
+
+@media (max-width: 1100px) {
+  /* En pantallas medianas la galería pasa a ser una fila de alto fijo:
+     las imágenes se reparten el ancho y el alto lo manda el contenedor. */
+  .proyecto { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .proyecto__galeria { flex-direction: row; height: 200px; }
+  .proyecto__galeria img { width: 0; height: 100%; }
+}
+
+@media (max-width: 720px) {
+  /* En móvil se apilan de nuevo, cada una con alto fijo */
+  .proyecto__galeria { flex-direction: column; height: auto; }
+  .proyecto__galeria img { flex: 0 0 200px; width: 100%; height: 200px; }
+  .proyecto__detalle { padding: 24px 20px; }
+}

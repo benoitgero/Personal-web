@@ -1,0 +1,75 @@
+/* ═══════════════════════════════════════════
+   RACK DE SKILLS (se pinta desde js/componentes/rack.js)
+   ═══════════════════════════════════════════ */
+.tarjeta--rack {
+  background: var(--superficie);
+  box-shadow:
+    var(--relieve-xl),
+    inset 0 0 60px rgba(255, 255, 255, .55);
+  display: grid; place-items: center;
+  padding: 28px 20px;
+}
+
+.rack {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+
+/* Módulo: 52.33 × 209.7 · radio 8.39 · fill C5C5C5 */
+.fader {
+  width: 52.33px;
+  min-height: 209.7px;
+  padding: 12px 0 18px;
+  background: var(--modulo);
+  border-radius: var(--radio-chico);
+  box-shadow: var(--relieve-boton);
+  display: flex; flex-direction: column; align-items: center;
+}
+
+.fader__escala {
+  display: flex; flex-direction: column-reverse; gap: 11px;
+}
+
+/* Segmento: 29.26 × 17.55 · radio 0.84 · fill C0C0C0 */
+.fader__seg {
+  width: 29.26px;
+  height: 17.55px;
+  border-radius: 3px;
+  background: var(--hueco);
+  box-shadow: var(--hundido-boton);
+}
+
+/* Encendido: mismas 4 sombras, solo cambia el fill */
+.fader__seg--on {
+  background: linear-gradient(160deg, #52ecf3, #22c3cb);
+  box-shadow:
+    inset 2px 2px 5px rgba(6, 90, 95, .35),
+    inset -1px -1px 3px rgba(255, 255, 255, .55),
+    0 0 10px var(--acento-glow),
+    0 0 22px rgba(46, 198, 205, .25);
+}
+
+.fader__logo {
+  width: 28px; height: 28px;
+  display: grid; place-items: center;
+  margin-top: 14px;
+  font-family: var(--display);
+  font-size: .6rem;
+  font-weight: 700;
+  color: var(--texto-fuerte);
+  background: transparent;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.fader__logo img { width: 100%; height: 100%; object-fit: contain; }
+
+@media (max-width: 720px) {
+  .rack { gap: 9px; }
+  /* Faders compactos: 5 por fila en un celular común */
+  .fader { width: 46px; min-height: 178px; padding: 10px 0 14px; }
+  .fader__seg { width: 25px; height: 15px; }
+  .fader__escala { gap: 9px; }
+  .fader__logo { width: 24px; height: 24px; margin-top: 11px; }
+}

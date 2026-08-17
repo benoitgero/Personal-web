@@ -1,0 +1,39 @@
+<!-- ══════════ HEADER ══════════
+     El logo queda inline (y no en el sprite de iconos) porque usa la
+     fuente Playfair del documento: dentro de un <img> externo no cargaría. -->
+<header class="barra">
+  <div class="barra__interior">
+
+    <a class="marca" href="#contenido" aria-label="Gerónimo — inicio">
+      <svg class="marca__logo" viewBox="0 0 540 140" width="270" height="70"
+           role="img" aria-hidden="true" focusable="false">
+        <defs>
+          <filter id="sombraLogo" x="-20%" y="-20%" width="150%" height="150%">
+            <feDropShadow dx="3" dy="3" stdDeviation="3" flood-color="#000" flood-opacity=".35"/>
+          </filter>
+        </defs>
+        <circle cx="96" cy="70" r="62" fill="#3fd0d6" filter="url(#sombraLogo)"/>
+        <text x="34" y="101"
+              font-family="'Playfair Display', Georgia, 'Times New Roman', serif"
+              font-size="94" font-weight="500"
+              fill="#ffffff" stroke="#5b5b5b" stroke-width="2.5"
+              paint-order="stroke" filter="url(#sombraLogo)">Gerónimo</text>
+      </svg>
+    </a>
+
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav-principal">
+      <span class="menu-btn__barra"></span>
+      <span class="visually-hidden">Abrir menú</span>
+    </button>
+
+    <nav class="nav" id="nav-principal" aria-label="Secciones">
+      <ul class="nav__lista">
+        <li><a class="nav__enlace" href="#sobre-mi">Sobre mí</a></li>
+        <li><a class="nav__enlace" href="#historias">Historias</a></li>
+        <li><a class="nav__enlace" href="#proyectos">Proyectos</a></li>
+        <li><a class="nav__enlace" href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+
+  </div>
+</header>
