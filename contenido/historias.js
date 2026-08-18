@@ -16,7 +16,7 @@
 
 export const HISTORIAS = [
   { id: "forge",  tab: "Forge",  titulo: "Fundación Forge", imagen: "assets/historias/forge.jpg" },
-  { id: "ces",    tab: "CES",    titulo: "CES",             imagen: "assets/historias/ces.jpg" },
+  { id: "ces",    tab: "CES",    titulo: "Centro de Ensayos de Software",             imagen: "assets/historias/ces.jpg" },
   { id: "jap",    tab: "JAP",    titulo: "JAP",             imagen: "assets/historias/jap.jpg" },
   { id: "fadu",   tab: "FADU",   titulo: "FADU",            imagen: "assets/historias/fadu.jpg" },
   { id: "tcs",    tab: "TCS",    titulo: "TCS",             imagen: "assets/historias/tcs.jpg" },
