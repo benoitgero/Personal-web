@@ -16,9 +16,9 @@
 
 export const HISTORIAS = [
   { id: "jap",    tab: "JAP",    titulo: "Jóvenes a Programar",             imagen: "assets/historias/jap.jpg" },
-  { id: "forge",  tab: "Forge",  titulo: "Fundación Forge", imagen: "assets/historias/forge.jpg" },
   { id: "ces",    tab: "CES",    titulo: "Centro de Ensayos de Software",             imagen: "assets/historias/ces.jpg" },
+  { id: "switch", tab: "Switch", titulo: "Switch Software Solutions",          imagen: "assets/historias/switch.jpg" },
+  { id: "forge",  tab: "Forge",  titulo: "Fundación Forge", imagen: "assets/historias/forge.jpg" },
   { id: "fadu",   tab: "FADU",   titulo: "Facultad de Arquitectura, Diseño y Urbanismo",            imagen: "assets/historias/fadu.jpg" },
-  { id: "tcs",    tab: "TCS",    titulo: "TCS",             imagen: "assets/historias/tcs.jpg" },
-  { id: "switch", tab: "Switch", titulo: "Switch",          imagen: "assets/historias/switch.jpg" },
+  { id: "tcs",    tab: "TCS",    titulo: "Tata Consultancy Services",             imagen: "assets/historias/tcs.jpg" },
 ];
