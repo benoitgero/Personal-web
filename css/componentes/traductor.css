@@ -1,0 +1,123 @@
+/* ═══════════════════════════════════════════
+   TRADUCTOR (partials/header.html + js/componentes/traductor.js)
+
+   Dos trabajos:
+   1. El switch ES/EN, con el material del sitio: canaleta hundida
+      (igual que .nav) y una pastilla turquesa que emerge y desliza.
+   2. Borrar todo lo que Google inyecta sin pedir permiso.
+   ═══════════════════════════════════════════ */
+
+/* ── La canaleta ── */
+.idioma {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+  align-items: stretch;
+  padding: 6px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--superficie);
+  box-shadow: var(--hundido-boton);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ── La pastilla que desliza ──
+   Ocupa media pista menos el padding; al activarse se corre
+   exactamente su propio ancho y queda calzada a la derecha. */
+.idioma__pastilla {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: calc(50% - 6px);
+  height: calc(100% - 12px);
+  border-radius: 999px;
+  background: linear-gradient(145deg, #3ad4db, #24b7be);
+  box-shadow:
+     3px  3px 8px rgba(var(--sombra), .55),
+    -2px -2px 6px rgba(255, 255, 255, .80),
+     0 0 16px var(--acento-glow);
+  transition: transform var(--trans);
+}
+
+.idioma[aria-checked="true"] .idioma__pastilla { transform: translateX(100%); }
+
+/* ── Las dos etiquetas ── */
+.idioma__opcion {
+  position: relative;   /* por encima de la pastilla */
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  min-height: 35px;     /* + 12 de padding = 47, el alto de .nav */
+  padding: 0 8px;
+  font-family: var(--display);
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+
+  /* Estado apagado: grabado en el material */
+  color: var(--texto-grabado);
+  text-shadow: var(--grabado);
+  transition: color var(--trans), text-shadow var(--trans);
+}
+
+/* La etiqueta que tiene la pastilla debajo se lee sobre el turquesa */
+.idioma[aria-checked="false"] .idioma__opcion--es,
+.idioma[aria-checked="true"]  .idioma__opcion--en {
+  color: #073a3d;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .35);
+}
+
+.idioma:hover .idioma__opcion--es,
+.idioma:hover .idioma__opcion--en { color: #aab3c5; }
+
+/* El hover no debe apagar la etiqueta activa */
+.idioma[aria-checked="false"]:hover .idioma__opcion--es,
+.idioma[aria-checked="true"]:hover  .idioma__opcion--en { color: #073a3d; }
+
+.idioma:disabled { opacity: .55; cursor: progress; }
+
+/* Foco: el anillo va en la pista entera, no en cada etiqueta */
+.idioma:focus-visible { outline: 2px solid var(--acento); outline-offset: 3px; }
+
+/* Sin animación si el usuario la pidió apagada */
+@media (prefers-reduced-motion: reduce) {
+  .idioma__pastilla { transition: none; }
+}
+
+/* ── Lo que Google inyecta y no queremos ── */
+
+/* El <select> del widget vive acá: montado pero invisible */
+#google_translate_element { display: none !important; }
+
+/* La barra superior de Google empuja el body y rompe el header sticky */
+.goog-te-banner-frame,
+iframe.skiptranslate { display: none !important; }
+body { top: 0 !important; }
+
+/* Tooltip flotante con el texto original y resaltado amarillo */
+.goog-tooltip,
+.goog-tooltip * { display: none !important; }
+
+.goog-text-highlight {
+  background: none !important;
+  box-shadow: none !important;
+}
+
+/* ── Móvil ──
+   El hamburguesa se va al final: logo … [ES|EN] ☰ */
+@media (max-width: 720px) {
+  .menu-btn { order: 1; }
+
+  .idioma { padding: 5px; }
+  .idioma__pastilla {
+    top: 5px; left: 5px;
+    width: calc(50% - 5px);
+    height: calc(100% - 10px);
+  }
+  .idioma__opcion { min-width: 44px; min-height: 34px; padding: 0 6px; }
+}

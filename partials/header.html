@@ -4,7 +4,7 @@
 <header class="barra">
   <div class="barra__interior">
 
-    <a class="marca" href="#contenido" aria-label="Gerónimo — inicio">
+    <a class="marca" href="#contenido" aria-label="Gerónimo — inicio" translate="no">
       <svg class="marca__logo" viewBox="0 0 540 140" width="270" height="70"
            role="img" aria-hidden="true" focusable="false">
         <defs>
@@ -34,6 +34,15 @@
         <li><a class="nav__enlace" href="#contacto">Contacto</a></li>
       </ul>
     </nav>
+
+    <!-- Traducción ES/EN. El estado (aria-checked) lo maneja
+         js/componentes/traductor.js; acá arranca siempre en español. -->
+    <button class="idioma" type="button" role="switch" translate="no"
+            aria-checked="false" aria-label="Traducir la página al inglés">
+      <span class="idioma__pastilla" aria-hidden="true"></span>
+      <span class="idioma__opcion idioma__opcion--es">ES</span>
+      <span class="idioma__opcion idioma__opcion--en">EN</span>
+    </button>
 
   </div>
 </header>
