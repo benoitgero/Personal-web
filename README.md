@@ -143,3 +143,23 @@ En GitHub Pages funciona directo, porque ya sirve por HTTP.
 - El **CSS mantiene el orden de cascada original**, incluidos los `!important`
   del panel de historias. Si agregás un componente, sumá su `@import` en
   `css/main.css` en el lugar que corresponda.
+
+---
+
+## Traducción ES/EN
+
+Botón en el header que traduce la página con el widget de Google.
+
+| Archivo | Rol |
+|---|---|
+| `js/componentes/traductor.js` | Toda la lógica |
+| `css/componentes/traductor.css` | Estilo del botón + oculta lo que inyecta Google |
+| `partials/header.html` | El `<button class="idioma-btn">` |
+
+**No funciona en localhost**: Google exige una URL pública. Probalo en GitHub Pages.
+
+Para cambiar el idioma destino, tocá `ORIGEN` / `DESTINO` arriba de `traductor.js`.
+Para excluir algo de la traducción, ponele `translate="no"`.
+
+El widget está deprecado desde 2019 y sigue funcionando, pero es un servicio
+externo: si deja de responder, el botón no hace nada y el sitio queda intacto.

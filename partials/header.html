@@ -4,7 +4,7 @@
 <header class="barra">
   <div class="barra__interior">
 
-    <a class="marca" href="#contenido" aria-label="Gerónimo — inicio">
+    <a class="marca" href="#contenido" aria-label="Gerónimo — inicio" translate="no">
       <svg class="marca__logo" viewBox="0 0 540 140" width="270" height="70"
            role="img" aria-hidden="true" focusable="false">
         <defs>
@@ -34,6 +34,11 @@
         <li><a class="nav__enlace" href="#contacto">Contacto</a></li>
       </ul>
     </nav>
+
+    <!-- Traducción ES/EN. El texto y el estado los pone js/componentes/traductor.js;
+         "EN" acá es solo el valor inicial por si el script no llega a correr. -->
+    <button class="idioma-btn" type="button" translate="no"
+            aria-pressed="false" aria-label="View this page in English">EN</button>
 
   </div>
 </header>

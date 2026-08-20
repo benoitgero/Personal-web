@@ -15,6 +15,7 @@
 
 /* Estructura de la página */
 @import url("componentes/header.css");
+@import url("componentes/traductor.css");
 @import url("layout.css");
 
 /* Secciones, en el orden en que aparecen */

@@ -18,6 +18,7 @@ import { montarNavActiva } from "./componentes/nav-activa.js";
 import { montarRevelado } from "./componentes/revelado.js";
 import { montarFormulario } from "./componentes/formulario.js";
 import { montarContador } from "./componentes/contador.js";
+import { montarTraductor } from "./componentes/traductor.js";
 
 async function iniciar() {
   // El portal no espera a nada: es lo primero que se ve
@@ -35,6 +36,10 @@ async function iniciar() {
   // montarRevelado();  ← desactivado, igual que en la versión original
   montarFormulario();
   montarContador();
+
+  // Último a propósito: el widget de Google tiene que encontrar el DOM
+  // ya completo (historias y proyectos incluidos) en su primera pasada.
+  montarTraductor();
 }
 
 document.addEventListener("DOMContentLoaded", iniciar);

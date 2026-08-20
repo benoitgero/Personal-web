@@ -1,0 +1,87 @@
+/* ═══════════════════════════════════════════
+   TRADUCTOR (partials/header.html + js/componentes/traductor.js)
+
+   Dos trabajos:
+   1. Vestir el botón ES/EN como una pieza más del soft-UI.
+   2. Borrar todo lo que Google inyecta sin pedir permiso.
+   ═══════════════════════════════════════════ */
+
+/* ── El botón ──
+   Misma altura y tipografía que .nav para que la barra quede pareja. */
+.idioma-btn {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 62px;
+  min-height: 47px;          /* alto real de .nav: 6+11+texto+11+6 */
+  padding: 0 18px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--superficie);
+  box-shadow: var(--relieve-boton);
+  font-family: var(--display);
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--texto-grabado);
+  text-shadow: var(--grabado);
+  cursor: pointer;
+  transition: color var(--trans), background var(--trans), box-shadow var(--trans);
+}
+
+.idioma-btn:hover { color: #aab3c5; }
+
+/* Se hunde al apretar, como el resto del material */
+.idioma-btn:active {
+  box-shadow: var(--hundido-boton);
+  text-shadow: none;
+}
+
+/* Traducción activa: emerge en turquesa, igual que la sección activa */
+.idioma-btn[aria-pressed="true"] {
+  background: linear-gradient(145deg, #3ad4db, #24b7be);
+  color: #073a3d;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .35);
+  box-shadow:
+     3px  3px 8px rgba(var(--sombra), .55),
+    -2px -2px 6px rgba(255, 255, 255, .80),
+     0 0 16px var(--acento-glow);
+}
+
+/* Mientras espera respuesta de Google */
+.idioma-btn:disabled { opacity: .55; cursor: progress; }
+
+/* ── Lo que Google inyecta y no queremos ── */
+
+/* El <select> del widget vive acá: montado pero invisible */
+#google_translate_element { display: none !important; }
+
+/* La barra superior de Google empuja el body hacia abajo y rompe
+   el header sticky. Fuera. */
+.goog-te-banner-frame,
+iframe.skiptranslate { display: none !important; }
+body { top: 0 !important; }
+
+/* El tooltip flotante con el texto original al pasar el mouse,
+   y el resaltado amarillo sobre lo traducido */
+.goog-tooltip,
+.goog-tooltip * { display: none !important; }
+
+.goog-text-highlight {
+  background: none !important;
+  box-shadow: none !important;
+}
+
+/* ── Móvil ──
+   El hamburguesa se va al final para que quede: logo … EN ☰ */
+@media (max-width: 720px) {
+  .menu-btn { order: 1; }
+
+  .idioma-btn {
+    min-width: 54px;
+    min-height: 44px;
+    padding: 0 14px;
+  }
+}
