@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
-   TRADUCTOR — botón ES/EN en el header
+   TRADUCTOR — switch ES/EN en el header
 
    Usa el widget de Google Translate, pero OCULTO: el <select> que
    Google inyecta en la página nunca se ve; nuestro switch lo maneja
@@ -14,7 +14,7 @@
 
    2. El widget está DEPRECADO desde diciembre de 2019. Sigue
       andando, pero es un servicio externo sin garantías. Por eso
-      todo acá falla en silencio: si Google no responde, el botón
+      todo acá falla en silencio: si Google no responde, el switch
       simplemente no hace nada y el sitio queda intacto.
 
    3. Esto NO sirve para SEO. La traducción pasa en el navegador
@@ -87,7 +87,7 @@ function pintarSwitch() {
    contenido le pedimos al widget que vuelva a pasar.
    Escuchamos clics (no un MutationObserver) a propósito: el propio
    widget modifica el DOM al traducir, y un observer genérico se
-   morderia la cola. */
+   mordería la cola. */
 function reTraducirTrasClics() {
   let temporizador = null;
   document.addEventListener("click", (e) => {
@@ -120,7 +120,7 @@ export function montarTraductor() {
   };
 
   // Estado inicial: si la cookie ya dice inglés, el widget traduce solo
-  // al arrancar; acá únicamente ponemos el botón a tono.
+  // al arrancar; acá únicamente ponemos el switch a tono.
   activo = leerCookie().endsWith(`/${DESTINO}`);
   pintarSwitch();
 

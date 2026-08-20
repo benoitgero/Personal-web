@@ -11,7 +11,7 @@ Personal-web/
 ├── index.html                  ← esqueleto: solo el portal y los "huecos" de cada parte
 │
 ├── partials/                   ← los pedazos de HTML
-│   ├── header.html             ← barra superior: logo + navegación
+│   ├── header.html             ← barra superior: logo + navegación + switch de idioma
 │   ├── footer.html             ← pie: botón CV + redes
 │   └── secciones/
 │       ├── sobre-mi.html       ← foto + about + rack de skills + carta
@@ -29,6 +29,7 @@ Personal-web/
 │   │   └── piezas.css          ← .tarjeta .titulo .rotulo .parrafo
 │   ├── componentes/
 │   │   ├── header.css
+│   │   ├── traductor.css       ← switch ES/EN + oculta el chrome de Google
 │   │   ├── columnas.css        ← las pestañas y miniaturas (compartido)
 │   │   ├── carta-skill.css
 │   │   ├── visor.css           ← lightbox
@@ -56,6 +57,7 @@ Personal-web/
 │   │   ├── menu.js             ← hamburguesa en móvil
 │   │   ├── nav-activa.js       ← resalta la sección visible
 │   │   ├── revelado.js         ← fade-in al scrollear (desactivado)
+│   │   ├── traductor.js        ← switch ES/EN (widget de Google, oculto)
 │   │   ├── formulario.js       ← envío a Formspree sin recargar
 │   │   └── contador.js         ← contador de caracteres
 │   └── util/
@@ -148,18 +150,28 @@ En GitHub Pages funciona directo, porque ya sirve por HTTP.
 
 ## Traducción ES/EN
 
-Botón en el header que traduce la página con el widget de Google.
+Switch en el header que traduce la página con el widget de Google.
 
 | Archivo | Rol |
 |---|---|
 | `js/componentes/traductor.js` | Toda la lógica |
-| `css/componentes/traductor.css` | Estilo del botón + oculta lo que inyecta Google |
+| `css/componentes/traductor.css` | Estilo del switch + oculta lo que inyecta Google |
 | `partials/header.html` | El switch `<button class="idioma" role="switch">` |
 
+Los tres nombres van apareados: el HTML usa `class="idioma"` con `role="switch"`,
+el CSS estiliza `.idioma`, y el JS busca `.idioma` y escribe `aria-checked`.
+Si uno queda desalineado, el switch se dibuja pero no responde.
+
 **No funciona en localhost**: Google exige una URL pública. Probalo en GitHub Pages.
+
+`montarTraductor()` va último en `main.js` a propósito: para ese momento los
+partials, las historias y los proyectos ya están en el DOM, así que el widget
+encuentra la página completa en su primera pasada.
 
 Para cambiar el idioma destino, tocá `ORIGEN` / `DESTINO` arriba de `traductor.js`.
 Para excluir algo de la traducción, ponele `translate="no"`.
 
 El widget está deprecado desde 2019 y sigue funcionando, pero es un servicio
-externo: si deja de responder, el botón no hace nada y el sitio queda intacto.
+externo: si deja de responder, el switch no hace nada y el sitio queda intacto.
+Tampoco sirve para SEO: la traducción pasa en el navegador del visitante y no
+genera URLs indexables en inglés.
