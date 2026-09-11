@@ -1,0 +1,11 @@
+/* ═══════════════════════════════════════════
+   BANDA DE IMAGEN (partials/secciones/banda.html)
+   ═══════════════════════════════════════════ */
+.seccion--banda { display: block; }
+
+.banda__imagen {
+  width: 100%;
+  height: clamp(220px, 26vw, 384px);
+  border-radius: var(--radio);
+  box-shadow: var(--relieve-xl);
+}

@@ -1,0 +1,133 @@
+/* ═══════════════════════════════════════════
+   HEADER (partials/header.html)
+   ═══════════════════════════════════════════ */
+.barra {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(227, 231, 238, .78);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow:
+    0 10px 30px rgba(var(--sombra), .35),
+    inset 0 -1px 0 rgba(255, 255, 255, .65);
+}
+
+.barra__interior {
+  max-width: var(--ancho);
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex; align-items: center; gap: 20px;
+  min-height: 80px;
+}
+
+.marca {
+  display: flex; align-items: center;
+  text-decoration: none; margin-right: auto;
+  width: clamp(150px, 24vw, 260px);
+  min-width: 150px;
+  flex: none;
+}
+
+.marca__logo {
+  width: 100%;
+  height: auto;
+  min-width: 150px;
+  display: block;
+  overflow: visible;
+}
+
+/* ── NAVEGACIÓN: canaleta hundida con las secciones grabadas ── */
+.nav {
+  display: flex;
+  padding: 6px;
+  border-radius: 999px;
+  background: var(--superficie);
+  box-shadow: var(--hundido-boton);
+}
+
+.nav__lista {
+  display: flex; gap: 4px;
+  list-style: none; margin: 0; padding: 0;
+}
+
+.nav__enlace {
+  display: block;
+  padding: 11px 20px;
+  border-radius: 999px;
+  font-family: var(--display);
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  color: var(--texto-grabado);
+  text-shadow: var(--grabado);
+  transition: color var(--trans), background var(--trans), box-shadow var(--trans);
+}
+
+.nav__enlace:hover { color: #aab3c5; }
+
+/* La sección activa emerge de la canaleta */
+.nav__enlace[aria-current="page"] {
+  background: linear-gradient(145deg, #3ad4db, #24b7be);
+  color: #073a3d;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .35);
+  box-shadow:
+     3px  3px 8px rgba(var(--sombra), .55),
+    -2px -2px 6px rgba(255, 255, 255, .80),
+     0 0 16px var(--acento-glow);
+}
+
+/* Botón hamburguesa: solo las tres líneas, sin fondo ni marco */
+.menu-btn {
+  display: none;
+  width: 44px; height: 44px;
+  background: none;
+  border: 0;
+  padding: 0;
+  box-shadow: none;
+  cursor: pointer;
+  position: relative;
+}
+.menu-btn__barra,
+.menu-btn__barra::before,
+.menu-btn__barra::after {
+  position: absolute; left: 50%; width: 24px; height: 2px;
+  border-radius: 2px;
+  background: var(--texto-fuerte); transform: translateX(-50%);
+  transition: transform .2s ease, opacity .2s ease;
+}
+.menu-btn__barra { top: 50%; margin-top: -1px; }
+.menu-btn__barra::before { content: ""; top: -7px; }
+.menu-btn__barra::after  { content: ""; top:  7px; }
+.menu-btn[aria-expanded="true"] .menu-btn__barra { background: transparent; }
+.menu-btn[aria-expanded="true"] .menu-btn__barra::before { transform: translateX(-50%) translateY(7px) rotate(45deg); }
+.menu-btn[aria-expanded="true"] .menu-btn__barra::after  { transform: translateX(-50%) translateY(-7px) rotate(-45deg); }
+
+/* ── Menú móvil ── */
+@media (max-width: 720px) {
+  .menu-btn { display: block; }
+
+  .nav {
+    display: none;
+    position: absolute; top: 100%; left: 0; right: 0;
+    padding: 14px;
+    border-radius: 0;
+    background: var(--superficie);
+    box-shadow: var(--relieve-boton);
+  }
+  .nav.abierto { display: block; }
+
+  .nav__lista { flex-direction: column; align-items: stretch; gap: 10px; }
+  .nav__enlace {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 15px 18px;
+    border-radius: 8px;
+    font-size: .78rem;
+  }
+  .nav__enlace[aria-current="page"] { border-radius: 8px; }
+
+  .barra__interior { position: relative; padding: 10px 16px; min-height: 68px; }
+}

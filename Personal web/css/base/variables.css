@@ -1,0 +1,87 @@
+/* ═══════════════════════════════════════════
+   VARIABLES GLOBALES (design tokens)
+   Cambiar acá repinta el sitio entero.
+   ═══════════════════════════════════════════ */
+:root {
+  /* ── Superficie única ──
+     Todo el sitio vive sobre el mismo material. Las piezas no se
+     distinguen por color sino por elevación: relieve o hundido. */
+  --fondo:          #e3e7ee;
+  --superficie:     #e3e7ee;
+  --superficie-alt: #e3e7ee;
+  --modulo:         #e3e7ee;
+  --hueco:          #dbe0e9;  /* segmento apagado */
+  --led:            #35e0e8;  /* segmento encendido: turquesa, no verde */
+
+  /* ── Acentos ── */
+  --acento:         #2ec6cd;
+  --acento-oscuro:  #0e6e73;
+  --acento-glow:    rgba(46, 198, 205, .45);
+
+  /* ── Texto ── */
+  --texto:          #4b5563;
+  --texto-fuerte:   #2f3640;
+  --texto-suave:    #7c86a0;
+  --texto-grabado:  #b3bccd;
+  --texto-claro:    #ffffff;
+
+  /* ── Sombra entintada ──
+     Nada de negro puro: la sombra toma el azul frío de la superficie
+     (#a3b1c6), que es lo que hace que el material se vea blando. */
+  --sombra: 163, 177, 198;
+
+  /* ═══ EL PATRÓN DE 4 CAPAS ═══
+     1. +X +Y blur grande → sombra ambiente
+     2. +X +Y blur chico  → contacto
+     3. −X −Y blur chico  → filo iluminado
+     4. −X −Y blur grande → rebote de luz
+     En relieve van como drop shadow; hundido, las mismas con inset. */
+
+  /* Piezas grandes: tarjetas y barras */
+  --relieve-xl:
+     20px  20px  48px rgba(var(--sombra), .50),
+      6px   6px  16px rgba(var(--sombra), .28),
+     -6px  -6px  16px rgba(255, 255, 255, .72),
+    -20px -20px  48px rgba(255, 255, 255, .90);
+
+  /* Piezas chicas: módulos, botones, pestañas */
+  --relieve-boton:
+      6px   6px  14px rgba(var(--sombra), .52),
+      2px   2px   4px rgba(var(--sombra), .34),
+     -2px  -2px   4px rgba(255, 255, 255, .80),
+     -6px  -6px  14px rgba(255, 255, 255, .95);
+
+  --hundido-boton: inset
+      5px   5px  12px rgba(var(--sombra), .55), inset
+      1.5px 1.5px 4px rgba(var(--sombra), .35), inset
+     -1.5px -1.5px 4px rgba(255, 255, 255, .85), inset
+     -5px  -5px  12px rgba(255, 255, 255, .95);
+
+  /* Texto grabado: CSS no tiene sombra interior en texto, así que se
+     invierte el color manteniendo posición y blur de las inner shadows. */
+  --grabado:
+     -0.6px -0.6px 2.5px rgba(var(--sombra), .70),
+     -0.15px -0.15px 1px rgba(var(--sombra), .85),
+      1px    1px   1px rgba(255, 255, 255, .85),
+      3px    3px   4px rgba(255, 255, 255, .70);
+
+  /* ── Tipografía ── */
+  --display:   "Inknut Antiqua", Georgia, serif;
+  --texto-fam: "Playfair Display", Georgia, serif;
+
+  /* ── Métrica ──
+     Radios generosos: el material blando no tiene aristas. */
+  --ancho: 1380px;
+  --alto-barra: 80px;   /* alto real del header sticky */
+  --radio: 18px;
+  --radio-chico: 12px;
+  --gap: clamp(14px, 2vw, 20px);
+  --gap-seccion: clamp(36px, 6vw, 64px);
+
+  /* ── Movimiento ──
+     Una sola curva para todo el sitio: las piezas responden igual. */
+  --curva: cubic-bezier(.4, 0, .2, 1);
+  --trans: .25s var(--curva);
+}
+
+::selection { background: var(--acento); color: #073a3d; }

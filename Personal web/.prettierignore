@@ -1,0 +1,20 @@
+node_modules/
+.yarn/
+vendor/
+yarn.lock
+
+# Assets binarios y documentos
+assets/
+*.pdf
+*.ico
+*.png
+*.jpg
+*.svg
+
+# Archivos de contenido: la alineación en columnas es intencional,
+# Prettier la rompe. Editalos a mano.
+contenido/
+
+# Versiones monolíticas viejas, conservadas como referencia
+script.js
+styles.css

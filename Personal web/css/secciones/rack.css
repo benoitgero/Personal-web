@@ -1,0 +1,131 @@
+/* ═══════════════════════════════════════════
+   RACK DE SKILLS (se pinta desde js/componentes/rack.js)
+   Carrusel circular: siempre una sola fila, las flechas rotan el orden.
+   ═══════════════════════════════════════════ */
+:root {
+  --fader-ancho: 52.33px;
+}
+
+.tarjeta--rack {
+  background: var(--superficie);
+  box-shadow:
+    var(--relieve-xl),
+    inset 0 0 0px rgba(255, 255, 255, .55);
+  display: grid; place-items: center;
+  padding: 28px 14px;
+  position: relative;   /* ancla de la carta de skill */
+}
+
+/* ── Carrusel ── */
+.rack-carrusel {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rack-pista {
+  flex: 1;
+  min-width: 0;        /* deja que el flex lo achique de verdad */
+  overflow: hidden;
+  touch-action: pan-y; /* el gesto lateral es del carrusel, el vertical scrollea */
+}
+
+.rack {
+  list-style: none; margin: 0; padding: 0;
+  display: flex;
+  flex-wrap: nowrap;           /* nunca parte a dos filas */
+  justify-content: center;
+  gap: 14px;
+  transition: opacity .14s ease, transform .14s ease;
+}
+
+/* Desvanecido hacia el lado al que se mueve */
+.rack--sale-izq { opacity: 0; transform: translateX(-14px); }
+.rack--sale-der { opacity: 0; transform: translateX(14px); }
+
+/* ── Flechas ── */
+.rack-nav {
+  flex: none;
+  width: 30px; height: 30px;
+  display: grid; place-items: center;
+  border: 0; padding: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--texto-apagado);
+  cursor: pointer;
+  transition: color .18s ease, background .18s ease;
+}
+.rack-nav:hover { color: var(--texto-fuerte); background: rgba(0, 0, 0, .06); }
+.rack-nav svg { width: 20px; height: 20px; }
+.rack-nav[hidden] { display: none; }
+
+/* ── Módulo: 52.33 × 209.7 · radio 8.39 · fill C5C5C5 ── */
+.fader {
+  flex: none;                  /* no se deja comprimir */
+  width: var(--fader-ancho);
+  min-height: 209.7px;
+  padding: 12px 0 18px;
+  background: var(--modulo);
+  border-radius: var(--radio-chico);
+  box-shadow: var(--relieve-boton);
+  display: flex; flex-direction: column; align-items: center;
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.fader:hover { transform: translateY(-3px); }
+
+.fader__escala {
+  display: flex; flex-direction: column-reverse; gap: 11px;
+}
+
+/* Segmento: 29.26 × 17.55 · radio 0.84 · fill C0C0C0 */
+.fader__seg {
+  width: 29.26px;
+  height: 17.55px;
+  border-radius: 3px;
+  background: var(--hueco);
+  box-shadow: var(--hundido-boton);
+}
+
+/* Encendido: mismas 4 sombras, solo cambia el fill */
+.fader__seg--on {
+  background: linear-gradient(160deg, #52ecf3, #22c3cb);
+  box-shadow:
+    inset 2px 2px 5px rgba(6, 90, 95, .35),
+    inset -1px -1px 3px rgba(255, 255, 255, .55),
+    0 0 10px var(--acento-glow),
+    0 0 22px rgba(46, 198, 205, .25);
+}
+
+.fader__logo {
+  width: 28px; height: 28px;
+  display: grid; place-items: center;
+  margin-top: 14px;
+  font-family: var(--display);
+  font-size: .6rem;
+  font-weight: 700;
+  color: var(--texto-fuerte);
+  background: transparent;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.fader__logo img { width: 100%; height: 100%; object-fit: contain; }
+
+@media (max-width: 720px) {
+  :root { --fader-ancho: 46px; }
+
+  .tarjeta--rack { padding: 22px 8px; }
+  .rack { gap: 9px; }
+  .fader { min-height: 178px; padding: 10px 0 14px; }
+  .fader__seg { width: 25px; height: 15px; }
+  .fader__escala { gap: 9px; }
+  .fader__logo { width: 24px; height: 24px; margin-top: 11px; }
+  .rack-nav { width: 26px; height: 26px; }
+  .rack-nav svg { width: 17px; height: 17px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rack, .fader { transition: none; }
+  .rack--sale-izq, .rack--sale-der { opacity: 1; transform: none; }
+}

@@ -1,0 +1,141 @@
+/* ═══════════════════════════════════════════
+   CARTA DE SKILL
+   Se superpone a la tarjeta del rack al clickear un fader.
+   (js/componentes/carta-skill.js)
+   ═══════════════════════════════════════════ */
+
+/* La tarjeta del rack pasa a ser el marco de referencia de la carta */
+.tarjeta--rack { position: relative; }
+
+/* Los faders ahora son clickeables */
+.fader {
+  cursor: pointer;
+  transition: box-shadow .18s ease, transform .18s ease;
+}
+.fader:hover { transform: translateY(-3px); }
+.fader:active { box-shadow: var(--hundido-boton); transform: none; }
+
+/* La carta cubre la tarjeta entera, con el mismo fondo del rack */
+.carta-skill {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  border-radius: var(--radio);
+  background: var(--superficie);
+  box-shadow: inset 0 0 60px rgba(255, 255, 255, .55);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 28px 20px;
+}
+.carta-skill[hidden] { display: none; }
+
+.carta-skill__contenido {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 0 6px;
+}
+
+/* Logo sobre un módulo chico en relieve, como los faders */
+.carta-skill__logo {
+  width: 56px; height: 56px;
+  display: grid; place-items: center;
+  background: var(--modulo);
+  border-radius: 8.39px;
+  box-shadow: var(--relieve-boton);
+  padding: 10px;
+  font-family: var(--display);
+  font-size: .7rem;
+  font-weight: 700;
+  color: var(--texto-fuerte);
+}
+.carta-skill__logo img { width: 100%; height: 100%; object-fit: contain; }
+
+.carta-skill__titulo {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--texto-fuerte);
+  margin: 0;
+}
+
+/* El nivel: los mismos segmentos LED del rack, pero en horizontal */
+.carta-skill__nivel {
+  display: flex;
+  gap: 11px;
+}
+.carta-skill__nivel span {
+  width: 29.26px;
+  height: 17.55px;
+  border-radius: 3px;
+  background: var(--hueco);
+  box-shadow: var(--hundido-boton);
+}
+.carta-skill__nivel span.on { background: var(--led); }
+
+/* Puntaje numérico grabado, como los rótulos de las columnas */
+.carta-skill__puntaje {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: .82rem;
+  letter-spacing: .14em;
+  margin: 0;
+  color: var(--texto-fuerte);
+}
+
+.carta-skill__texto {
+  font-size: .92rem;
+  line-height: 1.6;
+  margin: 0;
+  color: var(--texto);
+  max-width: 52ch;
+}
+
+/* Flechas: botones circulares en relieve que se hunden al presionar */
+/* Los botones toman el mismo tono claro de la carta en lugar del gris del rack.
+   El fondo de la carta es un degradado de #dedede a #efefef, así que cada botón
+   usa el tono exacto que le corresponde según dónde está apoyado. */
+.carta-skill__flecha {
+  width: 46px; height: 46px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--superficie);
+  box-shadow: var(--relieve-boton);
+  color: var(--texto-fuerte);
+  display: grid; place-items: center;
+  cursor: pointer;
+  transition: box-shadow .18s ease, transform .18s ease;
+}
+.carta-skill__flecha svg { width: 22px; height: 22px; }
+.carta-skill__flecha:hover  { transform: translateY(1px); }
+.carta-skill__flecha:active { box-shadow: var(--hundido-boton); }
+
+/* Cruz para cerrar, arriba a la derecha */
+.carta-skill__cerrar {
+  position: absolute;
+  top: 14px; right: 14px;
+  width: 38px; height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--superficie);
+  box-shadow: var(--relieve-boton);
+  color: var(--texto-fuerte);
+  display: grid; place-items: center;
+  cursor: pointer;
+  transition: box-shadow .18s ease, transform .18s ease;
+}
+.carta-skill__cerrar svg { width: 16px; height: 16px; }
+.carta-skill__cerrar:hover  { transform: translateY(1px); }
+.carta-skill__cerrar:active { box-shadow: var(--hundido-boton); }
+
+@media (max-width: 720px) {
+  .carta-skill { padding: 24px 12px; gap: 8px; }
+  .carta-skill__flecha { width: 40px; height: 40px; }
+  .carta-skill__texto { font-size: .88rem; }
+}

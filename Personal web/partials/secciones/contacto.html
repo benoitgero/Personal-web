@@ -1,0 +1,42 @@
+<!-- ══════════ CONTACTO ══════════
+     El envío sin recargar y el contador viven en
+     js/componentes/formulario.js y js/componentes/contador.js -->
+<section class="seccion seccion--contacto" id="contacto">
+  <article class="tarjeta contacto">
+    <div class="contacto__texto">
+      <h2 class="titulo">Contacto</h2>
+      <p class="parrafo">
+        ¿Tenés un proyecto de infraestructura, migración a la nube o
+        automatización dando vueltas? Escribime y lo charlamos.
+      </p>
+    </div>
+
+    <!-- Para que funcione: creá una cuenta gratis en formspree.io y pegá tu ID en el action -->
+    <form class="formulario" action="https://formspree.io/f/moeaegwl" method="POST">
+      <!-- Honeypot: invisible para humanos; los bots lo completan y quedan
+           descartados. El name "_gotcha" activa el filtro de Formspree. -->
+      <label class="campo campo--trampa" aria-hidden="true">
+        <span class="campo__etiqueta">No completar</span>
+        <input class="campo__input" type="text" name="_gotcha" tabindex="-1" autocomplete="off">
+      </label>
+      <label class="campo">
+        <span class="campo__etiqueta">Nombre</span>
+        <input class="campo__input" type="text" name="nombre" required
+              autocomplete="name" maxlength="60">
+      </label>
+      <label class="campo">
+        <span class="campo__etiqueta">Email</span>
+        <input class="campo__input" type="email" name="email" required
+              autocomplete="email" maxlength="120">
+      </label>
+      <label class="campo campo--ancho">
+        <span class="campo__etiqueta">Mensaje</span>
+        <textarea class="campo__input campo__input--area" name="mensaje" rows="4"
+                  required maxlength="800" id="campo-mensaje"></textarea>
+        <span class="campo__contador" id="contador-mensaje" aria-live="polite">0 / 800</span>
+      </label>
+      <button class="boton" type="submit">Enviar mensaje</button>
+      <p class="formulario__estado" id="form-estado" role="status" aria-live="polite"></p>
+    </form>
+  </article>
+</section>

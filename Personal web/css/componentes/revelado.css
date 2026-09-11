@@ -1,0 +1,14 @@
+/* ═══════════════════════════════════════════
+   REVELADO AL SCROLL (js/componentes/revelado.js)
+   Hoy está desactivado en js/main.js, pero el estilo queda
+   listo por si lo volvés a encender.
+   ═══════════════════════════════════════════ */
+.revelar { opacity: 0; transform: translateY(16px); }
+.revelar.visible {
+  opacity: 1; transform: none;
+  transition: opacity .6s ease, transform .6s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .revelar { opacity: 1; transform: none; }
+}

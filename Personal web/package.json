@@ -1,0 +1,38 @@
+{
+  "name": "personal-web",
+  "version": "5.0.0",
+  "description": "Sitio personal de Gerónimo Benoit — HTML, CSS y JavaScript vanilla, sin build step.",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "author": "Gerónimo Benoit Pérez (benoitgero)",
+  "homepage": "https://benoitgero.github.io",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benoitgero/benoitgero.github.io.git"
+  },
+  "packageManager": "yarn@4.18.0",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "dev": "live-server --port=5173 --entry-file=index.html",
+    "serve": "live-server --port=5173 --no-browser",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "css": "stylelint \"css/**/*.css\"",
+    "css:fix": "stylelint \"css/**/*.css\" --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "yarn lint && yarn css && yarn format:check"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^10.9.1",
+    "globals": "^17.12.0",
+    "live-server": "^1.2.2",
+    "prettier": "^3.9.6",
+    "stylelint": "^17.14.1",
+    "stylelint-config-standard": "^40.0.0"
+  }
+}

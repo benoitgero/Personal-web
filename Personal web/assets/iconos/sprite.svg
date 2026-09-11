@@ -1,0 +1,51 @@
+<!-- ═══════════════════════════════════════════════════════════
+     SPRITE DE ICONOS
+     Cada icono es un <symbol> y se usa en el HTML/JS así:
+       <svg viewBox="0 0 24 24"><use href="#icono-nombre"/></svg>
+     Los trazos usan currentColor: heredan el color del elemento
+     donde se apoyan, así los hover siguen funcionando.
+     Para agregar un icono: copiá un <symbol>, cambiale el id y el path.
+     ═══════════════════════════════════════════════════════════ -->
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true">
+
+  <!-- Trazo grueso (carta de skills) -->
+  <symbol id="icono-cerrar" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="2.4"
+          stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/>
+  </symbol>
+  <symbol id="icono-flecha-izq" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="2.4"
+          stroke-linecap="round" stroke-linejoin="round" d="M14 6l-6 6 6 6"/>
+  </symbol>
+  <symbol id="icono-flecha-der" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="2.4"
+          stroke-linecap="round" stroke-linejoin="round" d="M10 6l6 6-6 6"/>
+  </symbol>
+
+  <!-- Trazo fino (visor de imágenes) -->
+  <symbol id="icono-cerrar-fino" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="1.5"
+          stroke-linecap="round" d="M5 5l14 14M19 5 5 19"/>
+  </symbol>
+  <symbol id="icono-flecha-izq-fina" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round" d="M15 4l-8 8 8 8"/>
+  </symbol>
+  <symbol id="icono-flecha-der-fina" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round" d="M9 4l8 8-8 8"/>
+  </symbol>
+
+  <!-- Footer -->
+  <symbol id="icono-descarga" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round" d="M12 3v12m0 0 4-4m-4 4-4-4M4 19h16"/>
+  </symbol>
+  <symbol id="icono-linkedin" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.64h.05a4.17 4.17 0 0 1 3.75-2.06c4.01 0 4.75 2.64 4.75 6.07V21h-4v-5.5c0-1.31-.02-3-1.83-3-1.83 0-2.11 1.43-2.11 2.9V21h-4V9Z"/>
+  </symbol>
+  <symbol id="icono-whatsapp" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M12.04 2a9.9 9.9 0 0 0-8.5 14.95L2 22l5.2-1.5A9.9 9.9 0 1 0 12.04 2Zm0 1.8a8.1 8.1 0 1 1-4.1 15.08l-.3-.17-3.1.9.9-3-.2-.31A8.1 8.1 0 0 1 12.04 3.8Zm-3.6 4.1c-.18 0-.47.07-.72.34-.24.27-.94.92-.94 2.24s.96 2.6 1.1 2.78c.13.18 1.87 2.95 4.61 4.02 2.28.9 2.74.72 3.24.67.5-.04 1.6-.65 1.83-1.28.23-.63.23-1.17.16-1.28-.07-.11-.25-.18-.52-.31-.27-.14-1.6-.79-1.85-.88-.25-.09-.43-.13-.61.13-.18.27-.7.88-.86 1.06-.16.18-.32.2-.59.07-.27-.14-1.14-.42-2.17-1.34-.8-.71-1.35-1.6-1.5-1.87-.16-.27-.02-.41.12-.55.12-.12.27-.31.4-.47.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.47-.07-.14-.6-1.47-.83-2.01-.21-.52-.43-.45-.6-.46h-.5Z"/>
+  </symbol>
+
+</svg>
