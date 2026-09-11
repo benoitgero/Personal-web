@@ -29,6 +29,18 @@ export const PROYECTOS = [
     ],
   },
   {
+    id: "tokyo",
+    nombre: "Tokyo",
+    titulo: "Tokyo",
+    miniatura: "assets/proyectos/tokyo-thumb.jpg",
+    galeria: [
+      "assets/proyectos/tokyo-1.jpg",
+      // Los planos van "contener" para que se vean enteros, sin recortar
+      { src: "assets/proyectos/tokyo-2.jpg", ajuste: "contener" },
+      { src: "assets/proyectos/tokyo-3.jpg", ajuste: "contener" },
+    ],
+  },
+  {
     id: "proyecto-2",
     nombre: "Proyecto 2",
     titulo: "Proyecto 2",
