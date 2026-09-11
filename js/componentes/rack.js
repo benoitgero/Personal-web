@@ -1,21 +1,24 @@
 /* ── Rack de skills ──
-   Carrusel circular: los faders van SIEMPRE en una sola fila. Las flechas
-   giran la lista como una rueda; a cada lado se dibuja un fader de reserva
-   que queda fuera de la pista y es el que entra en escena al girar. */
+   Rueda de scroll libre: la lista se dibuja tres veces seguidas y el
+   scroll nativo se reposiciona al llegar a los bordes, así el giro es
+   infinito y con inercia. Si todas las skills entran en pantalla, no
+   hay scroll ni flechas: se muestran centradas y listo. */
 import { SKILLS, SEGMENTOS } from "../../contenido/skills.js";
+
+const COPIAS = 3;   // bloques idénticos: el del medio es el que se ve
 
 export function pintarRack() {
   const rack = document.getElementById("rack");
   const pista = document.getElementById("rack-pista");
   const prev = document.getElementById("rack-prev");
   const next = document.getElementById("rack-next");
-  if (!rack) return;
+  if (!rack || !pista) return;
 
-  let offset = 0;                   // cuántas posiciones giró la rueda
-  let enPantalla = SKILLS.length;   // cuántos faders se ven ahora
-  let girando = false;              // evita encimar dos giros
+  let anchoBloque = 0;     // ancho de una vuelta completa
+  let infinito = false;    // ¿hace falta el bucle?
+  let acomodando = false;  // evita reentrar al reposicionar
 
-  function fader(s, indiceReal) {
+  function fader(s, indiceReal, clon) {
     const segs = Array.from({ length: SEGMENTOS }, (_, i) =>
       `<span class="fader__seg${i < s.nivel ? " fader__seg--on" : ""}"></span>`
     ).join("");
@@ -26,137 +29,150 @@ export function pintarRack() {
              onerror="this.replaceWith('${s.abrev}')">`
       : s.abrev;
 
+    // Las copias no se anuncian dos veces a los lectores de pantalla
+    const oculto = clon ? ' aria-hidden="true" tabindex="-1"' : ' tabindex="0"';
+
     return `
       <li class="fader" title="${s.nombre}: ${s.nivel} de ${SEGMENTOS}"
-          role="button" tabindex="0" data-indice="${indiceReal}">
+          role="button" data-indice="${indiceReal}"${oculto}>
         <span class="visually-hidden">${s.nombre}: nivel ${s.nivel} de ${SEGMENTOS}. Abrir detalle.</span>
         <span class="fader__escala" aria-hidden="true">${segs}</span>
         <span class="fader__logo" aria-hidden="true">${logo}</span>
       </li>`;
   }
 
-  /* Ancho realmente disponible dentro de la pista */
   function anchoUtil() {
-    if (!pista) return Infinity;
     const e = getComputedStyle(pista);
     const relleno = parseFloat(e.paddingLeft) + parseFloat(e.paddingRight);
     return pista.clientWidth - (relleno || 0);
   }
 
-  /* Separación entre faders, leída del CSS */
   function hueco() {
     return parseFloat(getComputedStyle(rack).gap) || 0;
   }
 
-  /* Ancho de un fader, medido del DOM (más fiable que calcularlo) */
-  function anchoFader() {
-    const uno = rack.querySelector(".fader");
-    return uno ? uno.getBoundingClientRect().width : 52.33;
-  }
-
-  /* Escribe los faders. Con reserva: uno extra a cada lado, invisible,
-     listo para entrar cuando la rueda gire. */
-  function escribir(n, conReserva) {
-    const desde = conReserva ? -1 : 0;
-    const total = conReserva ? n + 2 : n;
-
-    rack.innerHTML = Array.from({ length: total }, (_, i) => {
-      const real = (offset + desde + i + SKILLS.length * 10) % SKILLS.length;
-      return fader(SKILLS[real], real);
-    }).join("");
-
-    rack.style.transition = "none";
-    rack.style.transform = "translateX(0)";
-  }
-
   function pintar() {
-    // Primero se dibuja sin reserva para poder medir un fader real
-    escribir(Math.min(SKILLS.length, 3), false);
+    // Una pasada para medir un fader real
+    rack.innerHTML = SKILLS.map((s, i) => fader(s, i, false)).join("");
 
-    const w = anchoFader();
+    const uno = rack.querySelector(".fader");
+    const w = uno ? uno.getBoundingClientRect().width : 52.33;
     const g = hueco();
-    const util = anchoUtil();
+    const necesario = SKILLS.length * w + (SKILLS.length - 1) * g;
 
-    let n = Math.floor((util + g) / (w + g));
-    n = Math.max(1, Math.min(n, SKILLS.length));
-    enPantalla = n;
+    infinito = necesario > anchoUtil() + 1;
 
-    const sobran = n < SKILLS.length;
-    escribir(n, sobran);
+    if (infinito) {
+      // Tres vueltas seguidas: el scroll salta de una a otra sin que se note
+      let html = "";
+      for (let c = 0; c < COPIAS; c++) {
+        html += SKILLS.map((s, i) => fader(s, i, c !== 1)).join("");
+      }
+      rack.innerHTML = html;
+      anchoBloque = SKILLS.length * (w + g);
 
-    [prev, next].forEach((b) => { if (b) b.hidden = !sobran; });
-    rack.classList.toggle("rack--completo", !sobran);
-    pista?.classList.toggle("rack-pista--recorta", sobran);
+      // Arranca en el bloque del medio, con margen para girar a los dos lados
+      acomodando = true;
+      pista.scrollLeft = anchoBloque;
+      requestAnimationFrame(() => { acomodando = false; });
+    }
+
+    pista.classList.toggle("rack-pista--desliza", infinito);
+    rack.classList.toggle("rack--centrado", !infinito);
+    [prev, next].forEach((b) => { if (b) b.hidden = !infinito; });
   }
 
-  function rotar(dir) {
-    if (girando || enPantalla >= SKILLS.length) return;
-    girando = true;
+  /* Bucle infinito: al pasar de un bloque, se salta al equivalente del medio */
+  pista.addEventListener("scroll", () => {
+    if (!infinito || acomodando || !anchoBloque) return;
 
-    const distancia = (anchoFader() + hueco()) * dir;
+    const x = pista.scrollLeft;
+    if (x < anchoBloque * 0.5) {
+      acomodando = true;
+      pista.scrollLeft = x + anchoBloque;
+      requestAnimationFrame(() => { acomodando = false; });
+    } else if (x > anchoBloque * 1.5) {
+      acomodando = true;
+      pista.scrollLeft = x - anchoBloque;
+      requestAnimationFrame(() => { acomodando = false; });
+    }
+  }, { passive: true });
 
-    // Reflow para que la transición arranque desde la posición actual
-    void rack.offsetWidth;
-    rack.style.transition = "transform .42s cubic-bezier(.22, .61, .36, 1)";
-    rack.style.transform = `translateX(${-distancia}px)`;
-
-    const terminar = () => {
-      rack.removeEventListener("transitionend", terminar);
-      offset = (offset + dir + SKILLS.length) % SKILLS.length;
-      pintar();            // repinta centrado, sin transición
-      girando = false;
-    };
-
-    rack.addEventListener("transitionend", terminar, { once: true });
-    // Respaldo por si transitionend no llega (pestaña en segundo plano)
-    setTimeout(() => { if (girando) terminar(); }, 700);
+  /* Flechas: desplazan poco más de un fader, con scroll suave */
+  function empujar(dir) {
+    if (!infinito) return;
+    const uno = rack.querySelector(".fader");
+    const paso = (uno ? uno.getBoundingClientRect().width : 52) + hueco();
+    pista.scrollBy({ left: paso * 2 * dir, behavior: "smooth" });
   }
 
-  prev?.addEventListener("click", () => rotar(-1));
-  next?.addEventListener("click", () => rotar(1));
+  prev?.addEventListener("click", () => empujar(-1));
+  next?.addEventListener("click", () => empujar(1));
 
-  /* Deslizar con el dedo sobre la pista */
-  let inicioX = null;
-  pista?.addEventListener("touchstart", (e) => {
-    inicioX = e.changedTouches[0].clientX;
-  }, { passive: true });
+  /* Arrastrar con el mouse en desktop (en celular ya funciona el táctil) */
+  let arrastrando = false;
+  let partidaX = 0;
+  let partidaScroll = 0;
+  let movido = 0;
 
-  pista?.addEventListener("touchend", (e) => {
-    if (inicioX === null) return;
-    const recorrido = e.changedTouches[0].clientX - inicioX;
-    if (Math.abs(recorrido) > 40) rotar(recorrido < 0 ? 1 : -1);
-    inicioX = null;
-  }, { passive: true });
+  pista.addEventListener("pointerdown", (e) => {
+    if (e.pointerType === "touch" || !infinito) return;
+    arrastrando = true;
+    movido = 0;
+    partidaX = e.clientX;
+    partidaScroll = pista.scrollLeft;
+    pista.classList.add("rack-pista--agarrada");
+  });
 
-  /* Al cambiar el ANCHO se recalcula cuántos entran y la rueda vuelve al
-     principio. El alto se ignora: en móvil cambia solo al aparecer y
-     desaparecer la barra del navegador, y no afecta cuántos faders caben. */
+  window.addEventListener("pointermove", (e) => {
+    if (!arrastrando) return;
+    const avance = e.clientX - partidaX;
+    movido = Math.max(movido, Math.abs(avance));
+    pista.scrollLeft = partidaScroll - avance;
+  });
+
+  window.addEventListener("pointerup", () => {
+    if (!arrastrando) return;
+    arrastrando = false;
+    pista.classList.remove("rack-pista--agarrada");
+  });
+
+  /* Si se arrastró, el click no debe abrir la carta de la skill */
+  pista.addEventListener("click", (e) => {
+    if (movido > 6) {
+      e.stopPropagation();
+      e.preventDefault();
+      movido = 0;
+    }
+  }, true);
+
+  /* Rueda del mouse en vertical → giro horizontal */
+  pista.addEventListener("wheel", (e) => {
+    if (!infinito) return;
+    if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;  // ya es horizontal
+    e.preventDefault();
+    pista.scrollLeft += e.deltaY;
+  }, { passive: false });
+
+  /* Al cambiar el ancho se recalcula. El alto se ignora: en móvil cambia
+     solo al aparecer y desaparecer la barra del navegador. */
   let anchoPrevio = window.innerWidth;
   let timer;
 
   window.addEventListener("resize", () => {
     if (window.innerWidth === anchoPrevio) return;
     anchoPrevio = window.innerWidth;
-
     clearTimeout(timer);
-    timer = setTimeout(() => {
-      offset = 0;
-      pintar();
-    }, 150);
+    timer = setTimeout(pintar, 150);
   });
 
-  /* Rotar el celular también reinicia la posición */
-  window.addEventListener("orientationchange", () => {
-    offset = 0;
-    setTimeout(pintar, 200);
-  });
+  window.addEventListener("orientationchange", () => setTimeout(pintar, 200));
 
-  /* El ancho de la pista puede cambiar sin que cambie el de la ventana */
-  if ("ResizeObserver" in window && pista) {
+  if ("ResizeObserver" in window) {
     let anchoPista = 0;
     new ResizeObserver(() => {
       const ancho = Math.round(pista.clientWidth);
-      if (ancho === anchoPista || girando) return;
+      if (ancho === anchoPista) return;
       anchoPista = ancho;
       pintar();
     }).observe(pista);

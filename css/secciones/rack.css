@@ -43,34 +43,49 @@
   min-width: 0;        /* deja que el flex lo achique de verdad */
   padding: 44px 10px;
   background: none;
-  touch-action: pan-y; /* el gesto lateral es del carrusel, el vertical scrollea */
 }
 
-/* Solo cuando hay faders de reserva fuera de vista hace falta recortar.
-   En vez de un corte seco se usa una máscara: los bordes se desvanecen,
-   así los faders que entran y salen lo hacen de a poco, como en una
-   rueda, y las sombras del relieve no quedan cortadas a filo. */
-.rack-pista--recorta {
-  overflow: hidden;
+/* Cuando las skills no entran, la pista se vuelve deslizable.
+   El scroll es nativo: así hay inercia en celular y arrastre libre con
+   el mouse. La máscara difumina los bordes en lugar de cortarlos, que
+   es lo que da la sensación de rueda que sigue girando. */
+.rack-pista--desliza {
+  overflow-x: auto;
+  overflow-y: hidden;
+  cursor: grab;
+  /* auto a propósito: el navegador resuelve solo el gesto horizontal sobre
+     la rueda y deja pasar el vertical para scrollear la página. */
+  touch-action: auto;
+  scrollbar-width: none;            /* Firefox */
+  -ms-overflow-style: none;         /* Edge viejo */
+  overscroll-behavior-x: contain;   /* no arrastra la página al llegar al borde */
   /* Franja corta y en píxeles, no en %: alcanza para difuminar el fader
      que asoma sin apagar a los que sí están completos en pantalla. */
   -webkit-mask-image: linear-gradient(90deg,
-    transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+    transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
   mask-image: linear-gradient(90deg,
-    transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
-  /* La máscara se pinta sobre la caja completa, padding incluido: así el
-     área enmascarada abarca la zona donde caen las sombras. */
+    transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
   -webkit-mask-clip: border-box;
   mask-clip: border-box;
 }
+.rack-pista--desliza::-webkit-scrollbar { display: none; }
+.rack-pista--agarrada { cursor: grabbing; }
+.rack-pista--agarrada .fader { pointer-events: none; }
+.rack-pista--desliza img { -webkit-user-drag: none; user-select: none; }
 
 .rack {
   list-style: none; margin: 0; padding: 0;
   display: flex;
   flex-wrap: nowrap;           /* nunca parte a dos filas */
-  justify-content: center;
+  justify-content: flex-start;
+  width: max-content;          /* deja que la fila crezca y se pueda scrollear */
   gap: 14px;
-  will-change: transform;      /* el giro lo anima el JS con transform */
+}
+
+/* Si entran todas, se centran dentro de la pista */
+.rack--centrado {
+  width: 100%;
+  justify-content: center;
 }
 
 /* ── Flechas ── */
@@ -102,7 +117,7 @@
   cursor: pointer;
   transition: transform .18s ease, box-shadow .18s ease;
 }
-.fader:hover { transform: translateY(-3px); }
+.rack-pista:not(.rack-pista--agarrada) .fader:hover { transform: translateY(-3px); }
 
 .fader__escala {
   display: flex; flex-direction: column-reverse; gap: 11px;
