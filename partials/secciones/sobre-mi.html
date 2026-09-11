@@ -20,7 +20,23 @@
 
   <article class="tarjeta tarjeta--rack" aria-labelledby="rack-titulo">
     <h2 class="visually-hidden" id="rack-titulo">Nivel por tecnología</h2>
-    <ul class="rack" id="rack"></ul>
+
+    <!-- Carrusel: una sola fila que rota de forma circular -->
+    <div class="rack-carrusel">
+      <button class="rack-nav rack-nav--prev" id="rack-prev" type="button"
+              aria-label="Ver tecnologías anteriores">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icono-flecha-izq-fina"/></svg>
+      </button>
+
+      <div class="rack-pista" id="rack-pista">
+        <ul class="rack" id="rack"></ul>
+      </div>
+
+      <button class="rack-nav rack-nav--next" id="rack-next" type="button"
+              aria-label="Ver tecnologías siguientes">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icono-flecha-der-fina"/></svg>
+      </button>
+    </div>
 
     <!-- Carta de skill: se superpone al rack al clickear un fader -->
     <div class="carta-skill" id="carta-skill" role="dialog"

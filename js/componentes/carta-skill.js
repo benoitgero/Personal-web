@@ -43,8 +43,11 @@ export function montarCartaSkills() {
 
   function cerrar() {
     carta.hidden = true;
-    // Devuelve el foco al fader que estaba abierto
-    rack.querySelector(`.fader[data-indice="${actual}"]`)?.focus();
+    // Devuelve el foco al fader que estaba abierto. Con el carrusel puede
+    // haber rotado fuera de vista: en ese caso enfoca el primero visible.
+    const destino = rack.querySelector(`.fader[data-indice="${actual}"]`)
+      || rack.querySelector(".fader");
+    destino?.focus();
   }
 
   rack.addEventListener("click", (e) => {
