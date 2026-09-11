@@ -20,11 +20,10 @@ export const PROYECTOS = [
     nombre: "Laguna Garzon",
     titulo: "Laguna Garzon",
     miniatura: "assets/proyectos/rocha-thumb.jpg",
-    video: "assets/proyectos/rocha.mp4",
-    poster: "assets/proyectos/rocha-poster.jpg",
     galeria: [
       "assets/proyectos/rocha-1.jpg",
-      "assets/proyectos/rocha-2.jpg",
+      // La planta lleva cotas: "contener" para que se lea entera
+      { src: "assets/proyectos/rocha-2.jpg", ajuste: "contener" },
       "assets/proyectos/rocha-3.jpg",
     ],
   },
