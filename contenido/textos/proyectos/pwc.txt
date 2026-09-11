@@ -1,0 +1,7 @@
+Año y medio dando soporte técnico L1 en inglés para PricewaterhouseCoopers Estados Unidos, y desde entonces hasta hoy en PwC México. En ambas cuentas el soporte cubre tanto laptops como dispositivos móviles.
+
+El día a día son los problemas que frenan a una oficina entera. GlobalProtect, el cliente VPN: portales mal configurados, conexiones que no levantan, usuarios que se quedan sin acceso a los recursos internos justo cuando los necesitan. Enrolamiento en Company Portal, con todo lo que implica registrar un equipo en la gestión corporativa: dispositivos que no completan el alta, aplicaciones que no bajan, políticas que no se aplican. Y errores de Office en general, desde activación de licencias hasta perfiles de Outlook corruptos y archivos que no sincronizan.
+
+Trabajar en L1 tiene una particularidad que no se ve desde afuera: sos el primer contacto, así que el problema llega sin diagnosticar y muchas veces mal descrito. La mitad del trabajo es traducir lo que el usuario cuenta a lo que realmente está pasando. Alguien dice "no tengo internet" y en realidad el adaptador está bien, pero la VPN dejó el tráfico sin ruta. Aprender a hacer las preguntas correctas rinde más que conocer cien procedimientos.
+
+El pase a la cuenta de México trajo un cambio de contexto que también se aprende: distinta zona horaria, distinta forma de comunicarse, distintos casos frecuentes. Hacer soporte en inglés para Estados Unidos y después para un equipo mexicano me enseñó que adaptar el tono y el vocabulario no es un detalle cosmético, es parte de resolver el problema.

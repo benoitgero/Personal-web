@@ -53,12 +53,15 @@ export const PROYECTOS = [
     ],
   },
   {
-    id: "proyecto-3",
-    nombre: "Proyecto 3",
-    titulo: "Proyecto 3",
-    miniatura: "assets/proyectos/p3-thumb.jpg",
-    video: "assets/proyectos/p3.mp4",
-    poster: "assets/proyectos/p3-poster.jpg",
-    galeria: ["assets/proyectos/p3-1.jpg", "assets/proyectos/p3-2.jpg", "assets/proyectos/p3-3.jpg"],
+    id: "pwc",
+    nombre: "PwC",
+    titulo: "PricewaterhouseCoopers",
+    miniatura: "assets/proyectos/pwc-thumb.jpg",
+    galeria: [
+      // Capturas de interfaz: "contener" para que el texto se lea entero
+      { src: "assets/proyectos/pwc-1.jpg", ajuste: "contener" },
+      { src: "assets/proyectos/pwc-2.jpg", ajuste: "contener" },
+      { src: "assets/proyectos/pwc-3.jpg", ajuste: "contener" },
+    ],
   },
 ];
