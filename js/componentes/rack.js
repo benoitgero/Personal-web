@@ -91,11 +91,28 @@ export function pintarRack() {
     inicioX = null;
   }, { passive: true });
 
-  /* Al cambiar el ancho de la ventana se recalcula cuántos entran */
+  /* Al cambiar el ANCHO se recalcula cuántos entran y el carrusel vuelve
+     al principio, así nunca queda a mitad de camino en un layout nuevo.
+     El alto se ignora a propósito: en móvil cambia solo al aparecer y
+     desaparecer la barra del navegador, y no afecta cuántos faders caben. */
+  let anchoPrevio = window.innerWidth;
   let timer;
+
   window.addEventListener("resize", () => {
+    if (window.innerWidth === anchoPrevio) return;
+    anchoPrevio = window.innerWidth;
+
     clearTimeout(timer);
-    timer = setTimeout(pintar, 150);
+    timer = setTimeout(() => {
+      offset = 0;          // vuelve a la primera skill
+      pintar();
+    }, 150);
+  });
+
+  /* Rotar el celular también reinicia la posición */
+  window.addEventListener("orientationchange", () => {
+    offset = 0;
+    setTimeout(pintar, 200);   // espera a que el layout se asiente
   });
 
   pintar();
