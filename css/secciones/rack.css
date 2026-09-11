@@ -18,9 +18,8 @@
   flex-direction: column;
   align-items: stretch;
   justify-content: center;
-  padding: 2px 14px;
+  padding: 0 14px;
   position: relative;   /* ancla de la carta de skill */
-  overflow: hidden;     /* red de seguridad: nada asoma fuera de la tarjeta */
 }
 
 /* ── Carrusel ── */
@@ -33,14 +32,16 @@
   overflow: visible;
 }
 
-/* El padding vertical es holgado a propósito: overflow:hidden recorta en
-   el borde del padding, así las sombras de los faders caen dentro y no
-   quedan cortadas arriba y abajo. La tarjeta compensa con menos padding
-   propio, para que el alto total no crezca. */
+/* El padding vertical es grande a propósito. Dos motivos:
+   1. overflow:hidden recorta en el borde del padding.
+   2. mask-image recorta TODO lo que quede fuera de la caja, también
+      arriba y abajo, aunque el degradado sea horizontal.
+   Con 44px las sombras de los faders (que llegan a ~28px) caen dentro.
+   La tarjeta cede su padding vertical para que el alto no crezca. */
 .rack-pista {
   flex: 1;
   min-width: 0;        /* deja que el flex lo achique de verdad */
-  padding: 30px 10px;
+  padding: 44px 10px;
   background: none;
   touch-action: pan-y; /* el gesto lateral es del carrusel, el vertical scrollea */
 }
@@ -57,6 +58,10 @@
     transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
   mask-image: linear-gradient(90deg,
     transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+  /* La máscara se pinta sobre la caja completa, padding incluido: así el
+     área enmascarada abarca la zona donde caen las sombras. */
+  -webkit-mask-clip: border-box;
+  mask-clip: border-box;
 }
 
 .rack {
@@ -139,8 +144,8 @@
 @media (max-width: 720px) {
   :root { --fader-ancho: 46px; }
 
-  .tarjeta--rack { padding: 2px 8px; }
-  .rack-pista { padding: 24px 8px; }
+  .tarjeta--rack { padding: 0 8px; }
+  .rack-pista { padding: 38px 8px; }
   .rack { gap: 9px; }
   .fader { min-height: 178px; padding: 10px 0 14px; }
   .fader__seg { width: 25px; height: 15px; }
