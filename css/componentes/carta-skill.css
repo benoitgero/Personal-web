@@ -5,7 +5,10 @@
    ═══════════════════════════════════════════ */
 
 /* La tarjeta del rack pasa a ser el marco de referencia de la carta */
-.tarjeta--rack { position: relative; }
+.tarjeta--rack {
+  position: relative;
+  transition: min-height .28s ease;
+}
 
 /* Los faders ahora son clickeables */
 .fader {
@@ -35,9 +38,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
   gap: 10px;
   padding: 0 6px;
+  overflow-y: auto;
+  min-height: 0;   /* permite que el hijo scrollee dentro del grid */
 }
 
 /* Logo sobre un módulo chico en relieve, como los faders */
@@ -135,7 +141,42 @@
 .carta-skill__cerrar:active { box-shadow: var(--hundido-boton); }
 
 @media (max-width: 720px) {
-  .carta-skill { padding: 24px 12px; gap: 8px; }
-  .carta-skill__flecha { width: 40px; height: 40px; }
-  .carta-skill__texto { font-size: .88rem; }
+  /* En celular la tarjeta del rack es baja y el texto no entra.
+     La carta pasa a columna: contenido arriba con scroll propio y
+     las flechas abajo, donde el pulgar las alcanza. */
+  .carta-skill {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    align-items: stretch;
+    gap: 10px;
+    padding: 46px 14px 14px;   /* deja aire arriba para la cruz */
+  }
+
+  /* El contenido scrollea si no entra, en vez de cortarse */
+  .carta-skill__contenido {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 0 2px;
+    min-height: 0;             /* sin esto el scroll en grid no funciona */
+  }
+
+  /* Las dos flechas comparten la fila de abajo */
+  .carta-skill__flecha {
+    width: 40px; height: 40px;
+    grid-row: 2;
+  }
+  #carta-prev { grid-column: 1; justify-self: start; }
+  #carta-next { grid-column: 1; justify-self: end; }
+
+  .carta-skill__logo { width: 46px; height: 46px; padding: 8px; }
+  .carta-skill__nivel { gap: 7px; }
+  .carta-skill__nivel span { width: 22px; height: 14px; }
+  .carta-skill__texto { font-size: .86rem; line-height: 1.5; }
+  .carta-skill__cerrar { width: 34px; height: 34px; top: 10px; right: 10px; }
+
+  /* Mientras la carta está abierta la tarjeta crece, así el texto
+     tiene lugar. Al cerrarse vuelve a su alto normal. */
+  .tarjeta--rack-abierta { min-height: 440px; }
 }

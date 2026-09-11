@@ -33,9 +33,6 @@
   overflow: visible;
 }
 
-/* Sin overflow:hidden a propósito: recortaría las sombras que dan
-   el relieve a los faders. Como el JS pinta solo los que entran,
-   no hay nada que desbordar. El padding les deja aire alrededor. */
 .rack-pista {
   flex: 1;
   min-width: 0;        /* deja que el flex lo achique de verdad */
@@ -44,18 +41,28 @@
   touch-action: pan-y; /* el gesto lateral es del carrusel, el vertical scrollea */
 }
 
+/* Solo cuando hay faders de reserva fuera de vista hace falta recortar.
+   En vez de un corte seco se usa una máscara: los bordes se desvanecen,
+   así los faders que entran y salen lo hacen de a poco, como en una
+   rueda, y las sombras del relieve no quedan cortadas a filo. */
+.rack-pista--recorta {
+  overflow: hidden;
+  /* Franja corta y en píxeles, no en %: alcanza para difuminar el fader
+     que asoma sin apagar a los que sí están completos en pantalla. */
+  -webkit-mask-image: linear-gradient(90deg,
+    transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+  mask-image: linear-gradient(90deg,
+    transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+}
+
 .rack {
   list-style: none; margin: 0; padding: 0;
   display: flex;
   flex-wrap: nowrap;           /* nunca parte a dos filas */
   justify-content: center;
   gap: 14px;
-  transition: opacity .14s ease, transform .14s ease;
+  will-change: transform;      /* el giro lo anima el JS con transform */
 }
-
-/* Desvanecido hacia el lado al que se mueve */
-.rack--sale-izq { opacity: 0; transform: translateX(-14px); }
-.rack--sale-der { opacity: 0; transform: translateX(14px); }
 
 /* ── Flechas ── */
 .rack-nav {
@@ -139,6 +146,5 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .rack, .fader { transition: none; }
-  .rack--sale-izq, .rack--sale-der { opacity: 1; transform: none; }
+  .rack, .fader { transition: none !important; }
 }

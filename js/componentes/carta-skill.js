@@ -6,6 +6,10 @@ export function montarCartaSkills() {
   const carta = document.getElementById("carta-skill");
   if (!rack || !carta) return;
 
+  // La tarjeta crece mientras la carta está abierta, para que en celular
+  // el texto tenga lugar en vez de quedar recortado.
+  const tarjeta = carta.closest(".tarjeta--rack");
+
   const logo = document.getElementById("carta-logo");
   const titulo = document.getElementById("carta-titulo");
   const nivel = document.getElementById("carta-nivel");
@@ -38,11 +42,13 @@ export function montarCartaSkills() {
   function abrir(i) {
     pintar(i);
     carta.hidden = false;
+    tarjeta?.classList.add("tarjeta--rack-abierta");
     btnCerrar.focus();
   }
 
   function cerrar() {
     carta.hidden = true;
+    tarjeta?.classList.remove("tarjeta--rack-abierta");
     // Devuelve el foco al fader que estaba abierto. Con el carrusel puede
     // haber rotado fuera de vista: en ese caso enfoca el primero visible.
     const destino = rack.querySelector(`.fader[data-indice="${actual}"]`)

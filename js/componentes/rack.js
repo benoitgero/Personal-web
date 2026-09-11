@@ -1,7 +1,7 @@
 /* ── Rack de skills ──
-   Carrusel circular: los faders se muestran siempre en UNA sola fila y
-   las flechas rotan el orden, así nunca se parten en varias líneas ni
-   quedan cortados, sea cual sea el ancho de la pantalla. */
+   Carrusel circular: los faders van SIEMPRE en una sola fila. Las flechas
+   giran la lista como una rueda; a cada lado se dibuja un fader de reserva
+   que queda fuera de la pista y es el que entra en escena al girar. */
 import { SKILLS, SEGMENTOS } from "../../contenido/skills.js";
 
 export function pintarRack() {
@@ -11,8 +11,9 @@ export function pintarRack() {
   const next = document.getElementById("rack-next");
   if (!rack) return;
 
-  /* Desplazamiento del carrusel: cuántas posiciones rotó la lista */
-  let offset = 0;
+  let offset = 0;                   // cuántas posiciones giró la rueda
+  let enPantalla = SKILLS.length;   // cuántos faders se ven ahora
+  let girando = false;              // evita encimar dos giros
 
   function fader(s, indiceReal) {
     const segs = Array.from({ length: SEGMENTOS }, (_, i) =>
@@ -34,54 +35,81 @@ export function pintarRack() {
       </li>`;
   }
 
-  /* Cuántos faders entran en el ancho disponible */
-  function capacidad() {
-    if (!pista) return SKILLS.length;
-    const estilo = getComputedStyle(rack);
-    const hueco = parseFloat(estilo.gap) || 14;
-    const uno = parseFloat(getComputedStyle(document.documentElement)
-      .getPropertyValue("--fader-ancho")) || 52.33;
-    // clientWidth incluye el padding lateral de la pista: hay que restarlo
-    const relleno = parseFloat(getComputedStyle(pista).paddingLeft) * 2 || 0;
-    const util = pista.clientWidth - relleno;
-    const cabe = Math.floor((util + hueco) / (uno + hueco));
-    return Math.max(1, Math.min(cabe, SKILLS.length));
+  /* Ancho realmente disponible dentro de la pista */
+  function anchoUtil() {
+    if (!pista) return Infinity;
+    const e = getComputedStyle(pista);
+    const relleno = parseFloat(e.paddingLeft) + parseFloat(e.paddingRight);
+    return pista.clientWidth - (relleno || 0);
+  }
+
+  /* Separación entre faders, leída del CSS */
+  function hueco() {
+    return parseFloat(getComputedStyle(rack).gap) || 0;
+  }
+
+  /* Ancho de un fader, medido del DOM (más fiable que calcularlo) */
+  function anchoFader() {
+    const uno = rack.querySelector(".fader");
+    return uno ? uno.getBoundingClientRect().width : 52.33;
+  }
+
+  /* Escribe los faders. Con reserva: uno extra a cada lado, invisible,
+     listo para entrar cuando la rueda gire. */
+  function escribir(n, conReserva) {
+    const desde = conReserva ? -1 : 0;
+    const total = conReserva ? n + 2 : n;
+
+    rack.innerHTML = Array.from({ length: total }, (_, i) => {
+      const real = (offset + desde + i + SKILLS.length * 10) % SKILLS.length;
+      return fader(SKILLS[real], real);
+    }).join("");
+
+    rack.style.transition = "none";
+    rack.style.transform = "translateX(0)";
   }
 
   function pintar() {
-    let n = capacidad();
+    // Primero se dibuja sin reserva para poder medir un fader real
+    escribir(Math.min(SKILLS.length, 3), false);
 
-    // Se dibuja y se comprueba contra la realidad: si el cálculo se pasó,
-    // se quita un fader y se vuelve a medir. Más fiable que confiar en
-    // la aritmética, que falla con bordes, márgenes o fuentes distintas.
-    for (let intento = 0; intento < SKILLS.length; intento++) {
-      dibujar(n);
-      if (rack.scrollWidth <= pista.clientWidth + 1 || n <= 1) break;
-      n--;
-    }
+    const w = anchoFader();
+    const g = hueco();
+    const util = anchoUtil();
 
-    // Si entran todas, las flechas no hacen falta
+    let n = Math.floor((util + g) / (w + g));
+    n = Math.max(1, Math.min(n, SKILLS.length));
+    enPantalla = n;
+
     const sobran = n < SKILLS.length;
+    escribir(n, sobran);
+
     [prev, next].forEach((b) => { if (b) b.hidden = !sobran; });
     rack.classList.toggle("rack--completo", !sobran);
+    pista?.classList.toggle("rack-pista--recorta", sobran);
   }
 
-  function dibujar(n) {
-    // Se toman n skills a partir del offset, dando la vuelta al final
-    rack.innerHTML = Array.from({ length: n }, (_, i) => {
-      const real = (offset + i + SKILLS.length * 10) % SKILLS.length;
-      return fader(SKILLS[real], real);
-    }).join("");
-  }
+  function rotar(dir) {
+    if (girando || enPantalla >= SKILLS.length) return;
+    girando = true;
 
-  function rotar(paso) {
-    offset = (offset + paso + SKILLS.length) % SKILLS.length;
-    rack.classList.add(paso > 0 ? "rack--sale-izq" : "rack--sale-der");
-    // Espera a que termine el desvanecido antes de repintar
-    setTimeout(() => {
-      pintar();
-      rack.classList.remove("rack--sale-izq", "rack--sale-der");
-    }, 140);
+    const distancia = (anchoFader() + hueco()) * dir;
+
+    // Reflow para que la transición arranque desde la posición actual
+    void rack.offsetWidth;
+    rack.style.transition = "transform .42s cubic-bezier(.22, .61, .36, 1)";
+    rack.style.transform = `translateX(${-distancia}px)`;
+
+    const terminar = () => {
+      rack.removeEventListener("transitionend", terminar);
+      offset = (offset + dir + SKILLS.length) % SKILLS.length;
+      pintar();            // repinta centrado, sin transición
+      girando = false;
+    };
+
+    rack.addEventListener("transitionend", terminar, { once: true });
+    // Respaldo por si transitionend no llega (pestaña en segundo plano)
+    setTimeout(() => { if (girando) terminar(); }, 700);
   }
 
   prev?.addEventListener("click", () => rotar(-1));
@@ -100,9 +128,8 @@ export function pintarRack() {
     inicioX = null;
   }, { passive: true });
 
-  /* Al cambiar el ANCHO se recalcula cuántos entran y el carrusel vuelve
-     al principio, así nunca queda a mitad de camino en un layout nuevo.
-     El alto se ignora a propósito: en móvil cambia solo al aparecer y
+  /* Al cambiar el ANCHO se recalcula cuántos entran y la rueda vuelve al
+     principio. El alto se ignora: en móvil cambia solo al aparecer y
      desaparecer la barra del navegador, y no afecta cuántos faders caben. */
   let anchoPrevio = window.innerWidth;
   let timer;
@@ -113,28 +140,27 @@ export function pintarRack() {
 
     clearTimeout(timer);
     timer = setTimeout(() => {
-      offset = 0;          // vuelve a la primera skill
+      offset = 0;
       pintar();
     }, 150);
   });
 
-  /* ResizeObserver mira el ancho real de la pista, que puede cambiar sin
-     que cambie el de la ventana (por ejemplo al apilarse el layout). */
+  /* Rotar el celular también reinicia la posición */
+  window.addEventListener("orientationchange", () => {
+    offset = 0;
+    setTimeout(pintar, 200);
+  });
+
+  /* El ancho de la pista puede cambiar sin que cambie el de la ventana */
   if ("ResizeObserver" in window && pista) {
     let anchoPista = 0;
     new ResizeObserver(() => {
       const ancho = Math.round(pista.clientWidth);
-      if (ancho === anchoPista) return;
+      if (ancho === anchoPista || girando) return;
       anchoPista = ancho;
       pintar();
     }).observe(pista);
   }
-
-  /* Rotar el celular también reinicia la posición */
-  window.addEventListener("orientationchange", () => {
-    offset = 0;
-    setTimeout(pintar, 200);   // espera a que el layout se asiente
-  });
 
   pintar();
 }
