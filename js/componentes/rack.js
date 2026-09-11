@@ -49,20 +49,29 @@ export function pintarRack() {
   }
 
   function pintar() {
-    const n = capacidad();
+    let n = capacidad();
 
-    // Se toman n skills a partir del offset, dando la vuelta al llegar al final
-    const visibles = Array.from({ length: n }, (_, i) => {
-      const real = (offset + i + SKILLS.length * 10) % SKILLS.length;
-      return fader(SKILLS[real], real);
-    });
-
-    rack.innerHTML = visibles.join("");
+    // Se dibuja y se comprueba contra la realidad: si el cálculo se pasó,
+    // se quita un fader y se vuelve a medir. Más fiable que confiar en
+    // la aritmética, que falla con bordes, márgenes o fuentes distintas.
+    for (let intento = 0; intento < SKILLS.length; intento++) {
+      dibujar(n);
+      if (rack.scrollWidth <= pista.clientWidth + 1 || n <= 1) break;
+      n--;
+    }
 
     // Si entran todas, las flechas no hacen falta
     const sobran = n < SKILLS.length;
     [prev, next].forEach((b) => { if (b) b.hidden = !sobran; });
     rack.classList.toggle("rack--completo", !sobran);
+  }
+
+  function dibujar(n) {
+    // Se toman n skills a partir del offset, dando la vuelta al final
+    rack.innerHTML = Array.from({ length: n }, (_, i) => {
+      const real = (offset + i + SKILLS.length * 10) % SKILLS.length;
+      return fader(SKILLS[real], real);
+    }).join("");
   }
 
   function rotar(paso) {
@@ -108,6 +117,18 @@ export function pintarRack() {
       pintar();
     }, 150);
   });
+
+  /* ResizeObserver mira el ancho real de la pista, que puede cambiar sin
+     que cambie el de la ventana (por ejemplo al apilarse el layout). */
+  if ("ResizeObserver" in window && pista) {
+    let anchoPista = 0;
+    new ResizeObserver(() => {
+      const ancho = Math.round(pista.clientWidth);
+      if (ancho === anchoPista) return;
+      anchoPista = ancho;
+      pintar();
+    }).observe(pista);
+  }
 
   /* Rotar el celular también reinicia la posición */
   window.addEventListener("orientationchange", () => {

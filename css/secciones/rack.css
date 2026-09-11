@@ -6,14 +6,21 @@
   --fader-ancho: 52.33px;
 }
 
+/* Ojo: NO usar place-items:center acá. Eso hace que el ancho lo defina
+   el contenido, y el carrusel necesita lo contrario: conocer el ancho
+   disponible para calcular cuántos faders entran. */
 .tarjeta--rack {
   background: var(--superficie);
   box-shadow:
     var(--relieve-xl),
     inset 0 0 0px rgba(255, 255, 255, .55);
-  display: grid; place-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
   padding: 28px 14px;
   position: relative;   /* ancla de la carta de skill */
+  overflow: hidden;     /* red de seguridad: nada asoma fuera de la tarjeta */
 }
 
 /* ── Carrusel ── */
