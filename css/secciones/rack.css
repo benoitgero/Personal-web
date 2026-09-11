@@ -18,7 +18,7 @@
   flex-direction: column;
   align-items: stretch;
   justify-content: center;
-  padding: 28px 14px;
+  padding: 2px 14px;
   position: relative;   /* ancla de la carta de skill */
   overflow: hidden;     /* red de seguridad: nada asoma fuera de la tarjeta */
 }
@@ -27,16 +27,20 @@
 .rack-carrusel {
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: center;   /* las flechas se centran con la altura de la pista */
   gap: 2px;
   background: none;
   overflow: visible;
 }
 
+/* El padding vertical es holgado a propósito: overflow:hidden recorta en
+   el borde del padding, así las sombras de los faders caen dentro y no
+   quedan cortadas arriba y abajo. La tarjeta compensa con menos padding
+   propio, para que el alto total no crezca. */
 .rack-pista {
   flex: 1;
   min-width: 0;        /* deja que el flex lo achique de verdad */
-  padding: 6px 10px;
+  padding: 30px 10px;
   background: none;
   touch-action: pan-y; /* el gesto lateral es del carrusel, el vertical scrollea */
 }
@@ -135,7 +139,8 @@
 @media (max-width: 720px) {
   :root { --fader-ancho: 46px; }
 
-  .tarjeta--rack { padding: 22px 8px; }
+  .tarjeta--rack { padding: 2px 8px; }
+  .rack-pista { padding: 24px 8px; }
   .rack { gap: 9px; }
   .fader { min-height: 178px; padding: 10px 0 14px; }
   .fader__seg { width: 25px; height: 15px; }
