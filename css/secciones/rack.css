@@ -21,13 +21,19 @@
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 2px;
+  background: none;
+  overflow: visible;
 }
 
+/* Sin overflow:hidden a propósito: recortaría las sombras que dan
+   el relieve a los faders. Como el JS pinta solo los que entran,
+   no hay nada que desbordar. El padding les deja aire alrededor. */
 .rack-pista {
   flex: 1;
   min-width: 0;        /* deja que el flex lo achique de verdad */
-  overflow: hidden;
+  padding: 6px 10px;
+  background: none;
   touch-action: pan-y; /* el gesto lateral es del carrusel, el vertical scrollea */
 }
 

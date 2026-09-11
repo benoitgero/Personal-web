@@ -41,7 +41,10 @@ export function pintarRack() {
     const hueco = parseFloat(estilo.gap) || 14;
     const uno = parseFloat(getComputedStyle(document.documentElement)
       .getPropertyValue("--fader-ancho")) || 52.33;
-    const cabe = Math.floor((pista.clientWidth + hueco) / (uno + hueco));
+    // clientWidth incluye el padding lateral de la pista: hay que restarlo
+    const relleno = parseFloat(getComputedStyle(pista).paddingLeft) * 2 || 0;
+    const util = pista.clientWidth - relleno;
+    const cabe = Math.floor((util + hueco) / (uno + hueco));
     return Math.max(1, Math.min(cabe, SKILLS.length));
   }
 
