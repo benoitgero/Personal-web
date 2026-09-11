@@ -54,7 +54,7 @@ export const PROYECTOS = [
   {
     id: "pwc",
     nombre: "PwC",
-    titulo: "PricewaterhouseCoopers",
+    titulo: "Price waterhouse Coopers",
     miniatura: "assets/proyectos/pwc-thumb.jpg",
     galeria: [
       // Capturas de interfaz: "contener" para que el texto se lea entero
