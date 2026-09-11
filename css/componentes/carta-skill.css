@@ -39,11 +39,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  justify-content: safe center;
   text-align: center;
   gap: 10px;
-  padding: 0 6px;
+  padding: 10px 8px;   /* aire para que las sombras no se corten */
   overflow-y: auto;
-  min-height: 0;   /* permite que el hijo scrollee dentro del grid */
+  min-height: 0;       /* permite que el hijo scrollee dentro del grid */
 }
 
 /* Logo sobre un módulo chico en relieve, como los faders */
@@ -52,7 +53,11 @@
   display: grid; place-items: center;
   background: var(--modulo);
   border-radius: 8.39px;
-  box-shadow: var(--relieve-boton);
+  /* Relieve corto a propósito: el del rack tiene 23px de difuminado y se
+     cortaría contra el borde del contenido, que lleva scroll propio. */
+  box-shadow:
+     4px  4px 10px rgba(0, 0, 0, .20),
+    -3px -3px  8px rgba(255, 255, 255, .90);
   padding: 10px;
   font-family: var(--display);
   font-size: .7rem;
@@ -156,9 +161,10 @@
   .carta-skill__contenido {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    justify-content: flex-start;
+    justify-content: center;
+    justify-content: safe center;
     gap: 8px;
-    padding: 0 2px;
+    padding: 8px 4px;
     min-height: 0;             /* sin esto el scroll en grid no funciona */
   }
 
@@ -176,7 +182,8 @@
   .carta-skill__texto { font-size: .86rem; line-height: 1.5; }
   .carta-skill__cerrar { width: 34px; height: 34px; top: 10px; right: 10px; }
 
-  /* Mientras la carta está abierta la tarjeta crece, así el texto
-     tiene lugar. Al cerrarse vuelve a su alto normal. */
-  .tarjeta--rack-abierta { min-height: 440px; }
+  /* Mientras la carta está abierta la tarjeta crece, así el texto tiene
+     lugar. 380px alcanza para un párrafo largo; si alguno se pasa, el
+     contenido scrollea. Al cerrarse vuelve a su alto normal. */
+  .tarjeta--rack-abierta { min-height: 380px; }
 }
