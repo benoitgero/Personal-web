@@ -41,13 +41,16 @@ export const PROYECTOS = [
     ],
   },
   {
-    id: "proyecto-2",
-    nombre: "Proyecto 2",
-    titulo: "Proyecto 2",
-    miniatura: "assets/proyectos/p2-thumb.jpg",
-    video: "assets/proyectos/p2.mp4",
-    poster: "assets/proyectos/p2-poster.jpg",
-    galeria: ["assets/proyectos/p2-1.jpg", "assets/proyectos/p2-2.jpg", "assets/proyectos/p2-3.jpg"],
+    id: "winserver",
+    nombre: "Windows Server",
+    titulo: "Windows Server",
+    miniatura: "assets/proyectos/winserver-thumb.jpg",
+    galeria: [
+      // Diagramas y capturas: "contener" para que se lean enteros
+      { src: "assets/proyectos/winserver-1.jpg", ajuste: "contener" },
+      "assets/proyectos/winserver-2.jpg",
+      { src: "assets/proyectos/winserver-3.jpg", ajuste: "contener" },
+    ],
   },
   {
     id: "proyecto-3",
