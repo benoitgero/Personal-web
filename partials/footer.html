@@ -4,10 +4,41 @@
   <div class="pie__barra"></div>
 
   <div class="pie__acciones">
-    <a class="pie__cv" href="cv.pdf" download>
-      <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icono-descarga"/></svg>
-      Descargar CV
-    </a>
+    <!-- Desplegable con las cuatro versiones del CV.
+         La lógica vive en js/componentes/cv.js -->
+    <div class="cv" id="cv">
+      <button class="pie__cv" id="cv-boton" type="button"
+              aria-expanded="false" aria-controls="cv-menu" aria-haspopup="true">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icono-descarga"/></svg>
+        Descargar CV
+        <svg class="cv__chevron" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="none" stroke="currentColor" stroke-width="2.4"
+                stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/>
+        </svg>
+      </button>
+
+      <ul class="cv__menu" id="cv-menu" role="menu" hidden>
+        <li class="cv__grupo" role="presentation">Español</li>
+        <li role="none">
+          <a class="cv__opcion" role="menuitem" download
+             href="cv/CV-Geronimo-Benoit-ES-sin-foto.pdf">Sin foto</a>
+        </li>
+        <li role="none">
+          <a class="cv__opcion" role="menuitem" download
+             href="cv/CV-Geronimo-Benoit-ES-con-foto.pdf">Con foto</a>
+        </li>
+
+        <li class="cv__grupo" role="presentation">English</li>
+        <li role="none">
+          <a class="cv__opcion" role="menuitem" download
+             href="cv/CV-Geronimo-Benoit-EN-sin-foto.pdf">No photo</a>
+        </li>
+        <li role="none">
+          <a class="cv__opcion" role="menuitem" download
+             href="cv/CV-Geronimo-Benoit-EN-con-foto.pdf">With photo</a>
+        </li>
+      </ul>
+    </div>
 
     <nav class="pie__redes" aria-label="Redes">
       <a class="red" href="https://www.linkedin.com/in/ger%C3%B3nimo-benoit-5b4021152/"

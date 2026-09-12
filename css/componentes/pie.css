@@ -43,7 +43,8 @@
 
 /* CV a la derecha */
 .pie__cv {
-  order: 2;
+  border: 0;
+  cursor: pointer;
   display: inline-flex; align-items: center; gap: 10px;
   padding: 13px 26px;
   border-radius: 999px;
@@ -68,6 +69,83 @@
 
 @media (max-width: 560px) {
   .pie__acciones { flex-direction: column; gap: 20px; padding: 26px 20px 34px; }
-  .pie__cv { order: 0; }
+  .cv { order: 0; }
   .pie__redes { gap: 34px; }
+}
+
+/* ═══════════════════════════════════════════
+   DESPLEGABLE DEL CV
+   Cuatro versiones: ES/EN, con y sin foto.
+   ═══════════════════════════════════════════ */
+.cv {
+  order: 2;
+  position: relative;
+}
+
+.cv__chevron {
+  width: 14px; height: 14px;
+  transition: transform .2s ease;
+}
+.cv--abierto .cv__chevron { transform: rotate(180deg); }
+
+/* Se abre hacia ARRIBA: el botón vive al pie de la página */
+.cv__menu {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  min-width: 190px;
+  margin: 0;
+  padding: 8px;
+  list-style: none;
+  border-radius: 14px;
+  background: var(--superficie-alt, #eef1f4);
+  box-shadow: var(--relieve-boton), 0 10px 30px rgba(0, 0, 0, .18);
+  opacity: 0;
+  transition: opacity .18s ease, transform .18s ease;
+  z-index: 20;
+}
+.cv--abierto .cv__menu {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.cv__menu[hidden] { display: none; }
+
+.cv__grupo {
+  padding: 7px 12px 3px;
+  font-family: var(--display);
+  font-size: .6rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--texto-suave, #78716c);
+}
+
+.cv__opcion {
+  display: block;
+  padding: 9px 12px;
+  border-radius: 8px;
+  color: var(--texto, #3f3f46);
+  text-decoration: none;
+  font-size: .82rem;
+  transition: background .15s ease, color .15s ease;
+}
+.cv__opcion:hover,
+.cv__opcion:focus-visible {
+  background: var(--acento, #3ad4db);
+  color: #073a3d;
+}
+
+/* Flechita que apunta al botón */
+.cv__menu::after {
+  content: "";
+  position: absolute;
+  top: 100%; left: 50%;
+  margin-left: -7px;
+  border: 7px solid transparent;
+  border-top-color: var(--superficie-alt, #eef1f4);
+}
+
+@media (max-width: 560px) {
+  .cv__menu { min-width: 200px; }
 }
