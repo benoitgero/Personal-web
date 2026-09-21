@@ -1,46 +1,26 @@
-/* ── Portal de entrada: verificación anti-bot ligera ──
-   Tres pruebas que un navegador real pasa sin darse cuenta y que
-   los scrapers básicos (curl, requests, muchos headless mal
-   configurados) no pasan:
-   1. Ejecutar JS (si llegamos acá, ya pasó).
-   2. No declararse automatizado (navigator.webdriver).
-   3. Producir frames de render reales (requestAnimationFrame). */
+/* ── Pantalla de carga de entrada ──
+   Se muestra 3 segundos una vez por sesión y se retira sola.
+   Ya no filtra bots: el sitio tiene que poder leerse también desde
+   herramientas automatizadas (reclutadores que usan IA, buscadores).
+
+   Además el CSS la oculta por su cuenta a los 3s (ver portal.css):
+   si el JS no corre, la pantalla igual desaparece y no tapa nada. */
+const DURACION = 3000;
+
 export function montarPortal() {
   const portal = document.getElementById("portal");
   if (!portal) return;
+
+  // Esta sesión ya la vio: se retira sin mostrarse
   if (document.documentElement.classList.contains("verificado")) {
     portal.remove();
     return;
   }
 
-  const texto = document.getElementById("portal-texto");
-  const inicio = performance.now();
-  const MINIMO_VISIBLE = 3000; // duración de la pantalla de carga
-
-  let frames = 0;
-  function contarFrames() {
-    frames++;
-    if (frames < 4) requestAnimationFrame(contarFrames);
-    else evaluar();
-  }
-  requestAnimationFrame(contarFrames);
-
-  // Red de seguridad: si algo falla, nadie queda afuera del sitio
-  const rescate = setTimeout(() => despedir(), 8000);
-
-  function evaluar() {
-    const automatizado = navigator.webdriver === true;
-    if (automatizado && texto) {
-      texto.textContent = "Navegador automatizado detectado";
-    }
-    // A los automatizados se los demora; a los humanos se los deja pasar.
-    const espera = automatizado ? 5000 : Math.max(0, MINIMO_VISIBLE - (performance.now() - inicio));
-    setTimeout(despedir, espera);
-  }
+  setTimeout(despedir, DURACION);
 
   function despedir() {
-    clearTimeout(rescate);
-    try { sessionStorage.setItem("portal-ok", "1"); } catch (e) {}
+    try { sessionStorage.setItem("portal-ok", "1"); } catch (e) { /* modo privado */ }
     portal.classList.add("portal--saliendo");
     portal.addEventListener("transitionend", () => portal.remove(), { once: true });
     // Por si transitionend no dispara (reduced motion)

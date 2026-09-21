@@ -28,6 +28,10 @@ async function iniciar() {
   // El resto del sitio necesita que los partials ya estén en el DOM
   await Promise.all([inyectarIconos(), incluirParciales()]);
 
+  // Las secciones reales ya están: el resumen de texto plano (pensado
+  // para crawlers sin JavaScript) deja de hacer falta.
+  document.getElementById("resumen")?.remove();
+
   pintarRack();
   montarCartaSkills();
   await Promise.all([montarHistorias(), montarProyectos()]);

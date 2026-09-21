@@ -6,6 +6,7 @@
 import { SKILLS, SEGMENTOS } from "../../contenido/skills.js";
 
 const COPIAS = 3;   // bloques idénticos: el del medio es el que se ve
+const UMBRAL = 6;   // px que hay que mover el mouse para que cuente como arrastre
 
 export function pintarRack() {
   const rack = document.getElementById("rack");
@@ -121,14 +122,20 @@ export function pintarRack() {
     movido = 0;
     partidaX = e.clientX;
     partidaScroll = pista.scrollLeft;
-    pista.classList.add("rack-pista--agarrada");
+    // La clase "agarrada" NO se pone acá: si se pusiera al apretar,
+    // un simple clic se trataría como arrastre y no abriría la carta.
   });
 
   window.addEventListener("pointermove", (e) => {
     if (!arrastrando) return;
     const avance = e.clientX - partidaX;
     movido = Math.max(movido, Math.abs(avance));
-    pista.scrollLeft = partidaScroll - avance;
+
+    // Recién con un desplazamiento real se considera arrastre
+    if (movido > UMBRAL) {
+      pista.classList.add("rack-pista--agarrada");
+      pista.scrollLeft = partidaScroll - avance;
+    }
   });
 
   window.addEventListener("pointerup", () => {
@@ -139,7 +146,7 @@ export function pintarRack() {
 
   /* Si se arrastró, el click no debe abrir la carta de la skill */
   pista.addEventListener("click", (e) => {
-    if (movido > 6) {
+    if (movido > UMBRAL) {
       e.stopPropagation();
       e.preventDefault();
       movido = 0;

@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════
-   PORTAL DE ENTRADA (verificación anti-bot)
+   PANTALLA DE CARGA DE ENTRADA
    Pantalla del mismo material que el sitio. Los LEDs de progreso
    citan al rack de skills: es la primera pieza de la identidad.
    (js/componentes/portal.js; el markup vive en index.html)
@@ -13,6 +13,13 @@
   background: var(--fondo);
   opacity: 1;
   transition: opacity .45s var(--curva);
+  /* Se retira sola a los 3s aunque el JS no corra: así nunca queda
+     tapando la página para un visitante o crawler sin JavaScript. */
+  animation: portal-retira .45s var(--curva) 3s forwards;
+}
+
+@keyframes portal-retira {
+  to { opacity: 0; visibility: hidden; pointer-events: none; }
 }
 
 /* Sesión ya verificada (clase puesta por el script inline del head):

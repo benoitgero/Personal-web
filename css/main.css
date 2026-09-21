@@ -17,6 +17,7 @@
 @import url("componentes/header.css");
 @import url("componentes/traductor.css");
 @import url("layout.css");
+@import url("componentes/resumen.css");
 
 /* Secciones, en el orden en que aparecen */
 @import url("secciones/sobre-mi.css");

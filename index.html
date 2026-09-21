@@ -4,7 +4,82 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Gerónimo Benoit — Infraestructura y arquitectura de sistemas</title>
-<meta name="description" content="Combino la pasión por la tecnología con una mentalidad de diseño. Windows Server, virtualización y nube.">
+<meta name="description" content="Gerónimo Benoit, Cloud & Infrastructure Engineer en Montevideo. Windows Server, Hyper-V, clústeres de alta disponibilidad, AWS y Azure. Certificado AWS Cloud Practitioner.">
+<meta name="author" content="Gerónimo Benoit">
+<meta name="robots" content="index, follow">
+
+<!-- Vista previa al compartir el link (LinkedIn, WhatsApp, Slack) -->
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Gerónimo Benoit — Cloud & Infrastructure Engineer">
+<meta property="og:description" content="Windows Server, Hyper-V, alta disponibilidad, AWS y Azure. Montevideo, Uruguay.">
+<meta property="og:image" content="https://benoitgero.github.io/Personal-web/assets/foto.jpg">
+<meta property="og:url" content="https://benoitgero.github.io/Personal-web/">
+
+<!-- Datos estructurados: buscadores e IAs los leen sin ejecutar JS -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Gerónimo Benoit",
+  "jobTitle": "Cloud & Infrastructure Engineer",
+  "url": "https://benoitgero.github.io/Personal-web/",
+  "image": "https://benoitgero.github.io/Personal-web/assets/foto.jpg",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Montevideo",
+    "addressCountry": "UY"
+  },
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Tata Consultancy Services"
+  },
+  "alumniOf": [
+    {
+      "@type": "EducationalOrganization",
+      "name": "Centro de Ensayos de Software (CES)"
+    },
+    {
+      "@type": "EducationalOrganization",
+      "name": "Fundación Forge — AWS re/Start"
+    },
+    {
+      "@type": "EducationalOrganization",
+      "name": "Facultad de Arquitectura, Diseño y Urbanismo — Universidad de la República"
+    },
+    {
+      "@type": "EducationalOrganization",
+      "name": "Jóvenes a Programar — Ceibal"
+    }
+  ],
+  "hasCredential": {
+    "@type": "EducationalOccupationalCredential",
+    "name": "AWS Certified Cloud Practitioner"
+  },
+  "knowsAbout": [
+    "Windows Server",
+    "Hyper-V",
+    "Failover Clustering",
+    "Storage Spaces Direct",
+    "Active Directory",
+    "AWS",
+    "Microsoft Azure",
+    "Linux",
+    "Microsoft 365",
+    "Intune",
+    "Software testing",
+    "JavaScript",
+    "Python"
+  ],
+  "knowsLanguage": [
+    "es",
+    "en"
+  ],
+  "sameAs": [
+    "https://www.linkedin.com/in/ger%C3%B3nimo-benoit-5b4021152/",
+    "https://github.com/benoitgero"
+  ]
+}
+</script>
 
 <link rel="icon" href="favicon.ico" sizes="16x16 32x32">
 <link rel="icon" type="image/png" href="icon-192.png" sizes="192x192">
@@ -18,33 +93,26 @@
 <link rel="stylesheet" href="css/main.css">
 
 <script>
-/* Si esta sesión ya pasó la verificación, se marca el html ANTES del
-   primer render y el portal no llega a mostrarse ni un frame. */
+/* Si esta sesión ya vio la pantalla de carga, se marca el html ANTES
+   del primer render y no vuelve a mostrarse ni un frame. */
+document.documentElement.classList.add("js");   // oculta el resumen estático
 try { if (sessionStorage.getItem("portal-ok")) document.documentElement.classList.add("verificado"); } catch (e) {}
 </script>
 </head>
 <body>
 
-<!-- ══════════ VERIFICACIÓN DE ENTRADA ══════════
-     Pantalla de carga que filtra bots simples: exige un navegador
-     que ejecute JS de verdad. Se muestra una vez por sesión.
-     NOTA: este bloque vive acá (y no en un partial) a propósito:
-     tiene que renderizarse en el primer frame, antes de que el
-     cargador de partials traiga el resto del sitio. -->
+<!-- ══════════ PANTALLA DE CARGA ══════════
+     Se muestra 3 segundos una vez por sesión. Vive inline porque tiene
+     que pintarse en el primer frame, antes de que lleguen los partials.
+     El CSS la retira sola aunque el JS no corra. -->
 <div class="portal" id="portal" aria-hidden="true">
   <div class="portal__nucleo">
     <div class="portal__logo">G</div>
     <div class="portal__leds" aria-hidden="true">
       <span></span><span></span><span></span><span></span><span></span>
     </div>
-    <p class="portal__texto" id="portal-texto">Verificando el navegador…</p>
+    <p class="portal__texto" id="portal-texto">Cargando…</p>
   </div>
-  <noscript>
-    <p class="portal__noscript">
-      Este sitio necesita JavaScript para verificar que no sos un robot.
-      Activalo y recargá la página.
-    </p>
-  </noscript>
 </div>
 
 <a class="saltar" href="#contenido">Saltar al contenido</a>
@@ -53,6 +121,64 @@ try { if (sessionStorage.getItem("portal-ok")) document.documentElement.classLis
 <div data-include="partials/header.html"></div>
 
 <main id="contenido">
+  <!-- ══════════ RESUMEN ESTÁTICO ══════════
+       El sitio se arma con JavaScript, y la mayoría de los crawlers de IA
+       y herramientas de reclutamiento NO ejecutan JS: sin esto verían la
+       página vacía. Este bloque tiene el mismo contenido que el sitio en
+       texto plano. main.js lo retira apenas cargan las secciones reales,
+       así que un visitante con navegador normal nunca lo ve. -->
+  <section class="resumen" id="resumen">
+    <h1>Gerónimo Benoit — Cloud &amp; Infrastructure Engineer</h1>
+    <p>Montevideo, Uruguay ·
+      <a href="https://www.linkedin.com/in/ger%C3%B3nimo-benoit-5b4021152/">LinkedIn</a> ·
+      <a href="https://github.com/benoitgero">GitHub</a> ·
+      <a href="https://wa.me/59895929064">WhatsApp</a></p>
+
+    <p>Profesional de infraestructura con experiencia en Windows Server, virtualización
+    y nube. Certificado AWS Cloud Practitioner. Combino la pasión por la tecnología con
+    una mentalidad de diseño y aspiro a crecer hacia la arquitectura de sistemas.</p>
+
+    <h2>Currículum</h2>
+    <ul>
+      <li><a href="cv/CV-Geronimo-Benoit-ES-sin-foto.pdf">CV en español (PDF)</a></li>
+      <li><a href="cv/CV-Geronimo-Benoit-EN-sin-foto.pdf">CV in English (PDF)</a></li>
+    </ul>
+
+    <h2>Experiencia</h2>
+    <ul>
+      <li><strong>Tata Consultancy Services — Analista de soporte, PwC México</strong> (may 2026 – presente).
+        Soporte sobre laptops y móviles: VPN GlobalProtect, enrolamiento en Company Portal, Microsoft Office.</li>
+      <li><strong>Tata Consultancy Services — Soporte técnico L1 en inglés, PwC Estados Unidos</strong> (nov 2024 – may 2026).
+        Soporte sobre laptops y móviles a usuarios corporativos.</li>
+      <li><strong>Tata Consultancy Services — Support Engineer, Storage &amp; High Availability (cuenta Microsoft)</strong> (nov 2023 – nov 2024).
+        Soporte a clientes de Windows Server: clústeres de conmutación por error, Hyper-V, CSV, Storage Spaces Direct, quórum.</li>
+      <li><strong>Switch Software Solutions — Tester manual (pasantía)</strong> (2022, 3 meses).
+        Casos de prueba en Jira sobre una app web y una app Android.</li>
+    </ul>
+
+    <h2>Formación</h2>
+    <ul>
+      <li>AWS re/Start — Fundación Forge junto a Amazon Web Services (2022 – 2023). Certificación AWS Cloud Practitioner.</li>
+      <li>Diploma de Tester de Software — Centro de Ensayos de Software, Universidad de la República (2021 – 2022), con beca.</li>
+      <li>Facultad de Arquitectura, Diseño y Urbanismo — Udelar (2023 – 2024). Primer año completo; AutoCAD, SketchUp, Twinmotion.</li>
+      <li>Jóvenes a Programar — Ceibal (2021). Programación orientada a objetos, testing y GeneXus.</li>
+    </ul>
+
+    <h2>Competencias</h2>
+    <p>Windows Server · Hyper-V · Failover Clustering · Storage Spaces Direct · Active Directory ·
+    AWS · Microsoft Azure · Linux · Microsoft 365 · Intune · GlobalProtect · HTML · CSS · JavaScript ·
+    Python · GeneXus · Jira · Figma · AutoCAD · SketchUp</p>
+
+    <h2>Proyectos</h2>
+    <ul>
+      <li>Laboratorio de alta disponibilidad: clúster de conmutación por error con dos nodos Hyper-V,
+        Active Directory replicado, volúmenes sobre S2D y cloud witness en Azure.</li>
+      <li>Laguna Garzón: edificio educativo para guardaparques con muros de gaviones rellenos de escombros reciclados.</li>
+      <li>Tokyo: vivienda entre medianeras que cruza brutalismo y wabi-sabi.</li>
+    </ul>
+
+    <p>Idiomas: español (nativo), inglés (profesional).</p>
+  </section>
   <!-- Cada sección vive en su propio archivo dentro de partials/secciones/ -->
   <div data-include="partials/secciones/sobre-mi.html"></div>
   <div data-include="partials/secciones/historias.html"></div>
