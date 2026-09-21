@@ -44,7 +44,7 @@
   cursor: pointer;
   transition: box-shadow var(--trans), color var(--trans), text-shadow var(--trans), transform var(--trans);
 }
-.tab:hover { color: #9aa4ba; }
+.tab:hover { color: var(--texto-fuerte); }
 
 /* El activo se hunde y su texto sube a oscuro sólido */
 .tab[aria-selected="true"] {

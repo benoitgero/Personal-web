@@ -9,8 +9,8 @@ body {
   margin: 0;
   background: var(--fondo);
   color: var(--texto);
-  font-family: var(--texto-fam);
-  font-size: 16.5px;
+  font-family: var(--lectura);
+  font-size: 17px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
@@ -29,7 +29,6 @@ img { max-width: 100%; display: block; }
 /* Ninguna imagen se estira: si no coincide con el hueco, se recorta */
 .about__foto,
 .panel__imagen,
-.banda__imagen,
 .miniatura img,
 .proyecto__galeria img {
   object-fit: cover;

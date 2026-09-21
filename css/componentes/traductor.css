@@ -73,7 +73,7 @@
 }
 
 .idioma:hover .idioma__opcion--es,
-.idioma:hover .idioma__opcion--en { color: #aab3c5; }
+.idioma:hover .idioma__opcion--en { color: var(--texto-fuerte); }
 
 /* El hover no debe apagar la etiqueta activa */
 .idioma[aria-checked="false"]:hover .idioma__opcion--es,

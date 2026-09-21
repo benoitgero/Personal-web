@@ -6,7 +6,7 @@ import globals from "globals";
 
 export default [
   {
-    ignores: ["node_modules/**", ".yarn/**", "vendor/**", "script.js"]
+    ignores: ["node_modules/**", ".yarn/**", "vendor/**"]
   },
 
   /* Código del sitio: js/ y contenido/ son módulos ES */

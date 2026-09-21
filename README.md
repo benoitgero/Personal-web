@@ -17,7 +17,6 @@ Personal-web/
 │       ├── sobre-mi.html       ← foto + about + rack de skills + carta
 │       ├── historias.html      ← panel de historia + columna de pestañas
 │       ├── proyectos.html      ← miniaturas + galería + video
-│       ├── banda.html          ← la franja de imagen
 │       └── contacto.html       ← texto + formulario
 │
 ├── css/
@@ -41,14 +40,13 @@ Personal-web/
 │       ├── rack.css
 │       ├── historias.css
 │       ├── proyectos.css
-│       ├── banda.css
 │       └── contacto.css
 │
 ├── js/
 │   ├── main.js                 ← punto de entrada: enciende todo en orden
 │   ├── incluir.js              ← pega los partials y el sprite de iconos
 │   ├── componentes/
-│   │   ├── portal.js           ← verificación anti-bot
+│   │   ├── portal.js           ← pantalla de carga
 │   │   ├── rack.js             ← dibuja los faders
 │   │   ├── carta-skill.js      ← carta que se abre al clickear un fader
 │   │   ├── historias.js        ← pestañas de historias
@@ -78,7 +76,6 @@ Personal-web/
     ├── historias/              ← fotos de las historias
     ├── proyectos/              ← miniaturas, galería, video, poster
     ├── foto.jpg
-    ├── banda.jpg
     └── fondo.svg
 ```
 

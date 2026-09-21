@@ -22,11 +22,17 @@ import { montarTraductor } from "./componentes/traductor.js";
 import { montarCV } from "./componentes/cv.js";
 
 async function iniciar() {
-  // El portal no espera a nada: es lo primero que se ve
-  montarPortal();
+  // La pantalla de carga es lo primero que se ve; se retira sola
+  // en cuanto las secciones reales están armadas.
+  const portalListo = montarPortal();
 
   // El resto del sitio necesita que los partials ya estén en el DOM
   await Promise.all([inyectarIconos(), incluirParciales()]);
+
+  // Las secciones reales ya están: el resumen de texto plano (pensado
+  // para crawlers sin JavaScript) deja de hacer falta.
+  document.getElementById("resumen")?.remove();
+  portalListo();
 
   pintarRack();
   montarCartaSkills();

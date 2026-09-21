@@ -21,8 +21,11 @@
   /* ── Texto ── */
   --texto:          #4b5563;
   --texto-fuerte:   #2f3640;
-  --texto-suave:    #7c86a0;
-  --texto-grabado:  #b3bccd;
+  /* Contraste medido contra --fondo (#e3e7ee); WCAG AA pide 4.5:1.
+     El neumorfismo tienta a aclarar el texto hasta que desaparece:
+     el efecto grabado lo dan las sombras, no el color pálido. */
+  --texto-suave:    #5a6378;  /* 4.85:1 — labels, contador, metadatos */
+  --texto-grabado:  #5c657a;  /* 4.69:1 — nav inactiva, tabs, rótulos */
   --texto-claro:    #ffffff;
 
   /* ── Sombra entintada ──
@@ -66,8 +69,11 @@
       3px    3px   4px rgba(255, 255, 255, .70);
 
   /* ── Tipografía ── */
+  /* Inknut y Playfair son de display: van en títulos y en la marca.
+     Para leer párrafos largos, una serif hecha para texto. */
   --display:   "Inknut Antiqua", Georgia, serif;
   --texto-fam: "Playfair Display", Georgia, serif;
+  --lectura:   "Source Serif 4", Georgia, "Times New Roman", serif;
 
   /* ── Métrica ──
      Radios generosos: el material blando no tiene aristas. */

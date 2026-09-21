@@ -65,7 +65,7 @@
   transition: color var(--trans), background var(--trans), box-shadow var(--trans);
 }
 
-.nav__enlace:hover { color: #aab3c5; }
+.nav__enlace:hover { color: var(--texto-fuerte); }
 
 /* La sección activa emerge de la canaleta */
 .nav__enlace[aria-current="page"] {

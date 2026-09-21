@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════
-   PORTAL DE ENTRADA (verificación anti-bot)
+   PANTALLA DE CARGA DE ENTRADA
    Pantalla del mismo material que el sitio. Los LEDs de progreso
    citan al rack de skills: es la primera pieza de la identidad.
    (js/componentes/portal.js; el markup vive en index.html)
@@ -12,7 +12,14 @@
   place-items: center;
   background: var(--fondo);
   opacity: 1;
-  transition: opacity .45s var(--curva);
+  transition: opacity .3s var(--curva);
+  /* Red de seguridad sin JS: se retira sola al segundo. Con JS se va
+     antes, apenas el sitio está listo (ver portal.js). */
+  animation: portal-retira .35s var(--curva) 1s forwards;
+}
+
+@keyframes portal-retira {
+  to { opacity: 0; visibility: hidden; pointer-events: none; }
 }
 
 /* Sesión ya verificada (clase puesta por el script inline del head):
@@ -50,7 +57,7 @@
 }
 
 /* Cinco segmentos LED que se encienden uno a uno, como barra de
-   progreso, y quedan prendidos. 3s total: un LED cada 0.6s. */
+   progreso. Rápido a propósito: toda la secuencia dura menos de 1s. */
 .portal__leds {
   display: flex;
   gap: 11px;
@@ -60,13 +67,13 @@
   border-radius: 3px;
   background: var(--hueco);
   box-shadow: var(--hundido-boton);
-  animation: portal-led .45s var(--curva) forwards;
+  animation: portal-led .2s var(--curva) forwards;
 }
-.portal__leds span:nth-child(1) { animation-delay: .15s; }
-.portal__leds span:nth-child(2) { animation-delay: .75s; }
-.portal__leds span:nth-child(3) { animation-delay: 1.35s; }
-.portal__leds span:nth-child(4) { animation-delay: 1.95s; }
-.portal__leds span:nth-child(5) { animation-delay: 2.55s; }
+.portal__leds span:nth-child(1) { animation-delay: .05s; }
+.portal__leds span:nth-child(2) { animation-delay: .2s; }
+.portal__leds span:nth-child(3) { animation-delay: .35s; }
+.portal__leds span:nth-child(4) { animation-delay: .5s; }
+.portal__leds span:nth-child(5) { animation-delay: .65s; }
 
 @keyframes portal-led {
   to {

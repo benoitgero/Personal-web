@@ -17,6 +17,7 @@
 @import url("componentes/header.css");
 @import url("componentes/traductor.css");
 @import url("layout.css");
+@import url("componentes/resumen.css");
 
 /* Secciones, en el orden en que aparecen */
 @import url("secciones/sobre-mi.css");
@@ -24,7 +25,6 @@
 @import url("componentes/columnas.css");
 @import url("secciones/historias.css");
 @import url("secciones/proyectos.css");
-@import url("secciones/banda.css");
 @import url("secciones/contacto.css");
 
 /* Footer y extras */

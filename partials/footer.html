@@ -7,10 +7,12 @@
     <!-- Desplegable con las cuatro versiones del CV.
          La lógica vive en js/componentes/cv.js -->
     <div class="cv" id="cv">
-      <button class="pie__cv" id="cv-boton" type="button"
+      <!-- El texto visible es solo "CV"; el aria-label mantiene la acción
+           completa para quien navega con lector de pantalla. -->
+      <button class="pie__cv" id="cv-boton" type="button" aria-label="Descargar CV"
               aria-expanded="false" aria-controls="cv-menu" aria-haspopup="true">
         <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icono-descarga"/></svg>
-        Descargar CV
+        CV
         <svg class="cv__chevron" viewBox="0 0 24 24" aria-hidden="true">
           <path fill="none" stroke="currentColor" stroke-width="2.4"
                 stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/>

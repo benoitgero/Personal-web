@@ -28,11 +28,12 @@
   min-height: 0;
 }
 
-/* Para planos y láminas: se ven enteros en vez de recortados.
-   Se activa poniendo ajuste: "contener" en el array de galería. */
+/* Planos y láminas ("contener" en el array de galería): en la tira
+   llenan el espacio igual que las fotos, para no dejar franjas vacías.
+   Al hacer clic, el visor los muestra completos (object-fit: contain). */
 .proyecto__galeria img.contener {
-  object-fit: contain;
-  background: #ffffff;
+  object-fit: cover;
+  object-position: center;
 }
 
 .proyecto__detalle { padding: 30px 32px; }

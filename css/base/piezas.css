@@ -29,9 +29,12 @@
   text-shadow: var(--grabado);
 }
 
+/* 68ch: entre 60 y 75 caracteres por línea, lo cómodo para leer.
+   Más ancho y el ojo pierde el renglón al volver a la izquierda. */
 .parrafo {
-  font-size: .97rem;
-  line-height: 1.7;
+  font-size: 1rem;
+  line-height: 1.65;
+  max-width: 68ch;
   margin: 0;
   color: var(--texto);
 }

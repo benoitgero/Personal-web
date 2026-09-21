@@ -15,10 +15,36 @@
    deben verse enteros en vez de recortados. */
 
 export const PROYECTOS = [
+  // Primero infraestructura, que es el perfil del sitio; la arquitectura
+  // va después, como complemento que muestra criterio de diseño.
+  {
+    id: "winserver",
+    nombre: "Windows Server",
+    titulo: "Alta disponibilidad en Windows Server",
+    miniatura: "assets/proyectos/winserver-thumb.jpg",
+    galeria: [
+      // Diagramas y capturas: "contener" para que se lean enteros
+      { src: "assets/proyectos/winserver-1.jpg", ajuste: "contener" },
+      "assets/proyectos/winserver-2.jpg",
+      { src: "assets/proyectos/winserver-3.jpg", ajuste: "contener" },
+    ],
+  },
+  {
+    id: "pwc",
+    nombre: "PwC",
+    titulo: "PricewaterhouseCoopers",
+    miniatura: "assets/proyectos/pwc-thumb.jpg",
+    galeria: [
+      // Capturas de interfaz: "contener" para que el texto se lea entero
+      { src: "assets/proyectos/pwc-1.jpg", ajuste: "contener" },
+      { src: "assets/proyectos/pwc-2.jpg", ajuste: "contener" },
+      { src: "assets/proyectos/pwc-3.jpg", ajuste: "contener" },
+    ],
+  },
   {
     id: "rocha",
-    nombre: "Laguna Garzon",
-    titulo: "Laguna Garzon",
+    nombre: "Laguna Garzón",
+    titulo: "Laguna Garzón",
     miniatura: "assets/proyectos/rocha-thumb.jpg",
     galeria: [
       "assets/proyectos/rocha-1.jpg",
@@ -37,30 +63,6 @@ export const PROYECTOS = [
       // Los planos van "contener" para que se vean enteros, sin recortar
       { src: "assets/proyectos/tokyo-2.jpg", ajuste: "contener" },
       { src: "assets/proyectos/tokyo-3.jpg", ajuste: "contener" },
-    ],
-  },
-  {
-    id: "winserver",
-    nombre: "Windows Server",
-    titulo: "Windows Server",
-    miniatura: "assets/proyectos/winserver-thumb.jpg",
-    galeria: [
-      // Diagramas y capturas: "contener" para que se lean enteros
-      { src: "assets/proyectos/winserver-1.jpg", ajuste: "contener" },
-      "assets/proyectos/winserver-2.jpg",
-      { src: "assets/proyectos/winserver-3.jpg", ajuste: "contener" },
-    ],
-  },
-  {
-    id: "pwc",
-    nombre: "PwC",
-    titulo: "Price waterhouse Coopers",
-    miniatura: "assets/proyectos/pwc-thumb.jpg",
-    galeria: [
-      // Capturas de interfaz: "contener" para que el texto se lea entero
-      { src: "assets/proyectos/pwc-1.jpg", ajuste: "contener" },
-      { src: "assets/proyectos/pwc-2.jpg", ajuste: "contener" },
-      { src: "assets/proyectos/pwc-3.jpg", ajuste: "contener" },
     ],
   },
 ];

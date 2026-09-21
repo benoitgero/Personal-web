@@ -70,7 +70,6 @@
 }
 .rack-pista--desliza::-webkit-scrollbar { display: none; }
 .rack-pista--agarrada { cursor: grabbing; }
-.rack-pista--agarrada .fader { pointer-events: none; }
 .rack-pista--desliza img { -webkit-user-drag: none; user-select: none; }
 
 .rack {
