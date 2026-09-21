@@ -36,7 +36,7 @@
   object-position: center;
 }
 
-.proyecto__detalle { padding: 30px 0px; }
+.proyecto__detalle { padding: 0px 32px; }
 
 .proyecto__video {
   width: 100%;
