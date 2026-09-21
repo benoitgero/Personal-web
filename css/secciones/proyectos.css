@@ -65,3 +65,8 @@
   .proyecto__detalle { padding: 24px 20px; }
 }
 
+.panel .parrafo { max-width: none; }
+
+@media (max-width: 1100px) {
+  .panel .parrafo { max-width: calc(68ch + 48px); }
+}
