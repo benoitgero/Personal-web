@@ -82,3 +82,15 @@
     object-position: center 35% !important;
   }
 }
+
+/* ═══ Ancho de línea del texto de historias ═══
+   .parrafo trae max-width: 68ch, pero con box-sizing: border-box ese
+   máximo INCLUYE el padding. Acá el padding derecho es de 405px (el
+   hueco de la imagen), así que el texto quedaba en ~150px de ancho.
+   En escritorio la columna ya limita la línea sola: se libera el máximo.
+   Apilado, el máximo se recalcula sumando el padding real (24 + 24). */
+.panel .parrafo { max-width: none; }
+
+@media (max-width: 1100px) {
+  .panel .parrafo { max-width: calc(68ch + 48px); }
+}
