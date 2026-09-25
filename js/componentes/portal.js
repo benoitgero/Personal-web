@@ -1,49 +1,42 @@
-/* ── Portal de entrada: verificación anti-bot ligera ──
-   Tres pruebas que un navegador real pasa sin darse cuenta y que
-   los scrapers básicos (curl, requests, muchos headless mal
-   configurados) no pasan:
-   1. Ejecutar JS (si llegamos acá, ya pasó).
-   2. No declararse automatizado (navigator.webdriver).
-   3. Producir frames de render reales (requestAnimationFrame). */
+/* ── Pantalla de carga de entrada ──
+   Se retira apenas el sitio está listo, no después de un tiempo fijo:
+   un reclutador que abre veinte portfolios no tiene por qué esperar.
+   Queda un mínimo corto para que no parpadee en conexiones rápidas.
+
+   Además el CSS la retira sola al segundo (ver portal.css): si el JS
+   no corre, igual desaparece y no tapa nada. */
+const MINIMO = 450;     // ms: evita el parpadeo si carga instantáneo
+const MAXIMO = 2500;    // ms: red de seguridad si algo se cuelga
+
+/* Devuelve una función que se llama cuando el sitio ya se armó. */
 export function montarPortal() {
   const portal = document.getElementById("portal");
-  if (!portal) return;
+  const nada = () => {};
+  if (!portal) return nada;
+
+  // Esta sesión ya la vio: se retira sin mostrarse
   if (document.documentElement.classList.contains("verificado")) {
     portal.remove();
-    return;
+    return nada;
   }
 
-  const texto = document.getElementById("portal-texto");
   const inicio = performance.now();
-  const MINIMO_VISIBLE = 3000; // duración de la pantalla de carga
-
-  let frames = 0;
-  function contarFrames() {
-    frames++;
-    if (frames < 4) requestAnimationFrame(contarFrames);
-    else evaluar();
-  }
-  requestAnimationFrame(contarFrames);
-
-  // Red de seguridad: si algo falla, nadie queda afuera del sitio
-  const rescate = setTimeout(() => despedir(), 8000);
-
-  function evaluar() {
-    const automatizado = navigator.webdriver === true;
-    if (automatizado && texto) {
-      texto.textContent = "Navegador automatizado detectado";
-    }
-    // A los automatizados se los demora; a los humanos se los deja pasar.
-    const espera = automatizado ? 5000 : Math.max(0, MINIMO_VISIBLE - (performance.now() - inicio));
-    setTimeout(despedir, espera);
-  }
+  let retirado = false;
+  const rescate = setTimeout(despedir, MAXIMO);
 
   function despedir() {
+    if (retirado) return;
+    retirado = true;
     clearTimeout(rescate);
-    try { sessionStorage.setItem("portal-ok", "1"); } catch (e) {}
+    try { sessionStorage.setItem("portal-ok", "1"); } catch (e) { /* modo privado */ }
     portal.classList.add("portal--saliendo");
     portal.addEventListener("transitionend", () => portal.remove(), { once: true });
-    // Por si transitionend no dispara (reduced motion)
-    setTimeout(() => portal.remove(), 700);
+    setTimeout(() => portal.remove(), 600);   // por si transitionend no dispara
   }
+
+  // Lo llama main.js cuando las secciones ya están en pantalla
+  return function listo() {
+    const falta = Math.max(0, MINIMO - (performance.now() - inicio));
+    setTimeout(despedir, falta);
+  };
 }

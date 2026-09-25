@@ -1,27 +1,22 @@
 /* ── Tabs de historias ──
-   Datos: contenido/historias.js
-   Textos largos: contenido/textos/historias/<id>.txt */
-import { HISTORIAS } from "../../contenido/historias.js";
+   Datos: contenido/historias.json (se edita desde Pages CMS).
+   Cada historia: tab (etiqueta del botón), titulo, imagen y texto.
+   En el texto, una línea en blanco separa párrafos. */
 import { navegarConTeclado } from "../util/teclado.js";
-import { cargarTexto } from "../util/texto.js";
+import { ruta, escapar, parrafos } from "../util/contenido.js";
 
-export async function montarHistorias() {
+export function montarHistorias(HISTORIAS = []) {
   const cont = document.getElementById("tabs-historias");
   const titulo = document.getElementById("historia-titulo");
   const texto = document.getElementById("historia-texto");
   const imagen = document.getElementById("historia-imagen");
-  if (!cont) return;
+  if (!cont || !HISTORIAS.length) return;
 
-  // Trae todos los textos de una vez, desde los .txt editables
-  await Promise.all(
-    HISTORIAS.map(async (h) => {
-      h.texto = await cargarTexto(`contenido/textos/historias/${h.id}.txt`);
-    })
-  );
-
+  // El id sale de la posición: así una historia nueva creada en el CMS
+  // no necesita que nadie invente un identificador a mano.
   cont.innerHTML = HISTORIAS.map((h, i) => `
-    <button class="tab" role="tab" id="tab-${h.id}"
-            aria-selected="${i === 0}" data-indice="${i}">${h.tab}</button>
+    <button class="tab" role="tab" id="tab-historia-${i}"
+            aria-selected="${i === 0}" data-indice="${i}">${escapar(h.tab)}</button>
   `).join("");
 
   const tabs = [...cont.querySelectorAll(".tab")];
@@ -29,10 +24,10 @@ export async function montarHistorias() {
   function seleccionar(i) {
     const h = HISTORIAS[i];
     tabs.forEach((t, j) => t.setAttribute("aria-selected", String(j === i)));
-    titulo.textContent = h.titulo;
-    texto.textContent = h.texto;
-    imagen.src = h.imagen;
-    imagen.alt = `Imagen de ${h.titulo}`;
+    titulo.textContent = h.titulo || "";
+    texto.innerHTML = parrafos(h.texto);
+    imagen.src = ruta(h.imagen);
+    imagen.alt = `Imagen de ${h.titulo || ""}`;
   }
 
   tabs.forEach((t) => t.addEventListener("click", () => seleccionar(+t.dataset.indice)));

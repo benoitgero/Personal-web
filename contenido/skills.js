@@ -4,28 +4,47 @@
 
    nivel: 0 a 5, son los segmentos encendidos.
    logo:  ruta al SVG. Si ponés null, muestra el texto de "abrev".
-   El orden del array es el orden de izquierda a derecha en pantalla. */
+   El orden del array es el orden de izquierda a derecha en pantalla.
+
+   El orden cuenta una historia: primero la infraestructura, que es
+   el perfil que vende el sitio; después la nube; al final desarrollo
+   y diseño, como complemento que aporta criterio. */
 
 export const SKILLS = [
-  { nombre: "HTML5",            abrev: "HTML", nivel: 3, logo: "assets/logos/html.svg",
-    descripcion: "Estructura semántica y accesible. Este mismo sitio está armado a mano con HTML5, sin frameworks." },
-  { nombre: "CSS3",             abrev: "CSS",  nivel: 3, logo: "assets/logos/css.svg",
-    descripcion: "Grid, flexbox y sistemas de diseño. El estilo neumórfico de esta página está traducido 1:1 desde Figma." },
-  { nombre: "JavaScript",       abrev: "JS",   nivel: 2, logo: "assets/logos/js.svg",
-    descripcion: "JavaScript vanilla para interactividad: tabs, menús, formularios y esta misma carta que estás viendo." },
-  { nombre: "AWS",              abrev: "AWS",  nivel: 3, logo: "assets/logos/aws.svg",
-    descripcion: "Certificado AWS Cloud Practitioner a través del programa re/Start: EC2, S3, redes, seguridad y fundamentos de la nube." },
-  { nombre: "Azure",            abrev: "AZ",   nivel: 3, logo: "assets/logos/azure.svg",
-    descripcion: "Administración de recursos en Azure: máquinas virtuales, Entra ID y servicios de infraestructura." },
-  { nombre: "Figma",            abrev: "FIG",  nivel: 3, logo: "assets/logos/figma.svg",
-    descripcion: "Diseño de interfaces y prototipos. Antes de escribir una línea de código, lo visualizo en Figma." },
-  { nombre: "Linux",            abrev: "LNX",  nivel: 2, logo: "assets/logos/linux.svg",
+  // ── Infraestructura ──
+  { nombre: "Windows Server", abrev: "WS", nivel: 4, logo: "assets/logos/windows-server.svg",
+    descripcion: "Administración y soporte de Windows Server en entornos productivos. Un año como Support Engineer de Microsoft en el área de Storage and High Availability, resolviendo incidentes de clientes empresariales." },
+  { nombre: "Failover Clustering", abrev: "FC", nivel: 4, logo: "assets/logos/clustering.svg",
+    descripcion: "Diagnóstico de clústeres de conmutación por error: expulsión de nodos, pérdida de quórum, discos de testigo y roles que no migran. Análisis de logs de clúster para hallar la causa raíz." },
+  { nombre: "Hyper-V", abrev: "HV", nivel: 4, logo: "assets/logos/hyper-v.svg",
+    descripcion: "Virtualización con Hyper-V: migraciones en vivo, arranque de máquinas virtuales tras un failover y configuración de redes virtuales. Laboratorio propio con dos nodos en clúster." },
+  { nombre: "Storage Spaces Direct", abrev: "S2D", nivel: 3, logo: "assets/logos/s2d.svg",
+    descripcion: "Almacenamiento definido por software sobre S2D y volúmenes compartidos de clúster (CSV), además de iSCSI. Soporte de incidentes de conectividad y rendimiento en la pila de almacenamiento." },
+  { nombre: "Active Directory", abrev: "AD", nivel: 3, logo: "assets/logos/active-directory.svg",
+    descripcion: "Dominio con controladores replicados y DNS integrado. Es la base sobre la que se apoya el clúster en mi laboratorio de alta disponibilidad." },
+
+  // ── Nube ──
+  { nombre: "Azure", abrev: "AZ", nivel: 3, logo: "assets/logos/azure.svg",
+    descripcion: "Recursos de infraestructura en Azure: máquinas virtuales, Entra ID y cloud witness como voto de quórum para clústeres locales." },
+  { nombre: "AWS", abrev: "AWS", nivel: 3, logo: "assets/logos/aws.svg",
+    descripcion: "Certificado AWS Cloud Practitioner a través del programa re/Start de Fundación Forge: EC2, S3, redes, seguridad y fundamentos de la nube." },
+  { nombre: "Linux", abrev: "LNX", nivel: 2, logo: "assets/logos/linux.svg",
     descripcion: "Línea de comandos, administración básica de servidores y scripting en entornos Linux." },
-  { nombre: "Windows Server", abrev: "MS",   nivel: 4, logo: "assets/logos/office.svg",
-    descripcion: "Dominio avanzado de Winodws Server en Clusters, administracion de storage y alta disponibilidad." },
-  { nombre: "AutoCAD",          abrev: "CAD",  nivel: 4, logo: "assets/logos/autocad.svg",
-    descripcion: "Dibujo técnico y planos en 2D. Base de mi mentalidad de diseño aplicada a la infraestructura." },
-  { nombre: "SketchUp",         abrev: "SKP",  nivel: 4, logo: "assets/logos/sketchup.svg",
+
+  // ── Desarrollo ──
+  { nombre: "JavaScript", abrev: "JS", nivel: 3, logo: "assets/logos/js.svg",
+    descripcion: "JavaScript vanilla con módulos ES: este sitio está hecho sin frameworks, incluida la rueda de skills y esta misma carta." },
+  { nombre: "HTML5", abrev: "HTML", nivel: 3, logo: "assets/logos/html.svg",
+    descripcion: "Estructura semántica y accesible. Este sitio está armado a mano, con arquitectura modular por componentes." },
+  { nombre: "CSS3", abrev: "CSS", nivel: 3, logo: "assets/logos/css.svg",
+    descripcion: "Grid, flexbox y sistemas de diseño con variables. El estilo de esta página está traducido desde Figma." },
+
+  // ── Diseño ──
+  { nombre: "Figma", abrev: "FIG", nivel: 3, logo: "assets/logos/figma.svg",
+    descripcion: "Diseño de interfaces y prototipos. Antes de escribir una línea de código, lo visualizo en Figma." },
+  { nombre: "AutoCAD", abrev: "CAD", nivel: 3, logo: "assets/logos/autocad.svg",
+    descripcion: "Dibujo técnico y planos en 2D, de mi paso por la Facultad de Arquitectura. La misma lógica de planificar antes de construir que aplico a la infraestructura." },
+  { nombre: "SketchUp", abrev: "SKP", nivel: 3, logo: "assets/logos/sketchup.svg",
     descripcion: "Modelado 3D para visualizar espacios y proyectos antes de construirlos." },
 ];
 

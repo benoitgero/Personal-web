@@ -1,10 +1,11 @@
 /* ── Carta de skill: se abre al clickear un fader ── */
-import { SKILLS, SEGMENTOS } from "../../contenido/skills.js";
+import { SEGMENTOS, ruta, escapar } from "../util/contenido.js";
 
-export function montarCartaSkills() {
+/* SKILLS llega desde main.js, leído de contenido/skills.json */
+export function montarCartaSkills(SKILLS = []) {
   const rack = document.getElementById("rack");
   const carta = document.getElementById("carta-skill");
-  if (!rack || !carta) return;
+  if (!rack || !carta || !SKILLS.length) return;
 
   // La tarjeta crece mientras la carta está abierta, para que en celular
   // el texto tenga lugar en vez de quedar recortado.
@@ -34,9 +35,11 @@ export function montarCartaSkills() {
       `<span${j < s.nivel ? ' class="on"' : ""}></span>`
     ).join("");
 
+    const abrev = escapar(s.abrev || s.nombre?.slice(0, 3) || "");
     logo.innerHTML = s.logo
-      ? `<img src="${s.logo}" alt="" onerror="this.replaceWith('${s.abrev}')">`
-      : s.abrev;
+      ? `<img src="${escapar(ruta(s.logo))}" alt="" data-alt="${abrev}"
+             onerror="this.replaceWith(this.dataset.alt)">`
+      : abrev;
   }
 
   function abrir(i) {

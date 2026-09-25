@@ -1,0 +1,178 @@
+# ═══════════════════════════════════════════════════════════════
+#  PAGES CMS — interfaz para editar el contenido del sitio
+#  Entrá a https://app.pagescms.org con tu cuenta de GitHub.
+#
+#  Cada guardado es un commit en este repo; GitHub Pages republica
+#  solo en uno o dos minutos. El sitio sigue siendo 100% estático.
+#
+#  Este archivo define QUÉ se puede editar y con qué campos.
+#  Los datos viven en contenido/*.json y las imágenes en assets/.
+# ═══════════════════════════════════════════════════════════════
+
+# Imágenes y videos se suben dentro de assets/. Las rutas se guardan
+# SIN barra inicial ("assets/..."): el sitio vive en /Personal-web/,
+# y con "/" adelante apuntarían a la raíz del dominio.
+media:
+  input: assets
+  output: assets
+  categories: [image, video]
+  rename: safe
+
+settings:
+  commit:
+    templates:
+      create: "contenido: crea {path} (Pages CMS)"
+      update: "contenido: actualiza {path} (Pages CMS)"
+      delete: "contenido: borra {path} (Pages CMS)"
+      rename: "contenido: renombra {oldPath} → {newPath} (Pages CMS)"
+
+content:
+
+  # ── Sobre mí ──────────────────────────────────────────────────
+  - name: perfil
+    label: Sobre mí
+    type: file
+    path: contenido/perfil.json
+    format: json
+    operations:
+      delete: false
+    fields:
+      - name: titulo
+        label: Título
+        type: string
+        required: true
+      - name: texto
+        label: Texto
+        type: text
+        required: true
+        description: "Dejá una línea en blanco para separar párrafos."
+      - name: foto
+        label: Foto
+        type: image
+        description: "Foto de frente o 3/4, luz pareja, fondo neutro."
+        options:
+          path: assets
+
+  # ── Skills (el rack de faders) ────────────────────────────────
+  - name: skills
+    label: Skills
+    type: file
+    path: contenido/skills.json
+    format: json
+    list: true
+    operations:
+      delete: false
+    fields:
+      - name: nombre
+        label: Nombre
+        type: string
+        required: true
+      - name: abrev
+        label: Abreviatura
+        type: string
+        description: "Se muestra si el logo no carga. Ej: AWS, JS, AD."
+        options:
+          maxlength: 5
+      - name: nivel
+        label: Nivel (0 a 5)
+        type: number
+        required: true
+        description: "Cantidad de segmentos encendidos en el fader."
+        options:
+          min: 0
+          max: 5
+      - name: logo
+        label: Logo
+        type: image
+        description: "SVG cuadrado. El orden de la lista es el orden en pantalla."
+        options:
+          path: assets/logos
+          extensions: [svg, png, webp]
+      - name: descripcion
+        label: Descripción
+        type: text
+        description: "Se ve en la carta al tocar la skill. Contá por qué tenés ese nivel."
+
+  # ── Historias ─────────────────────────────────────────────────
+  - name: historias
+    label: Historias
+    type: file
+    path: contenido/historias.json
+    format: json
+    list: true
+    operations:
+      delete: false
+    fields:
+      - name: tab
+        label: Etiqueta del botón
+        type: string
+        required: true
+        description: "Corta: se lee en el botón de la columna. Ej: JAP, FORGE."
+        options:
+          maxlength: 12
+      - name: titulo
+        label: Título
+        type: string
+        required: true
+      - name: imagen
+        label: Imagen
+        type: image
+        description: "Vertical. Se recorta para llenar el panel."
+        options:
+          path: assets/historias
+      - name: texto
+        label: Texto
+        type: text
+        required: true
+        description: "Dejá una línea en blanco para separar párrafos."
+
+  # ── Proyectos ─────────────────────────────────────────────────
+  - name: proyectos
+    label: Proyectos
+    type: file
+    path: contenido/proyectos.json
+    format: json
+    list: true
+    operations:
+      delete: false
+    fields:
+      - name: nombre
+        label: Nombre corto
+        type: string
+        required: true
+        description: "Aparece sobre la miniatura."
+      - name: titulo
+        label: Título
+        type: string
+        required: true
+      - name: miniatura
+        label: Miniatura
+        type: image
+        description: "Horizontal, se ve chica en la columna izquierda."
+        options:
+          path: assets/proyectos
+      - name: galeria
+        label: Galería
+        type: image
+        description: "Hasta 12 imágenes. Al hacer clic se ven completas."
+        options:
+          path: assets/proyectos
+          multiple:
+            max: 12
+      - name: texto
+        label: Descripción
+        type: text
+        required: true
+        description: "Dejá una línea en blanco para separar párrafos."
+      - name: video
+        label: Video (opcional)
+        type: file
+        description: "MP4. Menos de 100 MB: GitHub rechaza archivos más grandes."
+        options:
+          path: assets/proyectos
+          extensions: [mp4, webm]
+      - name: poster
+        label: Imagen previa del video (opcional)
+        type: image
+        options:
+          path: assets/proyectos

@@ -1,0 +1,21 @@
+/* ═══════════════════════════════════════════
+   RESUMEN ESTÁTICO (index.html)
+   Texto plano para crawlers y herramientas que no ejecutan JavaScript.
+   Con JS activo no se muestra nunca: el script inline del head marca
+   <html class="js"> antes del primer render.
+   ═══════════════════════════════════════════ */
+.js .resumen { display: none; }
+
+.resumen {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  font-family: var(--lectura);
+  line-height: 1.6;
+  color: var(--texto);
+}
+.resumen h1 { font-family: var(--display); font-size: 1.5rem; margin: 0 0 .4em; }
+.resumen h2 { font-family: var(--display); font-size: 1.05rem; margin: 1.6em 0 .5em; }
+.resumen ul { padding-left: 1.2em; }
+.resumen li { margin-bottom: .45em; }
+.resumen a { color: var(--acento-oscuro, #115e59); }

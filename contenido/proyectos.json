@@ -1,0 +1,46 @@
+[
+  {
+    "nombre": "Windows Server",
+    "titulo": "Alta disponibilidad en Windows Server",
+    "miniatura": "assets/proyectos/winserver-thumb.jpg",
+    "galeria": [
+      "assets/proyectos/winserver-1.jpg",
+      "assets/proyectos/winserver-2.jpg",
+      "assets/proyectos/winserver-3.jpg"
+    ],
+    "texto": "Durante un año trabajé como Support Engineer para Microsoft, dentro del área de Storage and High Availability. El trabajo consistía en dar soporte a clientes de Windows Server en todo lo relacionado con Hyper-V, almacenamiento y clustering: los escenarios donde un problema no afecta a un usuario sino a un servicio entero.\n\nEl grueso de los casos giraba alrededor del clúster de conmutación por error. Nodos que se expulsaban solos del clúster, volúmenes compartidos de clúster (CSV) que perdían conectividad, discos de testigo que dejaban de responder y comprometían el quórum, roles que no migraban al nodo secundario cuando tenían que hacerlo. Diagnosticar eso implica reconstruir qué pasó a partir de los logs del clúster, los eventos del sistema y las trazas de red, muchas veces sobre un incidente que ya terminó y no se puede reproducir.\n\nEn la parte de virtualización, los casos típicos eran de Hyper-V: migraciones en vivo que fallaban a mitad de camino, máquinas virtuales que no arrancaban tras un failover, problemas de rendimiento en el almacenamiento subyacente, configuraciones de red virtual que no sobrevivían al cambio de nodo. En almacenamiento, Storage Spaces Direct, iSCSI y la interacción entre los distintos niveles de la pila.\n\nLo que más me formó de ese año no fue una tecnología puntual sino el método. Trabajar con clientes que tienen un servicio caído obliga a ordenar el pensamiento: descartar hipótesis en orden de probabilidad, pedir exactamente los datos que hacen falta y no veinte archivos por las dudas, y explicar la causa raíz en términos que el cliente pueda llevar a su propia organización. También aprendí que la alta disponibilidad no es una función que se activa: es un conjunto de decisiones de diseño que se pagan o se cobran el día que algo falla."
+  },
+  {
+    "nombre": "PwC",
+    "titulo": "PricewaterhouseCoopers",
+    "miniatura": "assets/proyectos/pwc-thumb.jpg",
+    "galeria": [
+      "assets/proyectos/pwc-1.jpg",
+      "assets/proyectos/pwc-2.jpg",
+      "assets/proyectos/pwc-3.jpg"
+    ],
+    "texto": "Año y medio dando soporte técnico L1 en inglés para PricewaterhouseCoopers Estados Unidos, y desde entonces hasta hoy en PwC México. En ambas cuentas el soporte cubre tanto laptops como dispositivos móviles.\n\nEl día a día son los problemas que frenan a una oficina entera. GlobalProtect, el cliente VPN: portales mal configurados, conexiones que no levantan, usuarios que se quedan sin acceso a los recursos internos justo cuando los necesitan. Enrolamiento en Company Portal, con todo lo que implica registrar un equipo en la gestión corporativa: dispositivos que no completan el alta, aplicaciones que no bajan, políticas que no se aplican. Y errores de Office en general, desde activación de licencias hasta perfiles de Outlook corruptos y archivos que no sincronizan.\n\nTrabajar en L1 tiene una particularidad que no se ve desde afuera: sos el primer contacto, así que el problema llega sin diagnosticar y muchas veces mal descrito. La mitad del trabajo es traducir lo que el usuario cuenta a lo que realmente está pasando. Alguien dice \"no tengo internet\" y en realidad el adaptador está bien, pero la VPN dejó el tráfico sin ruta. Aprender a hacer las preguntas correctas rinde más que conocer cien procedimientos.\n\nEl pase a la cuenta de México trajo un cambio de contexto que también se aprende: distinta zona horaria, distinta forma de comunicarse, distintos casos frecuentes. Hacer soporte en inglés para Estados Unidos y después para un equipo mexicano me enseñó que adaptar el tono y el vocabulario no es un detalle cosmético, es parte de resolver el problema."
+  },
+  {
+    "nombre": "Laguna Garzón",
+    "titulo": "Laguna Garzón",
+    "miniatura": "assets/proyectos/rocha-thumb.jpg",
+    "galeria": [
+      "assets/proyectos/rocha-1.jpg",
+      "assets/proyectos/rocha-2.jpg",
+      "assets/proyectos/rocha-3.jpg"
+    ],
+    "texto": "Proyecto académico de un edificio multiuso educativo en la Laguna Garzón, pensado como base para los guardaparques y como escuela abierta a la comunidad. Un programa doble que obligaba a resolver dos lógicas distintas en un mismo edificio: la del uso permanente de quienes cuidan el área protegida, y la del uso eventual de quienes llegan a aprender sobre ella.\n\nLa decisión material define el proyecto. Los muros son gabiones rellenos con los escombros que quedaron sumergidos tras la construcción del puente de la Laguna Garzón. Lo que era un residuo bajo el agua pasa a ser la estructura y la piel del edificio: un material con historia y kilómetro cero, que no hubo que fabricar ni trasladar. La elección no es solo ambiental, también es narrativa. El edificio que enseña sobre la laguna está hecho literalmente con los restos de la obra que la transformó.\n\nEl gabión además tiene una ventaja que el hormigón no da: es reversible. Se arma sin mortero, se desarma sin escombro. En un paisaje protegido, construir algo que se puede quitar sin dejar huella es una posición de proyecto, no un detalle técnico.\n\nEl programa se organiza en un volumen bajo y alargado que acompaña el horizonte de la laguna, en vez de competir con él. La planta se fragmenta en tres piezas: la vivienda y los servicios de los guardaparques en un extremo, el aula-taller en el centro como pieza mayor, y un módulo de apoyo en el otro. Entre ellas, los patios y las circulaciones abiertas dejan pasar el paisaje a través del edificio.\n\nUn deck de madera elevado sobre pilotes se extiende desde el aula hacia el agua. Funciona como espacio de encuentro, como aula al aire libre y como mirador: es el lugar donde el edificio deja de ser edificio y se vuelve plataforma para observar. Los pilotes evitan tocar el suelo del humedal más de lo necesario, otra vez la misma lógica de intervenir lo mínimo.\n\nLo que más me dejó este proyecto fue entender que el sitio puede dar la respuesta si uno lo mira bien. El material no se eligió de un catálogo: estaba ahí, bajo el agua, esperando que alguien lo leyera como recurso en vez de como problema."
+  },
+  {
+    "nombre": "Tokyo",
+    "titulo": "Tokyo",
+    "miniatura": "assets/proyectos/tokyo-thumb.jpg",
+    "galeria": [
+      "assets/proyectos/tokyo-1.jpg",
+      "assets/proyectos/tokyo-2.jpg",
+      "assets/proyectos/tokyo-3.jpg"
+    ],
+    "texto": "Proyecto académico de vivienda unifamiliar para un terreno entre medianeras en Tokio, desarrollado en la Facultad de Arquitectura. El punto de partida fue cruzar dos lenguajes que a primera vista se contradicen: el brutalismo, con su hormigón visto y su estructura a la vista, y el wabi-sabi japonés, que encuentra belleza en lo imperfecto, lo austero y lo que envejece con dignidad. La síntesis funciona porque ambos comparten una misma honestidad material: nada se disimula.\n\nEl hormigón queda tal como sale del encofrado, con la veta de la madera impresa en la superficie y las marcas del proceso a la vista. Contra esa masa fría se apoya una estructura metálica exterior que ordena la fachada como una retícula, y una carpintería de madera que aporta la calidez y el envejecimiento noble que el wabi-sabi celebra. Con el tiempo el metal toma pátina y la madera se agrisa: el edificio no se deteriora, madura.\n\nEl programa se resuelve en tres niveles conectados por dos escaleras de carácter opuesto: una principal, de tramos rectos, y una caracol metálica que resuelve la circulación secundaria ocupando el mínimo espacio posible, algo necesario en un lote tan acotado. En planta baja van el acceso, los servicios y el área social con cocina y comedor; el primer piso concentra los dormitorios y baños, con una terraza de grava al fondo.\n\nLa azotea es el corazón del proyecto: un jardín elevado bajo una pérgola de vidrio que recupera para la vivienda el suelo que el terreno no tiene. En una ciudad donde el verde privado es un lujo, la vegetación no es ornamento sino programa. La misma lógica se repite hacia adentro, con jardineras que acompañan los desniveles y llevan el verde a cada piso.\n\nEl desafío real fue la densidad. Trabajar en Tokio obliga a resolver todo con el mínimo de superficie y a buscar la luz en vertical, no en horizontal: los patios internos y el vacío de la escalera son los que hacen que una planta profunda no quede a oscuras."
+  }
+]

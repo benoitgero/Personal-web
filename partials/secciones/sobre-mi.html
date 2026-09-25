@@ -1,20 +1,21 @@
 <!-- ══════════ SOBRE MÍ + SKILLS ══════════
-     El rack de faders se pinta desde js/componentes/rack.js con los
-     datos de contenido/skills.js -->
+     Texto y foto: contenido/perfil.json · Skills: contenido/skills.json
+     Ambos se editan desde Pages CMS. El texto de acá es el respaldo
+     que se ve si el JSON no llegara a cargar. -->
 <section class="seccion seccion--doble" id="sobre-mi">
 
   <article class="tarjeta tarjeta--about">
     <div class="about__marco">
-      <img class="about__foto" src="assets/foto.jpg" alt="Retrato de Gerónimo">
+      <img class="about__foto" id="perfil-foto" src="assets/foto.jpg" alt="Retrato de Gerónimo">
     </div>
     <div class="about__cuerpo">
-      <h2 class="titulo">Sobre mí</h2>
-      <p class="parrafo">
-        Combino mi pasión por la tecnología con una mentalidad de diseño.
+      <h2 class="titulo" id="perfil-titulo">Sobre mí</h2>
+      <div class="parrafo" id="perfil-texto">
+        <p>Combino mi pasión por la tecnología con una mentalidad de diseño.
         Tengo experiencia en Windows Server, virtualización y la nube, pero aspiro
         a ser un arquitecto de sistemas. Me encanta visualizar, diseñar y construir
-        soluciones, aprendiendo cada día para mejorar mis habilidades.
-      </p>
+        soluciones, aprendiendo cada día para mejorar mis habilidades.</p>
+      </div>
     </div>
   </article>
 

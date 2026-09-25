@@ -17,7 +17,6 @@ Personal-web/
 │       ├── sobre-mi.html       ← foto + about + rack de skills + carta
 │       ├── historias.html      ← panel de historia + columna de pestañas
 │       ├── proyectos.html      ← miniaturas + galería + video
-│       ├── banda.html          ← la franja de imagen
 │       └── contacto.html       ← texto + formulario
 │
 ├── css/
@@ -41,14 +40,13 @@ Personal-web/
 │       ├── rack.css
 │       ├── historias.css
 │       ├── proyectos.css
-│       ├── banda.css
 │       └── contacto.css
 │
 ├── js/
 │   ├── main.js                 ← punto de entrada: enciende todo en orden
 │   ├── incluir.js              ← pega los partials y el sprite de iconos
 │   ├── componentes/
-│   │   ├── portal.js           ← verificación anti-bot
+│   │   ├── portal.js           ← pantalla de carga
 │   │   ├── rack.js             ← dibuja los faders
 │   │   ├── carta-skill.js      ← carta que se abre al clickear un fader
 │   │   ├── historias.js        ← pestañas de historias
@@ -62,15 +60,15 @@ Personal-web/
 │   │   └── contador.js         ← contador de caracteres
 │   └── util/
 │       ├── teclado.js          ← flechas entre pestañas (compartido)
-│       └── texto.js            ← lee los .txt de contenido/
+│       └── contenido.js        ← lee los JSON de contenido/
 │
-├── contenido/                  ← ★ ACÁ EDITÁS EL SITIO, sin tocar lógica
-│   ├── skills.js               ← lista de skills, niveles y descripciones
-│   ├── historias.js            ← qué historias hay (pestaña, título, imagen)
-│   ├── proyectos.js            ← qué proyectos hay (miniatura, video, galería)
-│   └── textos/
-│       ├── historias/          ← un .txt por historia: forge.txt, ces.txt…
-│       └── proyectos/          ← un .txt por proyecto: rocha.txt…
+├── contenido/                  ← ★ ACÁ VIVE EL CONTENIDO (lo edita Pages CMS)
+│   ├── perfil.json             ← texto y foto de "Sobre mí"
+│   ├── skills.json             ← skills, niveles, logos y descripciones
+│   ├── historias.json          ← historias: etiqueta, título, imagen, texto
+│   └── proyectos.json          ← proyectos: miniatura, galería, texto, video
+│
+├── .pages.yml                  ← define la interfaz de edición de Pages CMS
 │
 └── assets/                     ← imágenes, video, logos, CV
     ├── iconos/sprite.svg       ← todos los iconos SVG en un solo archivo
@@ -78,7 +76,6 @@ Personal-web/
     ├── historias/              ← fotos de las historias
     ├── proyectos/              ← miniaturas, galería, video, poster
     ├── foto.jpg
-    ├── banda.jpg
     └── fondo.svg
 ```
 
@@ -86,29 +83,42 @@ Personal-web/
 
 ## Cómo edito cada cosa
 
-| Quiero cambiar… | Voy a… |
+### Desde la interfaz (recomendado)
+
+Entrá a **[app.pagescms.org](https://app.pagescms.org)** con tu cuenta de GitHub
+y abrí este repositorio. Vas a ver cuatro secciones: **Sobre mí**, **Skills**,
+**Historias** y **Proyectos**. Desde ahí podés editar textos, subir imágenes,
+agregar, borrar y reordenar ítems.
+
+Cada vez que guardás, Pages CMS hace un commit y GitHub Pages republica solo
+en uno o dos minutos. El sitio sigue siendo 100% estático.
+
+La primera vez: iniciá sesión, instalá la GitHub App de Pages CMS **solo en
+este repositorio** y abrilo. La configuración ya está en `.pages.yml`.
+
+### A mano
+
+Todo el contenido editable vive en `contenido/`, en JSON:
+
+| Quiero cambiar… | Archivo |
 |---|---|
-| El texto de una historia | `contenido/textos/historias/<id>.txt` |
-| La descripción de un proyecto | `contenido/textos/proyectos/<id>.txt` |
-| Agregar / sacar una historia | `contenido/historias.js` + crear su `.txt` |
-| Agregar / sacar un proyecto | `contenido/proyectos.js` + crear su `.txt` |
-| Un nivel de skill o su descripción | `contenido/skills.js` |
+| Texto y foto de "Sobre mí" | `contenido/perfil.json` |
+| Skills: nombre, nivel, logo, descripción | `contenido/skills.json` |
+| Historias: etiqueta, título, imagen, texto | `contenido/historias.json` |
+| Proyectos: miniatura, galería, texto, video | `contenido/proyectos.json` |
+| Qué campos muestra la interfaz de edición | `.pages.yml` |
 | Colores, sombras, tipografía | `css/base/variables.css` |
-| El texto de "About me" | `partials/secciones/sobre-mi.html` |
 | Links de redes o CV | `partials/footer.html` |
-| Un ícono | `assets/iconos/sprite.svg` |
-| El menú de navegación | `partials/header.html` |
+| El resumen para crawlers sin JavaScript | bloque `RESUMEN ESTÁTICO` en `index.html` |
 
-### Agregar una historia, paso a paso
+En los textos, **una línea en blanco separa párrafos**.
 
-1. En `contenido/historias.js`, copiá una línea:
-   ```js
-   { id: "nueva", tab: "Nueva", titulo: "Mi historia nueva", imagen: "assets/historias/nueva.jpg" },
-   ```
-2. Creá `contenido/textos/historias/nueva.txt` y escribí el texto ahí.
-3. Poné la foto en `assets/historias/nueva.jpg`.
+El orden de cada lista es el orden en pantalla.
 
-Listo. No hay que tocar HTML ni JS.
+> **Ojo con el resumen estático.** El bloque `RESUMEN ESTÁTICO` de `index.html`
+> es lo que leen las IAs y herramientas de reclutamiento que no ejecutan
+> JavaScript. No se actualiza solo desde el CMS: si cambiás de trabajo o sumás
+> algo importante, actualizalo también ahí.
 
 ### Agregar un ícono
 
@@ -123,7 +133,7 @@ Después usalo donde quieras con:
 
 ## Probar en local
 
-Los partials y los `.txt` se cargan con `fetch`, así que **no funciona abriendo
+Los partials y los `.json` de contenido se cargan con `fetch`, así que **no funciona abriendo
 `index.html` con doble clic** (`file://` los bloquea). Necesitás un servidor:
 
 - **VS Code**: extensión *Live Server* → clic derecho en `index.html` → "Open with Live Server".

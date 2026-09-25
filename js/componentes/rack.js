@@ -3,11 +3,13 @@
    scroll nativo se reposiciona al llegar a los bordes, así el giro es
    infinito y con inercia. Si todas las skills entran en pantalla, no
    hay scroll ni flechas: se muestran centradas y listo. */
-import { SKILLS, SEGMENTOS } from "../../contenido/skills.js";
+import { SEGMENTOS, ruta, escapar } from "../util/contenido.js";
 
 const COPIAS = 3;   // bloques idénticos: el del medio es el que se ve
+const UMBRAL = 6;   // px que hay que mover el mouse para que cuente como arrastre
 
-export function pintarRack() {
+/* SKILLS llega desde main.js, leído de contenido/skills.json */
+export function pintarRack(SKILLS = []) {
   const rack = document.getElementById("rack");
   const pista = document.getElementById("rack-pista");
   const prev = document.getElementById("rack-prev");
@@ -24,18 +26,21 @@ export function pintarRack() {
     ).join("");
 
     // Si el archivo no existe, onerror cambia la imagen por el texto
+    // Si el logo no carga, se reemplaza por la abreviatura (data-alt)
+    const abrev = escapar(s.abrev || s.nombre?.slice(0, 3) || "");
     const logo = s.logo
-      ? `<img src="${s.logo}" alt=""
-             onerror="this.replaceWith('${s.abrev}')">`
-      : s.abrev;
+      ? `<img src="${escapar(ruta(s.logo))}" alt="" data-alt="${abrev}"
+             onerror="this.replaceWith(this.dataset.alt)">`
+      : abrev;
+    const nombre = escapar(s.nombre);
 
     // Las copias no se anuncian dos veces a los lectores de pantalla
     const oculto = clon ? ' aria-hidden="true" tabindex="-1"' : ' tabindex="0"';
 
     return `
-      <li class="fader" title="${s.nombre}: ${s.nivel} de ${SEGMENTOS}"
+      <li class="fader" title="${nombre}: ${s.nivel} de ${SEGMENTOS}"
           role="button" data-indice="${indiceReal}"${oculto}>
-        <span class="visually-hidden">${s.nombre}: nivel ${s.nivel} de ${SEGMENTOS}. Abrir detalle.</span>
+        <span class="visually-hidden">${nombre}: nivel ${s.nivel} de ${SEGMENTOS}. Abrir detalle.</span>
         <span class="fader__escala" aria-hidden="true">${segs}</span>
         <span class="fader__logo" aria-hidden="true">${logo}</span>
       </li>`;
@@ -121,14 +126,20 @@ export function pintarRack() {
     movido = 0;
     partidaX = e.clientX;
     partidaScroll = pista.scrollLeft;
-    pista.classList.add("rack-pista--agarrada");
+    // La clase "agarrada" NO se pone acá: si se pusiera al apretar,
+    // un simple clic se trataría como arrastre y no abriría la carta.
   });
 
   window.addEventListener("pointermove", (e) => {
     if (!arrastrando) return;
     const avance = e.clientX - partidaX;
     movido = Math.max(movido, Math.abs(avance));
-    pista.scrollLeft = partidaScroll - avance;
+
+    // Recién con un desplazamiento real se considera arrastre
+    if (movido > UMBRAL) {
+      pista.classList.add("rack-pista--agarrada");
+      pista.scrollLeft = partidaScroll - avance;
+    }
   });
 
   window.addEventListener("pointerup", () => {
@@ -139,7 +150,7 @@ export function pintarRack() {
 
   /* Si se arrastró, el click no debe abrir la carta de la skill */
   pista.addEventListener("click", (e) => {
-    if (movido > 6) {
+    if (movido > UMBRAL) {
       e.stopPropagation();
       e.preventDefault();
       movido = 0;

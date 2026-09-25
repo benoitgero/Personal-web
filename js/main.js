@@ -2,12 +2,15 @@
    PUNTO DE ENTRADA
    Orquesta el montaje del sitio:
    1. Arranca el portal (su markup vive en index.html).
-   2. Trae los partials de HTML y el sprite de iconos.
-   3. Monta cada componente.
+   2. Trae en paralelo los partials, el sprite de iconos y el
+      contenido editable (contenido/*.json, que edita Pages CMS).
+   3. Monta cada componente con sus datos.
    Para desactivar un componente, comentá su línea acá.
    ═══════════════════════════════════════════════════════════ */
 import { incluirParciales, inyectarIconos } from "./incluir.js";
+import { cargarContenido } from "./util/contenido.js";
 import { montarPortal } from "./componentes/portal.js";
+import { montarPerfil } from "./componentes/perfil.js";
 import { pintarRack } from "./componentes/rack.js";
 import { montarCartaSkills } from "./componentes/carta-skill.js";
 import { montarHistorias } from "./componentes/historias.js";
@@ -22,15 +25,29 @@ import { montarTraductor } from "./componentes/traductor.js";
 import { montarCV } from "./componentes/cv.js";
 
 async function iniciar() {
-  // El portal no espera a nada: es lo primero que se ve
-  montarPortal();
+  // La pantalla de carga es lo primero que se ve; se retira sola
+  // en cuanto las secciones reales están armadas.
+  const portalListo = montarPortal();
 
-  // El resto del sitio necesita que los partials ya estén en el DOM
-  await Promise.all([inyectarIconos(), incluirParciales()]);
+  // Todo en paralelo: el contenido baja mientras llegan los partials
+  const [, , contenido] = await Promise.all([
+    inyectarIconos(),
+    incluirParciales(),
+    cargarContenido(),
+  ]);
 
-  pintarRack();
-  montarCartaSkills();
-  await Promise.all([montarHistorias(), montarProyectos()]);
+  // Las secciones reales ya están: el resumen de texto plano (pensado
+  // para crawlers sin JavaScript) deja de hacer falta.
+  document.getElementById("resumen")?.remove();
+
+  montarPerfil(contenido.perfil);
+  pintarRack(contenido.skills);
+  montarCartaSkills(contenido.skills);
+  montarHistorias(contenido.historias);
+  montarProyectos(contenido.proyectos);
+
+  // Con el contenido ya pintado, la pantalla de carga se puede ir
+  portalListo();
   montarVisor();
   montarMenu();
   montarNavActiva();

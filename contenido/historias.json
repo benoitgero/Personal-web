@@ -1,0 +1,38 @@
+[
+  {
+    "tab": "JAP",
+    "titulo": "Jóvenes a Programar",
+    "imagen": "assets/historias/jap.jpg",
+    "texto": "Jóvenes a Programar fue mi puerta de entrada al desarrollo de software. Es un programa de Ceibal, gratuito y a nivel nacional, dictado por capacitadores de empresas del sector junto a CUTI. Ahí trabajé programación orientada a objetos —clases, herencia, encapsulamiento, la idea de modelar un problema antes de escribir una línea de código—, los fundamentos del testing y desarrollo con GeneXus, la plataforma uruguaya de desarrollo de bajo código. GeneXus tiene una particularidad que me gustó: describís el conocimiento del negocio y la herramienta genera el código, así que te obliga a entender bien el problema antes de resolverlo. Este programa fue el primer eslabón de una cadena: el testing que empecé a ver acá lo profundicé después en el diploma del CES, y la lógica de programación me quedó como base para todo lo que vino después."
+  },
+  {
+    "tab": "CES",
+    "titulo": "Centro de Ensayos de Software",
+    "imagen": "assets/historias/ces.jpg",
+    "texto": "Conseguí una beca para cursar el Diploma de Tester de Software en el CES, la fundación de la Universidad de la República que desde 2004 forma testers en Uruguay junto a la Facultad de Ingeniería y CUTI. El diploma se cursa en línea y cada módulo aprobado tiene certificado de Educación Permanente de Fing. Ahí descubrí que testear no es buscar errores al azar: es investigar un producto con criterio, decidir qué probar primero y comunicar los hallazgos de forma que el equipo pueda actuar. Diseño de casos de prueba, reporte de incidentes, gestión de la calidad. Lo que más me costó al principio fue el cambio de mentalidad: pasar de querer que algo funcione a querer entender dónde y por qué se rompe. Al terminar el diploma hice una pasantía como tester manual en Switch Software Solutions, y ahí la teoría se puso a prueba con un producto real, un equipo real y plazos reales."
+  },
+  {
+    "tab": "Switch",
+    "titulo": "Switch Software Solutions",
+    "imagen": "assets/historias/switch.jpg",
+    "texto": "Tres meses de pasantía como tester manual, la instancia final del Diploma de Tester de Software del CES. Fue el momento en que la teoría se encontró con un producto real, un equipo real y plazos reales. Trabajé con Jira para gestionar el ciclo completo: diseñar los casos de prueba, ejecutarlos y reportar los incidentes con la información suficiente para que un desarrollador pudiera reproducirlos sin tener que venir a preguntarme. Probé dos productos en paralelo, una aplicación web y una app Android, y ahí entendí que testear en móvil es otro juego: permisos, interrupciones, distintos tamaños de pantalla, comportamientos que en el navegador simplemente no existen. Lo que más me llevé de esos tres meses no fue técnico sino de oficio: aprender a priorizar qué probar cuando el tiempo no alcanza para probar todo, y a escribir un reporte que el equipo pueda usar."
+  },
+  {
+    "tab": "Forge",
+    "titulo": "Fundación Forge",
+    "imagen": "assets/historias/forge.jpg",
+    "texto": "Entré a Forge sin experiencia formal en tecnología y salí con una certificación internacional. Cursé AWS re/Start, el programa que la fundación desarrolla junto a Amazon Web Services: cuatro meses de clases diarias online, con laboratorios prácticos y ejercicios basados en escenarios reales. Linux, Python, redes, seguridad, bases de datos y los fundamentos de la nube de AWS. En paralelo hice Tu Futuro, la parte socioemocional del programa: comunicación, manejo del tiempo, armado de CV, entrevistas simuladas. Al principio me parecía lo secundario frente a lo técnico; con el tiempo entendí que era justamente lo que marca la diferencia cuando estás sentado frente a un entrevistador. El cierre fue el examen de AWS Certified Cloud Practitioner, que aprobé. Más allá del diploma, Forge me dejó algo más difícil de medir: la certeza de que podía dedicarme a esto."
+  },
+  {
+    "tab": "FADU",
+    "titulo": "Facultad de Arquitectura, Diseño y Urbanismo",
+    "imagen": "assets/historias/fadu.jpg",
+    "texto": "Cursé hasta segundo año en la Facultad de Arquitectura, Diseño y Urbanismo de la Udelar, completando todas las asignaturas del primer año. No terminé la carrera, pero me dejó algo que uso todos los días: una forma de pensar el diseño que no se limita a lo estético. En arquitectura aprendés a resolver un problema con restricciones reales —el terreno, el presupuesto, quién va a habitar eso— y a defender cada decisión. Es la misma lógica que aplico hoy cuando diseño una infraestructura. Ahí aprendí AutoCAD y SketchUp para el modelado, y Twinmotion para renderizado y recorridos virtuales. Trabajé en dos proyectos académicos que me marcaron: uno en la Laguna Garzón, donde el desafío era intervenir un paisaje frágil sin arruinarlo, y otro en Tokio, una escala y una densidad urbana completamente distintas a las que conocía. Pasar de un humedal a una metrópolis en el mismo año de cursada fue un ejercicio de adaptación que me sirvió más de lo que imaginaba."
+  },
+  {
+    "tab": "TCS",
+    "titulo": "Tata Consultancy Services",
+    "imagen": "assets/historias/tcs.jpg",
+    "texto": "Mi trabajo actual, y donde llevo más tiempo. Entré como Support Engineer en el área de Windows Server, específicamente en Storage and High Availability: clusters, failover, la infraestructura que tiene que seguir en pie cuando algo falla. Ese primer año fue mi verdadera escuela de infraestructura: una cosa es estudiar alta disponibilidad y otra es responder cuando un cluster se cae y hay un negocio esperando del otro lado. Después pasé a soporte técnico L1 para PricewaterhouseCoopers Estados Unidos durante un año y medio, y actualmente sigo en la cuenta de PwC México como analista. Trabajar para clientes de distintos países te obliga a afinar algo que no aparece en ningún manual técnico: entender el contexto de cada operación, adaptar la comunicación y resolver con la información incompleta que suele llegar en un ticket. Es el lugar donde todo lo que estudié antes se puso a prueba de verdad."
+  }
+]
