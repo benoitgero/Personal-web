@@ -55,6 +55,9 @@
      las imágenes se reparten el ancho y el alto lo manda el contenedor. */
   .proyecto { grid-template-columns: minmax(0, 1fr); min-height: 0; }
   .proyecto__galeria { flex-direction: row; height: 200px; }
+  /* En una sola columna primero se lee el texto y después las fotos */
+  .proyecto__detalle { order: 1; }
+  .proyecto__galeria { order: 2; }
   .proyecto__galeria img { width: 0; height: 100%; }
 }
 
