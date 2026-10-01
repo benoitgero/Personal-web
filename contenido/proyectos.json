@@ -1,16 +1,5 @@
 [
   {
-    "nombre": "Windows Server",
-    "titulo": "Alta disponibilidad en Windows Server",
-    "miniatura": "assets/proyectos/winserver-thumb.jpg",
-    "galeria": [
-      "assets/proyectos/winserver-1.jpg",
-      "assets/proyectos/winserver-2.jpg",
-      "assets/proyectos/winserver-3.jpg"
-    ],
-    "texto": "Durante un año trabajé como Support Engineer para Microsoft, dentro del área de Storage and High Availability. El trabajo consistía en dar soporte a clientes de Windows Server en todo lo relacionado con Hyper-V, almacenamiento y clustering: los escenarios donde un problema no afecta a un usuario sino a un servicio entero.\n\nEl grueso de los casos giraba alrededor del clúster de conmutación por error. Nodos que se expulsaban solos del clúster, volúmenes compartidos de clúster (CSV) que perdían conectividad, discos de testigo que dejaban de responder y comprometían el quórum, roles que no migraban al nodo secundario cuando tenían que hacerlo. Diagnosticar eso implica reconstruir qué pasó a partir de los logs del clúster, los eventos del sistema y las trazas de red, muchas veces sobre un incidente que ya terminó y no se puede reproducir.\n\nEn la parte de virtualización, los casos típicos eran de Hyper-V: migraciones en vivo que fallaban a mitad de camino, máquinas virtuales que no arrancaban tras un failover, problemas de rendimiento en el almacenamiento subyacente, configuraciones de red virtual que no sobrevivían al cambio de nodo. En almacenamiento, Storage Spaces Direct, iSCSI y la interacción entre los distintos niveles de la pila.\n\nLo que más me formó de ese año no fue una tecnología puntual sino el método. Trabajar con clientes que tienen un servicio caído obliga a ordenar el pensamiento: descartar hipótesis en orden de probabilidad, pedir exactamente los datos que hacen falta y no veinte archivos por las dudas, y explicar la causa raíz en términos que el cliente pueda llevar a su propia organización. También aprendí que la alta disponibilidad no es una función que se activa: es un conjunto de decisiones de diseño que se pagan o se cobran el día que algo falla."
-  },
-  {
     "nombre": "PwC",
     "titulo": "Price waterhouse Coopers",
     "miniatura": "assets/proyectos/pwc-thumb.jpg",
@@ -20,6 +9,17 @@
       "assets/proyectos/pwc-3.jpg"
     ],
     "texto": "Año y medio dando soporte técnico L1 en inglés para PricewaterhouseCoopers Estados Unidos, y desde entonces hasta hoy en PwC México. En ambas cuentas el soporte cubre tanto laptops como dispositivos móviles.\n\nEl día a día son los problemas que frenan a una oficina entera. GlobalProtect, el cliente VPN: portales mal configurados, conexiones que no levantan, usuarios que se quedan sin acceso a los recursos internos justo cuando los necesitan. Enrolamiento en Company Portal, con todo lo que implica registrar un equipo en la gestión corporativa: dispositivos que no completan el alta, aplicaciones que no bajan, políticas que no se aplican. Y errores de Office en general, desde activación de licencias hasta perfiles de Outlook corruptos y archivos que no sincronizan.\n\nTrabajar en L1 tiene una particularidad que no se ve desde afuera: sos el primer contacto, así que el problema llega sin diagnosticar y muchas veces mal descrito. La mitad del trabajo es traducir lo que el usuario cuenta a lo que realmente está pasando. Alguien dice \"no tengo internet\" y en realidad el adaptador está bien, pero la VPN dejó el tráfico sin ruta. Aprender a hacer las preguntas correctas rinde más que conocer cien procedimientos.\n\nEl pase a la cuenta de México trajo un cambio de contexto que también se aprende: distinta zona horaria, distinta forma de comunicarse, distintos casos frecuentes. Hacer soporte en inglés para Estados Unidos y después para un equipo mexicano me enseñó que adaptar el tono y el vocabulario no es un detalle cosmético, es parte de resolver el problema."
+  },
+  {
+    "nombre": "Windows Server",
+    "titulo": "Alta disponibilidad en Windows Server",
+    "miniatura": "assets/proyectos/winserver-thumb.jpg",
+    "galeria": [
+      "assets/proyectos/winserver-1.jpg",
+      "assets/proyectos/winserver-2.jpg",
+      "assets/proyectos/winserver-3.jpg"
+    ],
+    "texto": "Durante un año trabajé como Support Engineer para Microsoft, dentro del área de Storage and High Availability. El trabajo consistía en dar soporte a clientes de Windows Server en todo lo relacionado con Hyper-V, almacenamiento y clustering: los escenarios donde un problema no afecta a un usuario sino a un servicio entero.\n\nEl grueso de los casos giraba alrededor del clúster de conmutación por error. Nodos que se expulsaban solos del clúster, volúmenes compartidos de clúster (CSV) que perdían conectividad, discos de testigo que dejaban de responder y comprometían el quórum, roles que no migraban al nodo secundario cuando tenían que hacerlo. Diagnosticar eso implica reconstruir qué pasó a partir de los logs del clúster, los eventos del sistema y las trazas de red, muchas veces sobre un incidente que ya terminó y no se puede reproducir.\n\nEn la parte de virtualización, los casos típicos eran de Hyper-V: migraciones en vivo que fallaban a mitad de camino, máquinas virtuales que no arrancaban tras un failover, problemas de rendimiento en el almacenamiento subyacente, configuraciones de red virtual que no sobrevivían al cambio de nodo. En almacenamiento, Storage Spaces Direct, iSCSI y la interacción entre los distintos niveles de la pila.\n\nLo que más me formó de ese año no fue una tecnología puntual sino el método. Trabajar con clientes que tienen un servicio caído obliga a ordenar el pensamiento: descartar hipótesis en orden de probabilidad, pedir exactamente los datos que hacen falta y no veinte archivos por las dudas, y explicar la causa raíz en términos que el cliente pueda llevar a su propia organización. También aprendí que la alta disponibilidad no es una función que se activa: es un conjunto de decisiones de diseño que se pagan o se cobran el día que algo falla."
   },
   {
     "nombre": "Laguna Garzón",
