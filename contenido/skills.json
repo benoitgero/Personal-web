@@ -2,7 +2,7 @@
   {
     "nombre": "Windows Server",
     "abrev": "WS",
-    "nivel": 4,
+    "nivel": 5,
     "logo": "assets/logos/windows-server.svg",
     "descripcion": "Administración y soporte de Windows Server en entornos productivos. Un año como Support Engineer de Microsoft en el área de Storage and High Availability, resolviendo incidentes de clientes empresariales."
   },
