@@ -1,0 +1,37 @@
+# ═══════════════════════════════════════════════════════════════
+#  Archivos del repo que NO se publican en Cloudflare.
+#  Mismo formato que .gitignore. El sitio se sirve desde la raíz,
+#  así que sin esta lista se subirían node_modules y la config.
+# ═══════════════════════════════════════════════════════════════
+
+# Dependencias de desarrollo (linters): no son parte del sitio
+**/node_modules
+.yarn
+package.json
+package-lock.json
+yarn.lock
+.yarnrc.yml
+
+# Git y configuración del repo
+**/.git
+.gitignore
+.gitattributes
+.github
+
+# Configuración de herramientas
+wrangler.jsonc
+.wrangler
+.assetsignore
+.pages.yml
+eslint.config.js
+.prettierrc.json
+.prettierignore
+.stylelintrc.json
+.nojekyll
+
+# Documentación interna
+README.md
+
+# Basura del sistema
+**/.DS_Store
+**/Thumbs.db

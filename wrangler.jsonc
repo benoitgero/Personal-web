@@ -1,0 +1,13 @@
+// ═══════════════════════════════════════════════════════════════
+//  Cloudflare Workers — sitio público estático
+//  Sirve los archivos del repo tal cual, sin build.
+//  Qué NO se sube: ver .assetsignore (mismo formato que .gitignore).
+// ═══════════════════════════════════════════════════════════════
+{
+  // Tiene que coincidir con el nombre del proyecto en Cloudflare
+  "name": "personal-web",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "./"
+  }
+}
