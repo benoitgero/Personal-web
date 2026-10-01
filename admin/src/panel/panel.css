@@ -1,0 +1,284 @@
+/* ═══════════════════════════════════════════════════════════
+   PANEL — mismo lenguaje visual que el sitio (relieve suave)
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  --fondo: #e3e7ee;
+  --texto: #2f3640;
+  --suave: #5b6573;
+  --tenue: #8a93a0;
+  --acento: #2ec6cd;
+  --acento-osc: #0b6f75;
+  --alerta: #d9822b;
+  --peligro: #c2453d;
+  --sombra: 163, 177, 198;
+
+  --relieve: 6px 6px 14px rgba(var(--sombra), .55), -6px -6px 14px rgba(255, 255, 255, .9);
+  --relieve-chico: 3px 3px 7px rgba(var(--sombra), .55), -3px -3px 7px rgba(255, 255, 255, .9);
+  --hundido: inset 3px 3px 6px rgba(var(--sombra), .5), inset -3px -3px 6px rgba(255, 255, 255, .85);
+
+  --radio: 18px;
+  --radio-chico: 12px;
+  --ancho: 920px;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Barra superior ─────────────────────────────────────── */
+.barra {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px max(16px, calc((100vw - var(--ancho)) / 2));
+  background: rgba(227, 231, 238, .92);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 6px 16px rgba(var(--sombra), .35);
+}
+
+.marca { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.marca strong { display: block; font-size: 17px; letter-spacing: .01em; }
+.marca small { display: block; color: var(--tenue); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
+.esfera {
+  width: 30px; height: 30px; flex: none; border-radius: 50%;
+  background: linear-gradient(135deg, #1fbcc4, #0b6f75);
+  box-shadow: var(--relieve-chico);
+}
+
+.estado {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px; border-radius: 999px;
+  box-shadow: var(--hundido);
+  font-size: 13px; color: var(--suave); white-space: nowrap;
+}
+.estado .punto { width: 8px; height: 8px; border-radius: 50%; background: var(--acento); }
+.estado.estado--pendiente .punto { background: var(--alerta); box-shadow: 0 0 0 3px rgba(217, 130, 43, .2); }
+
+.acciones { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+
+/* ── Botones ────────────────────────────────────────────── */
+.boton {
+  appearance: none; border: 0; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 40px; padding: 0 16px; border-radius: 999px;
+  background: var(--fondo); color: var(--texto);
+  font: 600 14px/1 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; text-decoration: none; white-space: nowrap;
+  box-shadow: var(--relieve-chico);
+  transition: box-shadow .15s, transform .15s, color .15s;
+}
+.boton:hover { color: var(--acento-osc); }
+.boton:active { box-shadow: var(--hundido); transform: translateY(1px); }
+.boton:disabled { cursor: default; opacity: .45; box-shadow: none; }
+.boton--primario { background: linear-gradient(135deg, #2ec6cd, #13959b); color: #fff; }
+.boton--primario:hover { color: #fff; filter: brightness(1.05); }
+.boton--plano { box-shadow: none; background: transparent; }
+.boton--plano:hover { box-shadow: var(--relieve-chico); }
+.boton--chico { min-height: 32px; padding: 0 12px; font-size: 13px; }
+.boton--icono { width: 34px; min-height: 34px; padding: 0; font-size: 15px; }
+.boton--peligro:hover { color: var(--peligro); }
+
+.enlace {
+  appearance: none; border: 0; background: none; padding: 0; cursor: pointer;
+  color: var(--suave); font: inherit; font-size: 13px; text-decoration: underline;
+}
+.enlace:hover { color: var(--peligro); }
+
+:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+
+/* ── Pestañas ───────────────────────────────────────────── */
+.pestanas {
+  display: flex; gap: 10px; overflow-x: auto;
+  max-width: var(--ancho); margin: 24px auto 0; padding: 6px 16px 10px;
+  scrollbar-width: none;
+}
+.pestanas::-webkit-scrollbar { display: none; }
+.pestana {
+  position: relative; flex: none;
+  appearance: none; border: 0; cursor: pointer;
+  padding: 10px 18px; border-radius: 999px;
+  background: var(--fondo); color: var(--suave);
+  font: 600 14px/1 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  box-shadow: var(--relieve-chico);
+}
+.pestana[aria-current="true"] { color: var(--acento-osc); box-shadow: var(--hundido); }
+.pestana.pestana--sucia::after {
+  content: ""; position: absolute; top: 6px; right: 8px;
+  width: 7px; height: 7px; border-radius: 50%; background: var(--alerta);
+}
+
+/* ── Contenido ──────────────────────────────────────────── */
+main { max-width: var(--ancho); margin: 0 auto; padding: 16px 16px 120px; }
+.cargando { color: var(--tenue); text-align: center; padding: 60px 0; }
+
+.cabecera { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin: 8px 0 18px; }
+.cabecera h1 { margin: 0; font-size: 26px; letter-spacing: -.01em; }
+.cabecera p { margin: 4px 0 0; color: var(--suave); font-size: 14px; }
+
+.tarjeta {
+  background: var(--fondo);
+  border-radius: var(--radio);
+  box-shadow: var(--relieve);
+  padding: 22px;
+}
+.tarjeta + .tarjeta { margin-top: 18px; }
+
+/* ── Campos ─────────────────────────────────────────────── */
+.campo { display: block; }
+.campo + .campo { margin-top: 18px; }
+.campo > .etiqueta { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 8px; font-weight: 600; font-size: 14px; }
+.campo .ayuda { color: var(--tenue); font-weight: 400; font-size: 12.5px; text-align: right; }
+
+.entrada, .area {
+  width: 100%; border: 0; border-radius: var(--radio-chico);
+  background: var(--fondo); color: var(--texto);
+  box-shadow: var(--hundido);
+  padding: 11px 14px; font: inherit;
+}
+.area { min-height: 110px; resize: vertical; line-height: 1.6; }
+.area--codigo { font: 13px/1.55 ui-monospace, "Cascadia Code", Consolas, monospace; min-height: 420px; white-space: pre; overflow-x: auto; }
+.entrada:focus, .area:focus { outline: 2px solid rgba(46, 198, 205, .55); outline-offset: 0; }
+
+/* Nivel 0–5: segmentos como los faders del sitio */
+.niveles { display: inline-flex; gap: 6px; padding: 6px; border-radius: 999px; box-shadow: var(--hundido); }
+.nivel {
+  appearance: none; border: 0; cursor: pointer;
+  width: 34px; height: 30px; border-radius: 999px;
+  background: var(--fondo); color: var(--tenue); font: 600 13px/1 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+.nivel.nivel--encendido { background: linear-gradient(135deg, #2ec6cd, #13959b); color: #fff; box-shadow: var(--relieve-chico); }
+
+/* Imagen */
+.imagen { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.miniatura {
+  position: relative; flex: none;
+  width: 120px; height: 90px; border-radius: var(--radio-chico);
+  box-shadow: var(--hundido); overflow: hidden;
+  display: grid; place-items: center; color: var(--tenue); font-size: 12px;
+}
+.miniatura img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.miniatura--logo img { object-fit: contain; padding: 14px; }
+.miniatura .marca-nueva {
+  position: absolute; left: 6px; top: 6px; padding: 2px 7px; border-radius: 999px;
+  background: var(--alerta); color: #fff; font-size: 10.5px; font-weight: 700; letter-spacing: .03em;
+}
+.imagen .botones { display: flex; gap: 8px; flex-wrap: wrap; }
+.imagen .ruta { width: 100%; color: var(--tenue); font: 12px ui-monospace, Consolas, monospace; word-break: break-all; }
+
+.subiendo { opacity: .55; pointer-events: none; }
+.subiendo .miniatura::after {
+  content: ""; position: absolute; inset: 0; margin: auto; width: 26px; height: 26px;
+  border: 3px solid rgba(46, 198, 205, .3); border-top-color: var(--acento);
+  border-radius: 50%; animation: giro .8s linear infinite;
+}
+@keyframes giro { to { transform: rotate(360deg); } }
+
+/* Galería */
+.galeria { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 14px; }
+.galeria .cuadro { display: grid; gap: 6px; }
+.galeria .miniatura { width: 100%; height: 96px; }
+.galeria .mini-botones { display: flex; justify-content: center; gap: 6px; }
+.galeria .agregar {
+  appearance: none; border: 0; cursor: pointer; height: 96px; border-radius: var(--radio-chico);
+  background: var(--fondo); color: var(--acento-osc); font: 600 13px/1.3 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  box-shadow: var(--relieve-chico);
+}
+
+/* ── Listas (skills, historias, proyectos) ──────────────── */
+.item { padding: 0; overflow: hidden; }
+.item > summary {
+  list-style: none; cursor: pointer;
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px;
+}
+.item > summary::-webkit-details-marker { display: none; }
+.item > summary .miniatura { width: 54px; height: 54px; border-radius: 12px; }
+.item > summary .miniatura:not(:has(img)) { font-size: 0; }
+.item > summary .miniatura:not(:has(img))::before { content: "—"; font-size: 14px; }
+.item > summary .miniatura--logo img { padding: 8px; }
+.item .titulo-item { flex: 1; min-width: 0; }
+.item .titulo-item strong { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.item .titulo-item small { display: block; color: var(--tenue); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.item .orden { display: flex; gap: 6px; }
+.item .cuerpo { padding: 6px 22px 22px; border-top: 1px solid rgba(var(--sombra), .35); }
+.item[open] > summary { padding-bottom: 14px; }
+.item .numero {
+  flex: none; width: 26px; text-align: center; color: var(--tenue); font-size: 13px; font-variant-numeric: tabular-nums;
+}
+
+.agregar-item { margin-top: 18px; width: 100%; min-height: 52px; border-radius: var(--radio); }
+
+/* ── Barra de guardado ──────────────────────────────────── */
+.guardar {
+  position: fixed; left: 50%; bottom: 18px; z-index: 30;
+  transform: translate(-50%, 140%);
+  display: flex; align-items: center; gap: 14px;
+  padding: 10px 10px 10px 20px; border-radius: 999px;
+  background: #2f3640; color: #fff;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .25);
+  transition: transform .25s ease;
+  max-width: calc(100vw - 32px);
+}
+.guardar.guardar--visible { transform: translate(-50%, 0); }
+.guardar span { font-size: 14px; white-space: nowrap; }
+.guardar .boton--plano { color: #cfd5de; }
+.guardar .boton--plano:hover { color: #fff; box-shadow: none; text-decoration: underline; }
+
+/* ── Estado vacío / importar ────────────────────────────── */
+.vacio { text-align: center; padding: 48px 28px; }
+.vacio h1 { margin: 0 0 8px; font-size: 24px; }
+.vacio p { color: var(--suave); max-width: 520px; margin: 0 auto 22px; }
+.progreso { height: 8px; border-radius: 999px; box-shadow: var(--hundido); overflow: hidden; margin: 18px auto 0; max-width: 360px; }
+.progreso > i { display: block; height: 100%; width: 0; background: var(--acento); transition: width .3s; }
+
+/* ── Pie ────────────────────────────────────────────────── */
+.pie {
+  max-width: var(--ancho); margin: 0 auto; padding: 0 16px 40px;
+  display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  color: var(--tenue); font-size: 13px;
+}
+
+/* ── Avisos ─────────────────────────────────────────────── */
+.avisos {
+  position: fixed; top: 76px; right: 16px; z-index: 40;
+  display: grid; gap: 10px; width: min(380px, calc(100vw - 32px));
+}
+.aviso {
+  padding: 12px 16px; border-radius: 14px;
+  background: var(--fondo); box-shadow: var(--relieve);
+  border-left: 4px solid var(--acento);
+  font-size: 14px; animation: entra .2s ease;
+}
+.aviso a { color: var(--acento-osc); font-weight: 600; }
+.aviso--error { border-left-color: var(--peligro); }
+@keyframes entra { from { opacity: 0; transform: translateY(-6px); } }
+
+/* ── Celular ────────────────────────────────────────────── */
+@media (max-width: 720px) {
+  .barra { flex-wrap: wrap; gap: 10px; }
+  .estado { order: 3; }
+  .acciones { gap: 6px; }
+  .acciones .boton--plano { padding: 0 10px; }
+  .marca small { max-width: 130px; }
+  .tarjeta { padding: 16px; }
+  .item .cuerpo { padding: 6px 16px 18px; }
+  .item .numero { display: none; }
+  .cabecera h1 { font-size: 22px; }
+  .avisos { top: auto; bottom: 86px; }
+}
+@media (max-width: 460px) {
+  .acciones .boton--plano:first-child { display: none; }
+  .item > summary { gap: 10px; padding: 12px; }
+  .item > summary .miniatura { width: 44px; height: 44px; }
+  .item .orden { gap: 4px; }
+  .item .orden .boton--icono { width: 30px; min-height: 30px; font-size: 13px; }
+}

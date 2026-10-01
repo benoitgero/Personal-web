@@ -1,0 +1,17 @@
+{
+  "name": "portfolio-admin",
+  "version": "1.0.0",
+  "description": "Panel privado para editar el contenido del sitio: MongoDB Atlas + publicación en GitHub.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "mongodb": "^6.21.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.145.0"
+  }
+}

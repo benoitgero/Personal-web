@@ -1,0 +1,51 @@
+// ═══════════════════════════════════════════════════════════════
+//  Cloudflare Workers — PANEL DE ADMINISTRACIÓN (privado)
+//
+//  Es un Worker aparte del sitio público. Lee y guarda el contenido
+//  en MongoDB Atlas y, al tocar "Publicar", hace un commit en el
+//  repo con los JSON y las imágenes nuevas → el sitio se redespliega.
+//
+//  Secretos (se cargan en el panel de Cloudflare, NUNCA acá):
+//    MONGODB_URI   cadena de conexión de Atlas (usuario portfolio-api)
+//    GITHUB_TOKEN  token fine-grained, solo Personal-web, Contents R/W
+//    ADMIN_EMAIL   tu email; el único que puede usar el panel
+//
+//  El acceso lo controla Cloudflare Access (Settings → Access).
+//  Sin Access activado el panel responde 403 a todo.
+// ═══════════════════════════════════════════════════════════════
+{
+  "name": "portfolio-admin",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-01",
+  // El driver de MongoDB usa APIs de Node (sockets, TLS, DNS, crypto)
+  "compatibility_flags": ["nodejs_compat"],
+
+  "workers_dev": true,
+  // Sin URLs de vista previa por versión: una puerta menos para cuidar
+  "preview_urls": false,
+  // Las variables cargadas a mano en el dashboard no se borran al desplegar
+  "keep_vars": true,
+
+  "vars": {
+    "REPO": "benoitgero/Personal-web",
+    "RAMA": "main",
+    "BASE": "portfolio",
+    // Desde dónde el panel muestra las imágenes ya publicadas
+    "SITIO_URL": "https://personal-web.geronimodst.workers.dev/"
+  },
+
+  // Una consulta mínima a Atlas cada lunes: el plan gratis pausa
+  // el cluster si pasan 30 días sin actividad.
+  "triggers": {
+    "crons": ["17 12 * * 1"]
+  },
+
+  // La interfaz del panel (HTML, CSS y JS del navegador) se incluye
+  // dentro del Worker como texto, no como archivos estáticos: así
+  // cada pedido pasa por el control de acceso del código.
+  "rules": [
+    { "type": "Text", "globs": ["**/*.html", "**/*.css", "**/panel/*.js"], "fallthrough": true }
+  ],
+
+  "observability": { "enabled": true }
+}

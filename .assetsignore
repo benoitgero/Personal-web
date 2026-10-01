@@ -32,6 +32,17 @@ eslint.config.js
 # Documentación interna
 README.md
 
+# Panel de administración: es otro Worker (privado), no parte del sitio
+admin/
+
+# Restos de versiones anteriores
+assetsignore
+script.js
+styles.css
+cv.pdf
+contenido/*.js
+contenido/textos/
+
 # Basura del sistema
 **/.DS_Store
 **/Thumbs.db

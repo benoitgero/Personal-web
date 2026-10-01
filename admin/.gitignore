@@ -1,0 +1,7 @@
+node_modules/
+.wrangler/
+# Secretos para pruebas locales: NUNCA al repo
+.dev.vars
+.dev.vars.*
+.env
+wrangler.test.jsonc
